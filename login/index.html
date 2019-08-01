@@ -1,82 +1,77 @@
 <!DOCTYPE html>
-
  <!--
 	 For God so loved the world that he gave his one and only Son,
 	 that whoever believes in him shall not perish but have eternal life.
 	 (John 3:16)
  -->
-
 <html lang="pt-br">
-
+    <!-- head -->
 	<head>
-
-		<title>Etecdados</title>
-
-		<meta charset="utf-8">
-		<meta name="viewport"    content="width=device-width, initial-scale=1">
-		<meta name="author"      content="fernando silva">
-		<meta name="contact"     content="etecdados@gmail.com / +55 (21) 983633263">
-		<meta name="description" content="etecdados">
-		<meta name="keywords"    content="etecdados, empresa, tecnologia, dados, data, technology, company">
-
-		<link type="image/x-icon" rel="icon"       href="../root/favicon/etecdados.ico"> <!-- version 1.0.0 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/bootstrap.css">     <!-- version 4.3.1 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/fontawesome.css">   <!-- version 5.9.0 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/etecdados.css">     <!-- version 1.0.0 -->
-		
-		<script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
-		<script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
-		<script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
-		<script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.14.7 -->
-
-	</head> <!-- end head -->
-
+        <!-- title -->
+        <title>Etecdados</title>
+        <!-- meta -->
+        <meta charset="utf-8">
+        <meta name="viewport"    content="width=device-width, initial-scale=1">
+        <meta name="author"      content="fernando silva">
+        <meta name="contact"     content="etecdados@gmail.com, +55 (021) 98363-3263">
+        <meta name="description" content="etecdados">
+        <meta name="keywords"    content="etecdados, empresa, tecnologia, dados, data, technology, company">
+        <!-- link -->
+        <link type="image/x-icon" rel="icon"       href="../root/favicon/etecdados.ico"> <!-- version 1.0.0 -->
+        <link type="text/css"     rel="stylesheet" href="../root/css/bootstrap.css">     <!-- version 4.3.1 -->
+        <link type="text/css"     rel="stylesheet" href="../root/css/fontawesome.css">   <!-- version 5.9.0 -->
+        <link type="text/css"     rel="stylesheet" href="../root/css/etecdados.css">     <!-- version 1.0.0 -->
+        <!-- script -->
+        <script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
+        <script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
+        <script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
+        <script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.14.7 -->
+    </head>
+    <!-- body -->
     <body>
-
-        <div class="container text-center mb-3" style="max-width: 377px">
-
+        <!-- container -->
+        <div class="container text-center mb-3" id="div_login">
+            <!-- logo -->
             <div class="mt-4">
-
                 <img src="../root/images/etecdados.png" alt="logo etecdados">
-
-            </div> <!-- end div logo -->
-
+            </div>
+            <!-- login form -->
             <form class="mt-4">
-
+                <!-- language -->
                 <div>
-
-                    <button type="button" class="button_language" id="button_brazil" title="Portuguese"></button>
-                    <button type="button" class="button_language" id="button_spain"  title="Spanish"   ></button>
-                    <button type="button" class="button_language" id="button_uk"     title="English"   ></button>
-
-                </div> <!-- end div language -->
-
-                <div class="form-group mt-4">
-
-                    <label for="input_email">Login</label>
-                    <input type="email" class="form-control" id="input_email" placeholder="Email">
-
-                </div> <!-- end div email -->
-
-                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
-
-            </form> <!-- end form login -->
-
-            <div class="mt-4">
-
-                <a href="https://www.bible.com/pt/bible/129/JHN.3.16.NVI" target="_blank">João 3:16</a>
-
-            </div> <!-- end div link -->
-
+                    <button type="button" class="button_language" onclick="setLanguage(this)" value="1" id="button_portuguese" title="Portuguese"></button>
+                    <button type="button" class="button_language" onclick="setLanguage(this)" value="2" id="button_spanish"    title="Spanish"   ></button>
+                    <button type="button" class="button_language" onclick="setLanguage(this)" value="3" id="button_english"    title="English"   ></button>
+                </div>
+                <!-- email and password -->
+                <div class="form-group text-left">
+                    <!-- email -->
+                    <label for="input_email"    class="mt-3"         id="text0001">Email</label>
+                    <input type="email"         class="form-control" id="input_email" placeholder="etecdados@gmail.com" required>
+                    <!-- password -->
+                    <label for="input_password" class="mt-2"         id="text0002">Senha</label>
+                    <input type="password"      class="form-control" id="input_password" placeholder="******" required>
+                    <!-- validation -->
+                    <button type="submit"       class="btn btn-primary btn-block mt-4" id="button_login">Enviar</button>
+                </div>
+            </form>
+            <!-- bible -->
+            <div class="mt-3">
+                <a href="https://www.bible.com/pt/bible/129/JHN.3.16.NVI" target="_blank" id="text0004">João 3:16</a>
+            </div>
+            <!-- footer -->
             <footer class="mt-3">
-                    
-                <small>Copyright &copy; 2019 Etecdados. Todos os direitos reservados.</small><br>
-                <small>Website desenvolvido por Fernando Silva</small>
-                    
-            </footer> <!-- end footer -->
+                <small id="text0005">Copyright &copy; 2019 Etecdados. Todos os direitos reservados.</small><br>
+                <small id="text0006">Website desenvolvido por Fernando Silva</small>
+            </footer>
+            <!-- google api -->
+            <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};loadLibrary()"></script>
 
-        </div> <!-- end div container -->
+            <div id="result">result</div>
+            <div id="cookie">
+                <script>document.getElementById("cookie").innerHTML = document.cookie</script>
+            </div>
 
-    </body> <!-- end body -->
-
-</html> <!-- end html -->
+        </div>
+    </body>
+</html>

@@ -8,17 +8,25 @@
  */
 
 @charset "utf-8";
+/* container ------------------------------------------------ */
+#div_login, #div_info {
+    max-width: 377px;
+}
+
+#div_projects {
+    max-width: 987px;
+}
 
 /* login ---------------------------------------------------- */
-#button_brazil {
+#button_portuguese {
     background-image: url(../images/flag_brazil.png);
 }
 
-#button_spain {
+#button_spanish {
     background-image: url(../images/flag_spain.png);
 }
 
-#button_uk {
+#button_english {
     background-image: url(../images/flag_uk.png);
 }
 
@@ -52,6 +60,9 @@
 }
 
 /* nav ------------------------------------------------------ */
+nav a {
+    text-decoration: none !important;
+}
 #img_nav {
     height: 21px;
 }
