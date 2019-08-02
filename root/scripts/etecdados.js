@@ -148,7 +148,6 @@ function login() {
     }
     // validate
     if (search == null) {
-        alert(search);
         alert("Usuário não cadastrado");
     } else if (temporary[search][auxiliary] != password) {
         alert("Senha não confere");
