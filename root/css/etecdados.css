@@ -13,11 +13,15 @@
     max-width: 377px;
 }
 
+#div_login footer {
+    font-size: 12px;
+}
+
 #div_projects {
     max-width: 987px;
 }
 
-/* login ---------------------------------------------------- */
+/* language ------------------------------------------------- */
 #button_portuguese {
     background-image: url(../images/flag_brazil.png);
 }
@@ -60,9 +64,6 @@
 }
 
 /* nav ------------------------------------------------------ */
-nav a {
-    text-decoration: none !important;
-}
 #img_nav {
     height: 21px;
 }

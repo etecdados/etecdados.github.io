@@ -46,32 +46,27 @@
                 <!-- email and password -->
                 <div class="form-group text-left">
                     <!-- email -->
-                    <label for="input_email"    class="mt-3"         id="text0001">Email</label>
+                    <label for="input_email"    class="mt-3"         id="text0001"></label>
                     <input type="email"         class="form-control" id="input_email" placeholder="etecdados@gmail.com" required>
                     <!-- password -->
-                    <label for="input_password" class="mt-2"         id="text0002">Senha</label>
+                    <label for="input_password" class="mt-2"         id="text0002"></label>
                     <input type="password"      class="form-control" id="input_password" placeholder="******" required>
                     <!-- validation -->
-                    <button type="submit"       class="btn btn-primary btn-block mt-4" id="button_login">Enviar</button>
+                    <button type="button"       class="btn btn-primary btn-block mt-4" onclick="login()"><span id="text0003"></span></button>
                 </div>
             </form>
             <!-- bible -->
             <div class="mt-3">
-                <a href="https://www.bible.com/pt/bible/129/JHN.3.16.NVI" target="_blank" id="text0004">João 3:16</a>
+                <a href="" target="_blank" id="text0004"></a>
             </div>
             <!-- footer -->
-            <footer class="mt-3">
-                <small id="text0005">Copyright &copy; 2019 Etecdados. Todos os direitos reservados.</small><br>
-                <small id="text0006">Website desenvolvido por Fernando Silva</small>
+            <footer class="text-muted mt-3">
+                <span id="text0005"></span>
+                <br>
+                <span id="text0006"></span>
             </footer>
             <!-- google api -->
             <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};loadLibrary()"></script>
-
-            <div id="result">result</div>
-            <div id="cookie">
-                <script>document.getElementById("cookie").innerHTML = document.cookie</script>
-            </div>
-
         </div>
     </body>
 </html>
