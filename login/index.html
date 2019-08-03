@@ -25,7 +25,7 @@
         <script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
         <script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
         <script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
-        <script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.14.7 -->
+        <script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.0.0  -->
     </head>
     <!-- body -->
     <body>
@@ -35,38 +35,75 @@
             <div class="mt-4">
                 <img src="../root/images/etecdados.png" alt="logo etecdados">
             </div>
-            <!-- login form -->
-            <form class="mt-4">
-                <!-- language -->
-                <div>
-                    <button type="button" class="button_language" onclick="setLanguage(this)" value="1" id="button_portuguese" title="Portuguese"></button>
-                    <button type="button" class="button_language" onclick="setLanguage(this)" value="2" id="button_spanish"    title="Spanish"   ></button>
-                    <button type="button" class="button_language" onclick="setLanguage(this)" value="3" id="button_english"    title="English"   ></button>
-                </div>
-                <!-- email and password -->
-                <div class="form-group text-left">
-                    <!-- email -->
-                    <label for="input_email"    class="mt-3"         id="text0001"></label>
-                    <input type="email"         class="form-control" id="input_email" placeholder="etecdados@gmail.com" required>
-                    <!-- password -->
-                    <label for="input_password" class="mt-2"         id="text0002"></label>
-                    <input type="password"      class="form-control" id="input_password" placeholder="******" required>
-                    <!-- validation -->
-                    <button type="button"       class="btn btn-primary btn-block mt-4" onclick="login()"><span id="text0003"></span></button>
-                </div>
-            </form>
+            <!-- language -->
+            <div class="mt-4">
+                <button type="button" class="button_language" onclick="setLanguage(this)" value="0" id="button_portuguese" title="Portuguese"></button>
+                <button type="button" class="button_language" onclick="setLanguage(this)" value="1" id="button_spanish"    title="Spanish"   ></button>
+                <button type="button" class="button_language" onclick="setLanguage(this)" value="2" id="button_english"    title="English"   ></button>
+            </div>
+            <!-- email and password -->
+            <div class="form-group text-left">
+                <!-- email -->
+                <label for="input_email" class="mt-3">
+                    <script>document.write(text[0][language])</script>
+                </label>
+                <input type="email" class="form-control" id="input_email" placeholder="etecdados@gmail.com" required>
+                <!-- password -->
+                <label for="input_password" class="mt-2">
+                    <script>document.write(text[1][language])</script>
+                </label>
+                <input type="password" class="form-control" id="input_password" placeholder="******" required>
+                <!-- validation -->
+                <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#login" onclick="login()">
+                    <script>document.write(text[2][language])</script>
+                </button>
+            </div>
             <!-- bible -->
             <div class="mt-3">
-                <a href="" target="_blank" id="text0004"></a>
+                <a href="" target="_blank" id="a_bible">
+                    <script>document.write(text[3][language])</script>
+                </a>
             </div>
             <!-- footer -->
             <footer class="text-muted mt-3">
-                <span id="text0005"></span>
+                <script>document.write(text[4][language])</script>
                 <br>
-                <span id="text0006"></span>
+                <script>document.write(text[5][language])</script>
             </footer>
-            <!-- google api -->
-            <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};loadLibrary()"></script>
+            <!-- modal -->
+            <div class="modal fade" id="login">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <!-- modal header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span class="ml-1">
+                                    <script>document.write(text[6][language])</script>
+                                </span>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!-- modal body -->
+                        <div class="modal-body">
+                            <span id="span_user">
+                                <script>document.write(text[7][language])</script>
+                            </span>
+                            <span id="span_password">
+                                <script>document.write(text[8][language])</script>
+                            </span>
+                        </div>
+                        <!-- modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="button_logout btn btn-primary" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- google api -->
+        <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};loadLibrary()"></script>
     </body>
 </html>

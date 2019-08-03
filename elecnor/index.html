@@ -25,7 +25,9 @@
 		<script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
 		<script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
 		<script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
-		<script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.14.7 -->
+		<script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.0.0  -->
+		<!-- security -->
+		<script type="text/javascript">security()</script>
 	</head>
 	<!-- body -->
 	<body>
@@ -34,7 +36,9 @@
 			<!-- logo and username -->
 			<div class="text-left nowrap">
 				<img src="../root/images/favicon.png" alt="logo favicon" id="img_nav">
-				<span>fernando.silva@elecnor.com</span>
+				<span>
+					<script>document.write(username)</script>
+				</span>
 			</div>
 			<!-- button toggler -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="">
@@ -49,15 +53,15 @@
 					<!-- projects -->
 					<li class="nav-item ml-3">
 						<a href="../elecnor" class="text-white-50 text-decoration-none">
-							<i class="fas fa-globe"	   	></i>
-							<span class="ml-1">Projetos</span>
+							<i class="fas fa-globe"></i>
+							<script>document.write(text[9][language])</script>
 						</a>
 					</li>
 					<!-- logout -->
 					<li class="nav-item ml-3">
 						<a href="#" class="text-white-50 text-decoration-none" data-toggle="modal" data-target="#logout">
 							<i class="fas fa-sign-out-alt"></i>
-							<span class="ml-1">Sair</span>
+							<script>document.write(text[10][language])</script>
 						</a>
 					</li>
 				</ul>
@@ -69,17 +73,26 @@
 				<div class="modal-content">
 					<!-- modal header -->
 					<div class="modal-header">
-						<h5 class="modal-title"><i class="fas fa-sign-out-alt"></i><span class="ml-1">Sair</span></h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h5 class="modal-title">
+							<i class="fas fa-sign-out-alt"></i>
+							<script>document.write(text[10][language])</script>
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
 					<!-- modal body -->
 					<div class="modal-body">
-						<span>Tem certeza que deseja sair?</span>
+						<script>document.write(text[11][language])</script>
 					</div>
 					<!-- modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="button_logout btn btn-primary">Sim</button>
-						<button type="button" class="button_logout btn btn-secondary" data-dismiss="modal">Não</button>
+						<button type="button" class="button_logout btn btn-primary">
+							<script>document.write(text[12][language])</script>
+						</button>
+						<button type="button" class="button_logout btn btn-secondary" data-dismiss="modal">
+							<script>document.write(text[13][language])</script>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -92,15 +105,16 @@
 			</div>
 			<!-- projects -->
 			<div class="mt-4">
-				<span><i class="fas fa-globe mr-1"></i>Projetos</span>
-				<form class="mt-4">
+				<i class="fas fa-globe"></i>
+				<script>document.write(text[9][language])</script>
+				<div class="mt-4">
 					<button type="button" class="button_projects m-2" style="background-image: url(images/site.png)"></button>
 					<button type="button" class="button_projects m-2" style="background-image: url(images/pate.png)"></button>
 					<button type="button" class="button_projects m-2" style="background-image: url(images/saojoaopiaui.png)"></button>
 					<button type="button" class="button_projects m-2" style="background-image: url(images/saofernando.png)"></button>
 					<button type="button" class="button_projects m-2" style="background-image: url(images/equatorial.png)"></button>
 					<button type="button" class="button_projects m-2" style="background-image: url(images/msg.png)"></button>
-				</form>
+				</div>
 			</div>
 		</div>
 	</body>

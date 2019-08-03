@@ -8,7 +8,9 @@
  */
 
 /* variables ------------------------------------------------ */
-var range;
+var users;
+var username = getCookie("username") ? getCookie("username") : null;
+var language = getCookie("language") ? getCookie("language") : 0;
 
  /* google api ----------------------------------------------- */
 var apikey_gsheet   = "AIzaSyBke8vUjVil_hL3-G9OJWWsVYJgn1ZdCRY";
@@ -59,9 +61,7 @@ function getUsers() {
         range: "users!A2:Z",
     }).then(function(response) {
         // result
-        range = response.result;
-        //document.getElementById("input_email").value = range.values[0][1];
-        //document.getElementById("input_password").value = range.values[0][2];
+        users = response.result;
     });
 }
 
@@ -69,35 +69,23 @@ function getUsers() {
 function getLanguage() {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: database_main,
-        range: "language!A2:Z",
+        range: "language!B2:Z",
     }).then(function(response) {
         // result
-        range = response.result;
-        // check cookie language
-        var key;
-        if (getCookie("language") == null) {
-            key = 1;
-        } else {
-            key = getCookie("language");
-        }
+        var range = response.result;
+        // set item
+        sessionStorage.setItem("lastname", range.values);
         // bilble link
-        switch(key) {
-            case "2":
-                document.getElementById("text0004").href = "https://www.bible.com/es/bible/128/JHN.3.16.NVI";
+        switch(language) {
+            case "1":
+                document.getElementById("a_bible").href = "https://www.bible.com/es/bible/128/JHN.3.16.NVI";
                 break;
-            case "3":
-                document.getElementById("text0004").href = "https://www.bible.com/bible/111/JHN.3.16.NIV";
+            case "2":
+                document.getElementById("a_bible").href = "https://www.bible.com/bible/111/JHN.3.16.NIV";
                 break;
             default:
-                document.getElementById("text0004").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
+                document.getElementById("a_bible").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
         }
-        // text language
-        document.getElementById("text0001").innerHTML = range.values[0][key];
-        document.getElementById("text0002").innerHTML = range.values[1][key];
-        document.getElementById("text0003").innerHTML = range.values[2][key];
-        document.getElementById("text0004").innerHTML = range.values[3][key];
-        document.getElementById("text0005").innerHTML = range.values[4][key];
-        document.getElementById("text0006").innerHTML = range.values[5][key];
     });
 }
 
@@ -109,17 +97,38 @@ function setLanguage(parameter) {
     var element = document.getElementById(identifier).value;
     // switch
     switch(element) {
-        case "2":
-            document.cookie = "language=" + element;
+        case "1":
+            document.cookie = "language=" + element + "; path=/";
             location.reload();
             break;
-        case "3":
-            document.cookie = "language=" + element;
+        case "2":
+            document.cookie = "language=" + element + "; path=/";
             location.reload();
             break;
         default:
-            document.cookie = "language=1";
+            document.cookie = "language=0; path=/";
             location.reload();
+    }
+}
+
+/* text ----------------------------------------------------- */
+var text = new Array();
+// total rows
+var rows = 11;
+// total columns
+var columns = 3;
+// multidimensional arrays
+for (var i = 0; i < rows; i++ ) {
+    text.push([]);
+}
+// get item
+var item = sessionStorage.getItem("lastname");
+// split
+var split = item.split(",")
+// push into array
+for (var i = 0; i < rows; i++) {
+    for (var b = 0; b < columns; b++) {
+        text[i].push(split[i * columns + b]);
     }
 }
 
@@ -128,13 +137,13 @@ function login() {
     // get email and password
     var email    = document.getElementById("input_email").value;
     var password = document.getElementById("input_password").value;
-    // users length
-    var users = Object.keys(range.values).length;
+    // keys length
+    var keys = Object.keys(users.values).length;
     // temporary array
     var temporary = new Array();
     // push
-    for (var i = 0; i < users; i++) {
-        temporary.push(range.values[i]);
+    for (var i = 0; i < keys; i++) {
+        temporary.push(users.values[i]);
     }
     // search user
     var search;
@@ -146,13 +155,28 @@ function login() {
             break;
         }
     }
+    // clear modal
+    document.getElementById("span_user").className = "d-none";
+    document.getElementById("span_password").className = "d-none";
     // validate
     if (search == null) {
-        alert(search);
-        alert("Usuário não cadastrado");
+        // user not found
+        document.getElementById("span_user").className = "d-block";
     } else if (temporary[search][auxiliary] != password) {
-        alert("Senha não confere");
+        // incorrect password
+        document.getElementById("span_password").className = "d-block";
     } else {
+        // username cookie
+        document.cookie = "username=" + email + "; path=/";
+        // redirect
         location.href = "../elecnor";
+    }
+}
+
+/* security ------------------------------------------------- */
+function security() {
+    // check login
+    if (username == null) {
+        location.href = "../";
     }
 }
