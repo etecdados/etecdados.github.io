@@ -73,7 +73,10 @@ function getLanguage() {
     }).then(function(response) {
         // result
         var range = response.result;
+        // keys
+        var number = Object.keys(range.values).length;
         // set item
+        sessionStorage.setItem("total", number);
         sessionStorage.setItem("records", range.values);
         // bilble link
         switch(language) {
@@ -91,7 +94,7 @@ function getLanguage() {
 
 /* set language --------------------------------------------- */
 function setLanguage(parameter) {
-    // id
+    // identifier
     var identifier = parameter.id;
     // get element
     var element = document.getElementById(identifier).value;
@@ -113,20 +116,19 @@ function setLanguage(parameter) {
 
 /* text ----------------------------------------------------- */
 var text = new Array();
-// total rows
-var rows = 11;
-// total columns
-var columns = 3;
+// get item
+var rows  = sessionStorage.getItem("total");
+var words = sessionStorage.getItem("records");
 // multidimensional arrays
-for (var i = 0; i < rows; i++ ) {
+for (var i = 0; i <= rows; i++) {
     text.push([]);
 }
-// get item
-var item = sessionStorage.getItem("records");
+// total columns
+var columns = 3;
 // split
-var split = item.split(",")
+var split = words.split(",");
 // push into array
-for (var i = 0; i < rows; i++) {
+for (var i = 0; i <= rows; i++) {
     for (var b = 0; b < columns; b++) {
         text[i].push(split[i * columns + b]);
     }
@@ -179,4 +181,16 @@ function security() {
     if (username == null) {
         location.href = "../";
     }
+}
+
+/* logout --------------------------------------------------- */
+function logout() {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var value    = cookies[i];
+        var position = value.indexOf("=");
+        var name     = position > -1 ? value.substr(0, position) : value;
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+    location.href = "../"
 }

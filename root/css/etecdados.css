@@ -11,6 +11,7 @@
 /* container ------------------------------------------------ */
 #div_login, #div_info {
     max-width: 377px;
+    margin: auto;
 }
 
 #div_login footer {
