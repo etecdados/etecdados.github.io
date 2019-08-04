@@ -74,7 +74,7 @@ function getLanguage() {
         // result
         var range = response.result;
         // set item
-        sessionStorage.setItem("lastname", range.values);
+        sessionStorage.setItem("records", range.values);
         // bilble link
         switch(language) {
             case "1":
@@ -122,7 +122,7 @@ for (var i = 0; i < rows; i++ ) {
     text.push([]);
 }
 // get item
-var item = sessionStorage.getItem("lastname");
+var item = sessionStorage.getItem("records");
 // split
 var split = item.split(",")
 // push into array

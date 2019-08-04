@@ -31,6 +31,15 @@
     <body>
         <!-- container -->
         <div class="container text-center mb-3" id="div_login">
+            <!-- check text -->
+            <script type="text/javascript">
+            if (text[0] == '') {
+                document.getElementById("div_login").className = "d-none";
+                document.cookie = "reload=0";
+            } else {
+                document.cookie = "reload=1";
+            }
+            </script>
             <!-- logo -->
             <div class="mt-4">
                 <img src="../root/images/etecdados.png" alt="logo etecdados">
@@ -54,7 +63,7 @@
                 </label>
                 <input type="password" class="form-control" id="input_password" placeholder="******" required>
                 <!-- validation -->
-                <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#login" onclick="login()">
+                <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#login" id="button_login" onclick="login()">
                     <script>document.write(text[2][language])</script>
                 </button>
             </div>
@@ -105,5 +114,13 @@
         </div>
         <!-- google api -->
         <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};loadLibrary()"></script>
-    </body>
+        <!-- reload -->
+        <script>
+            if (getCookie("reload") == 0) {
+                setTimeout(function(){
+                    window.location.reload(1);
+                }, 2000);
+            }
+        </script>
+    </body>    
 </html>
