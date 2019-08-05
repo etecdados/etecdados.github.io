@@ -8,12 +8,13 @@
  */
 
 /* variables ------------------------------------------------ */
-var username = getCookie("username") ? getCookie("username") : null;
-var language = getCookie("language") ? getCookie("language") : 0;
+var username  = getCookie("username")  ? getCookie("username")  : null;
+var language  = getCookie("language")  ? getCookie("language")  : 0;
+var customer  = getCookie("customer")  ? getCookie("customer")  : null;
 
  /* google api ----------------------------------------------- */
-var apikeyGsheet  = "AIzaSyBke8vUjVil_hL3-G9OJWWsVYJgn1ZdCRY";
-var apikeyGmaps   = "";
+var apiKeySheet   = "AIzaSyBke8vUjVil_hL3-G9OJWWsVYJgn1ZdCRY";
+var apiKeyMaps    = "";
 var clientId      = "345990898270-gh1f4t9pe4lhgcmgfnubojanrqnsmhs5.apps.googleusercontent.com";
 var databaseMain  = "1ZcP8Rax-xRtegYTHQ_1BJjtOQmnQT8kMQb7Bi9Guls4";
 var discoveryDocs = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
@@ -22,7 +23,7 @@ var requestScope  = "https://www.googleapis.com/auth/spreadsheets.readonly";
 /* initial setup -------------------------------------------- */
 function initialSetup() {
     gapi.client.init({
-        apiKey: apikeyGsheet,
+        apiKey: apiKeySheet,
         clientId: clientId,
         discoveryDocs: discoveryDocs,
         scope: requestScope,
@@ -160,12 +161,22 @@ function pushArray(parameter1, parameter2, parameter3, parameter4) {
 /* text ----------------------------------------------------- */
 var text = new Array();
 // get item
-var textTotal  = sessionStorage.getItem("languageLength");
+var textTotal = sessionStorage.getItem("languageLength");
 var textValue = sessionStorage.getItem("languageValues");
 // total columns
 var textColumns = 3;
 // push into array
 pushArray(textTotal, textValue, text, textColumns);
+
+/* projects ------------------------------------------------- */
+var projects = new Array();
+// get item
+var projectsTotal = sessionStorage.getItem("projectsLength");
+var projectsValue = sessionStorage.getItem("projectsValues");
+// total columns
+var projectsColumns = 5;
+// push into array
+pushArray(projectsTotal, projectsValue, projects, projectsColumns);
 
 /* login ---------------------------------------------------- */
 function login() {
@@ -252,6 +263,8 @@ function validation(parameter) {
     if (split[element.value] == "TRUE") {
         // modal
         element.setAttribute("data-target", "");
+        // customer cookie
+        document.cookie = "customer=" + element.value + "; path=/";
         // redirect
         location.href = "maps";
     }

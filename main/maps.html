@@ -68,10 +68,24 @@
 		<!-- container -->
 		<div class="container-fluid text-center mb-3">
 			<div>
-				<header>LT500</header>
+				<header>
+					<script>document.write("customer = " + customer)</script>
+					<br>
+					<script>document.write(projects[0][2])</script>
+					<br>
+					<script>document.write(projects[0][3])</script>
+				</header>
 			</div>
 			<div>
-				<span>maps</span>
+				<ul>
+					<li><script>document.write(projects[0]);</script></li>
+					<li><script>document.write(projects[1]);</script></li>
+					<li><script>document.write(projects[2]);</script></li>
+					<li><script>document.write(projects[3]);</script></li>
+					<li><script>document.write(projects[4]);</script></li>
+					<li><script>document.write(projects[5]);</script></li>
+				</ul>
+				
 			</div>
             <!-- modal logout -->
 			<div class="modal fade" id="logout">
