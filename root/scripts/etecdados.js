@@ -168,6 +168,8 @@ function login() {
         // incorrect password
         document.getElementById("span_password").className = "d-block";
     } else {
+        // modal
+        document.getElementById("button_login").setAttribute("data-target", "");
         // username cookie
         document.cookie = "username=" + email + "; path=/";
         // redirect
@@ -177,8 +179,8 @@ function login() {
 
 /* security ------------------------------------------------- */
 function security() {
-    // check login
-    if (username == null) {
+    // check login and text
+    if (username == null || text[0] == "") {
         location.href = "../";
     }
 }

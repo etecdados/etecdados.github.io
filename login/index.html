@@ -8,7 +8,7 @@
     <!-- head -->
 	<head>
         <!-- title -->
-        <title>Etecdados</title>
+        <title>ETECDADOS</title>
         <!-- meta -->
         <meta charset="utf-8">
         <meta name="viewport"    content="width=device-width, initial-scale=1">
@@ -37,14 +37,14 @@
             </div>
             <!-- spinner -->
             <div id="div_spinner" class="mt-4">
-                <div class="spinner-border text-primary" role="status">
+                <div class="spinner-grow text-info" role="status">
                     <span class="sr-only"></span>
                 </div>        
             </div>
             <div id="div_login">
                 <!-- check reload -->
                 <script type="text/javascript">
-                    if (text[0] == '') {
+                    if (text[0] == "") {
                         document.getElementById("div_login").className = "d-none";
                         document.cookie = "reload=0";
                     } else {
@@ -71,13 +71,13 @@
                     </label>
                     <input type="password" class="form-control" id="input_password" placeholder="******" required>
                     <!-- validation -->
-                    <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#login" id="button_login" onclick="login()">
+                    <button type="button" class="btn btn-info btn-block mt-4" data-toggle="modal" data-target="#login" id="button_login" onclick="login()">
                         <script>document.write(text[2][language])</script>
                     </button>
                 </div>
                 <!-- bible -->
                 <div class="mt-3">
-                    <a href="" target="_blank" id="a_bible">
+                    <a href="" target="_blank" class="text-info" id="a_bible">
                         <script>document.write(text[3][language])</script>
                     </a>
                 </div>
@@ -94,7 +94,7 @@
                     <div class="modal-content">
                         <!-- modal header -->
                         <div class="modal-header">
-                            <h5 class="modal-title">
+                            <h5 class="modal-title text-info">
                                 <i class="fas fa-exclamation-triangle"></i>
                                 <span class="ml-1">
                                     <script>document.write(text[6][language])</script>
@@ -115,7 +115,7 @@
                         </div>
                         <!-- modal footer -->
                         <div class="modal-footer">
-                            <button type="button" class="button_logout btn btn-primary" data-dismiss="modal">OK</button>
+                            <button type="button" class="button_logout btn btn-info" data-dismiss="modal">OK</button>
                         </div>
                     </div>
                 </div>
