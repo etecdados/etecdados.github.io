@@ -1,0 +1,225 @@
+/*
+ * https://etecdados.github.io
+ * etecdados v1.0.0
+ * copyright 2019 by etecdados
+ * created on 2013/06/24 12:10
+ * author fernando silva
+ * last update on 2019/07/25
+ */
+
+/* variables ------------------------------------------------ */
+var users;
+var username = getCookie("username") ? getCookie("username") : null;
+var language = getCookie("language") ? getCookie("language") : 0;
+
+ /* google api ----------------------------------------------- */
+var apikey_gsheet   = "AIzaSyBke8vUjVil_hL3-G9OJWWsVYJgn1ZdCRY";
+var apikey_gmaps    = "";
+var client_id       = "345990898270-gh1f4t9pe4lhgcmgfnubojanrqnsmhs5.apps.googleusercontent.com";
+var database_main   = "1ZcP8Rax-xRtegYTHQ_1BJjtOQmnQT8kMQb7Bi9Guls4";
+var discovery_docs  = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+var request_scope   = "https://www.googleapis.com/auth/spreadsheets.readonly";
+
+/* initial setup -------------------------------------------- */
+function initialSetup() {
+    gapi.client.init({
+        apiKey: apikey_gsheet,
+        clientId: client_id,
+        discoveryDocs: discovery_docs,
+        scope: request_scope,
+    }).then(function() {
+        // listen
+        gapi.auth2.getAuthInstance().isSignedIn.listen(getUsers);
+        gapi.auth2.getAuthInstance().isSignedIn.listen(getLanguage);
+        // get
+        getUsers(gapi.auth2.getAuthInstance().isSignedIn.get());
+        getLanguage(gapi.auth2.getAuthInstance().isSignedIn.get());
+    });
+}
+
+/* load library --------------------------------------------- */
+function loadLibrary() {
+    gapi.load("client:auth2", initialSetup);
+}
+
+/* get cookie ----------------------------------------------- */
+function getCookie(parameter) {
+    // values
+    var values = "; " + document.cookie;
+    // split
+    var split = values.split("; " + parameter + "=");
+    // check
+    if (split.length == 2) {
+        return split.pop().split(";").shift()
+    };
+}
+
+/* get users ------------------------------------------------ */
+function getUsers() {
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: database_main,
+        range: "users!A2:Z",
+    }).then(function(response) {
+        // result
+        users = response.result;
+    });
+}
+
+/* get language --------------------------------------------- */
+function getLanguage() {
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: database_main,
+        range: "language!B2:Z",
+    }).then(function(response) {
+        // result
+        var range = response.result;
+        // keys
+        var number = Object.keys(range.values).length;
+        // set item
+        sessionStorage.setItem("total", number);
+        sessionStorage.setItem("records", range.values);
+        // bilble link
+        switch(language) {
+            case "1":
+                document.getElementById("a_bible").href = "https://www.bible.com/es/bible/128/JHN.3.16.NVI";
+                break;
+            case "2":
+                document.getElementById("a_bible").href = "https://www.bible.com/bible/111/JHN.3.16.NIV";
+                break;
+            default:
+                document.getElementById("a_bible").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
+        }
+    });
+}
+
+/* set language --------------------------------------------- */
+function setLanguage(parameter) {
+    // identifier
+    var identifier = parameter.id;
+    // get element
+    var element = document.getElementById(identifier).value;
+    // switch
+    switch(element) {
+        case "1":
+            document.cookie = "language=" + element + "; path=/";
+            location.reload();
+            break;
+        case "2":
+            document.cookie = "language=" + element + "; path=/";
+            location.reload();
+            break;
+        default:
+            document.cookie = "language=0; path=/";
+            location.reload();
+    }
+}
+
+/* text ----------------------------------------------------- */
+var text = new Array();
+// get item
+var rows  = sessionStorage.getItem("total");
+var words = sessionStorage.getItem("records");
+// multidimensional arrays
+for (var i = 0; i <= rows; i++) {
+    text.push([]);
+}
+// total columns
+var columns = 3;
+// split
+var split = words.split(",");
+// push into array
+for (var a = 0; a <= rows; a++) {
+    for (var b = 0; b < columns; b++) {
+        text[a].push(split[a * columns + b]);
+    }
+}
+
+/* login ---------------------------------------------------- */
+function login() {
+    // get elements
+    var email         = document.getElementById("input_email").value;
+    var password      = document.getElementById("input_password").value;
+    var modalUser     = document.getElementById("span_user");
+    var modalPassword = document.getElementById("span_password");
+    var modalLogin    = document.getElementById("button_login");
+    // keys length
+    var keys = Object.keys(users.values).length;
+    // temporary array
+    var temporary = new Array();
+    // push
+    for (var i = 0; i < keys; i++) {
+        temporary.push(users.values[i]);
+    }
+    // search user
+    var search;
+    var auxiliary = 0;
+    for (var i = 0; i < temporary.length; i++) {
+        if (temporary[i][1] == email) {
+            search = i;
+            auxiliary = temporary[search].length - 1;
+            break;
+        }
+    }
+    // set item
+    sessionStorage.setItem("projects", temporary[search]);
+    // clear modal
+    modalUser.className = "d-none";
+    modalPassword.className = "d-none";
+    // validate
+    if (search == null) {
+        // user not found
+        modalUser.className = "d-block";
+    } else if (temporary[search][auxiliary] != password) {
+        // incorrect password
+        modalPassword.className = "d-block";
+    } else {
+        // modal
+        modalLogin.setAttribute("data-target", "");
+        // username cookie
+        document.cookie = "username=" + email + "; path=/";
+        // redirect
+        location.href = "../main";
+    }
+}
+
+/* security ------------------------------------------------- */
+function security() {
+    // check login and text
+    if (username == null || text[0] == "") {
+        location.href = "../";
+    }
+}
+
+/* logout --------------------------------------------------- */
+function logout() {
+    // split
+    var cookies = document.cookie.split(";");
+    // delete cookies
+    for (var i = 0; i < cookies.length; i++) {
+        var value    = cookies[i];
+        var position = value.indexOf("=");
+        var name     = position > -1 ? value.substr(0, position) : value;
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+    // redirect
+    location.href = "../";
+}
+
+/* projects ------------------------------------------------- */
+function projects(parameter) {
+    // identifier
+    var identifier = parameter.id;
+    // get element
+    var element = document.getElementById(identifier);
+    // get item
+    var item = sessionStorage.getItem("projects");
+    // split
+    var split = item.split(",");
+    // validation
+    if (split[element.value] == "TRUE") {
+        // modal
+        element.setAttribute("data-target", "");
+        // redirect
+        location.href = "maps";
+    }
+}
