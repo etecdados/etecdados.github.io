@@ -53,7 +53,6 @@
     border: none;
     border-radius: 8px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-    border: none;
     cursor: pointer;
     height: 120px;
     width: 280px;
@@ -77,7 +76,7 @@
 }
 
 #button_project5 {
-    background-image: url(../../root/images/elecnor/saofernando.png);
+    background-image: url(../../root/images/elecnor/sfernando.png);
 }
 
 #button_project6 {
@@ -96,4 +95,13 @@
 /* logout --------------------------------------------------- */
 .button_logout {
     width: 89px;
+}
+
+/* header --------------------------------------------------- */
+header{
+    border-bottom: 1px solid rgba(144, 144, 144, 0.5);
+}
+header img {
+    max-height: 34px;
+    max-width: 144px;
 }

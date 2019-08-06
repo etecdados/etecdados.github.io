@@ -7,11 +7,6 @@
  * last update on 2019/07/25
  */
 
-/* variables ------------------------------------------------ */
-var username  = getCookie("username")  ? getCookie("username")  : null;
-var language  = getCookie("language")  ? getCookie("language")  : 0;
-var customer  = getCookie("customer")  ? getCookie("customer")  : null;
-
  /* google api ----------------------------------------------- */
 var apiKeySheet   = "AIzaSyBke8vUjVil_hL3-G9OJWWsVYJgn1ZdCRY";
 var apiKeyMaps    = "";
@@ -35,7 +30,7 @@ function initialSetup() {
         // get
         getUsers(gapi.auth2.getAuthInstance().isSignedIn.get());
         getLanguage(gapi.auth2.getAuthInstance().isSignedIn.get());
-        getProjects(gapi.auth2.getAuthInstance().isSignedIn.get());databaseMain
+        getProjects(gapi.auth2.getAuthInstance().isSignedIn.get());
     });
 }
 
@@ -56,6 +51,11 @@ function getCookie(parameter) {
     };
 }
 
+/* cookies -------------------------------------------------- */
+var language = getCookie("language") ? getCookie("language") : 0;
+var map      = getCookie("map")      ? getCookie("map")      : null;
+var username = getCookie("username") ? getCookie("username") : null;
+
 /* get users ------------------------------------------------ */
 function getUsers() {
     gapi.client.sheets.spreadsheets.values.get({
@@ -69,6 +69,22 @@ function getUsers() {
         // set item
         sessionStorage.setItem("userLength", keys);
         sessionStorage.setItem("userValues", range.values);
+    });
+}
+
+/* get projects --------------------------------------------- */
+function getProjects() {
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: databaseMain,
+        range: "projects!A2:Z",
+    }).then(function(response) {
+        // result
+        var range = response.result;
+        // keys
+        var keys = Object.keys(range.values).length;
+        // set item
+        sessionStorage.setItem("projectsLength", keys);
+        sessionStorage.setItem("projectsValues", range.values);
     });
 }
 
@@ -99,28 +115,10 @@ function getLanguage() {
     });
 }
 
-/* get projects --------------------------------------------- */
-function getProjects() {
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: databaseMain,
-        range: "projects!A2:Z",
-    }).then(function(response) {
-        // result
-        var range = response.result;
-        // keys
-        var keys = Object.keys(range.values).length;
-        // set item
-        sessionStorage.setItem("projectsLength", keys);
-        sessionStorage.setItem("projectsValues", range.values);
-    });
-}
-
 /* set language --------------------------------------------- */
 function setLanguage(parameter) {
-    // identifier
-    var identifier = parameter.id;
     // get element
-    var element = document.getElementById(identifier).value;
+    var element = document.getElementById(parameter.id).value;
     // switch
     switch(element) {
         case "1":
@@ -141,19 +139,18 @@ function setLanguage(parameter) {
 function pushArray(parameter1, parameter2, parameter3, parameter4) {
     // get item
     var total = parameter1;
-    var value = parameter2;
     // multidimensional array
     for (var a = 0; a <= total; a++) {
-        parameter3.push([]);
+        parameter2.push([]);
     }
     // total columns
-    var columns = parameter4;
+    var columns = parameter3;
     // split
-    var split = value.split(",");
+    var split = parameter4.split(",");
     // push into array
     for (var b = 0; b < total; b++) {
         for (var c = 0; c < columns; c++) {
-            parameter3[b].push(split[b * columns + c]);
+            parameter2[b].push(split[b * columns + c]);
         }
     }
 }
@@ -166,7 +163,7 @@ var textValue = sessionStorage.getItem("languageValues");
 // total columns
 var textColumns = 3;
 // push into array
-pushArray(textTotal, textValue, text, textColumns);
+pushArray(textTotal, text, textColumns, textValue);
 
 /* projects ------------------------------------------------- */
 var projects = new Array();
@@ -176,7 +173,7 @@ var projectsValue = sessionStorage.getItem("projectsValues");
 // total columns
 var projectsColumns = 5;
 // push into array
-pushArray(projectsTotal, projectsValue, projects, projectsColumns);
+pushArray(projectsTotal, projects, projectsColumns, projectsValue);
 
 /* login ---------------------------------------------------- */
 function login() {
@@ -188,7 +185,7 @@ function login() {
     // total columns
     var loginColumns = 9;
     // push into array
-    pushArray(loginTotal, loginValue, login, loginColumns);
+    pushArray(loginTotal, login, loginColumns, loginValue);
     // get element
     var email         = document.getElementById("input_email").value;
     var password      = document.getElementById("input_password").value;
@@ -249,23 +246,78 @@ function logout() {
     location.href = "../";
 }
 
+/* set map -------------------------------------------------- */
+function setMap(parameter) {
+    // element
+    var element = parameter.id;
+    // replace
+    var position = element.replace("map", "");
+    // map cookie
+    document.cookie = "map=" + position + "; path=/";
+}
+
 /* validation ----------------------------------------------- */
 function validation(parameter) {
-    // identifier
-    var identifier = parameter.id;
     // get element
-    var element = document.getElementById(identifier);
-    // get item
-    var projectValue = sessionStorage.getItem("userProjects");
+    var element = document.getElementById(parameter.id);
+    var dialog  = document.getElementById("div_modalDialog");
+    var content = document.getElementById("div_modalMap");
+    // clear content
+    content.innerHTML = "";
+    // modal (jQuery)
+    var access = $(".modal_access");
+    var list   = $(".modal_map");
     // split
-    var split = projectValue.split(",");
+    var split = sessionStorage.getItem("userProjects").split(",");
     // conditional
     if (split[element.value] == "TRUE") {
+        // check map
+        var position;
+        var total = new Array();
+        // push into array
+        for (var a = 0; a < projects.length; a++) {
+            total.push(projects[a][0]);
+            // position
+            if (total[a] == element.value && position == null) {
+                position = a;
+            }
+        }
+        // occurrences
+        var occurrences = total.filter(function(count){return count === element.value;}).length;
+        // conditional
+        if (occurrences > 1) {
+            // modal
+            access.css("display", "none");
+            list.css("display", "block");
+            dialog.setAttribute("class", "modal-dialog");
+            // create links
+            for (var b = 0; b < projects.length - 1; b++) {
+                // create element
+                var link = document.createElement("a");
+                // attributes
+                if (total[b] == element.value) {
+                    link.setAttribute("class", "text-decoration-none list-group-item list-group-item-action");
+                } else {
+                    link.setAttribute("class", "text-decoration-none list-group-item list-group-item-action d-none");
+                }
+                link.setAttribute("href", "maps");
+                link.setAttribute("id", "map" + b);
+                link.setAttribute("onclick", "setMap(this)");
+                link.innerHTML = projects[b][2];
+                content.appendChild(link);    
+            }
+        } else {
+            // modal
+            element.setAttribute("data-target", "");
+            // map cookie
+            document.cookie = "map=" + position + "; path=/";
+            // redirect
+            location.href = "maps";
+        }
+    } else {
         // modal
-        element.setAttribute("data-target", "");
-        // customer cookie
-        document.cookie = "customer=" + element.value + "; path=/";
-        // redirect
-        location.href = "maps";
+        access.css("display", "block");
+        list.css("display", "none");
+        dialog.setAttribute("class", "modal-dialog modal-sm");
     }
 }

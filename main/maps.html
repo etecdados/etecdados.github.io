@@ -8,7 +8,7 @@
 	<!-- head -->
 	<head>
 		<!-- title -->
-		<title>ETECDADOS</title>
+		<title>Etecdados</title>
 		<!-- meta -->
 		<meta charset="utf-8">
 		<meta name="viewport"    content="width=device-width, initial-scale=1">
@@ -18,9 +18,9 @@
 		<meta name="keywords"    content="etecdados, empresa, tecnologia, dados, data, technology, company">
 		<!-- link -->
 		<link type="image/x-icon" rel="icon"       href="../root/favicon/etecdados.ico"> <!-- version 1.0.0 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/bootstrap.css">     <!-- version 4.3.1 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/fontawesome.css">   <!-- version 5.9.0 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/etecdados.css">     <!-- version 1.0.0 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/bootstrap.css"	   > <!-- version 4.3.1 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/fontawesome.css"  > <!-- version 5.9.0 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/etecdados.css"    > <!-- version 1.0.0 -->
 		<!-- script -->
 		<script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
 		<script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
@@ -67,25 +67,31 @@
 		</nav>
 		<!-- container -->
 		<div class="container-fluid text-center mb-3">
+			<!-- header -->
+			<header class="row pt-1 pb-1">
+				<!-- logo elecnor -->
+				<div class="col-sm-3 m-auto text-left d-none d-sm-block">
+					<img src="../root/images/elecnor/elecnor.png" alt="logo elecnor">
+				</div>
+				<!-- project name -->
+				<div class="col m-auto">
+					<small>
+						<script>document.write(projects[map][2])</script>
+					</small>
+				</div>
+				<!-- logo project -->
+				<div class="col-sm-3 m-auto text-right d-none d-sm-block">
+					<img src="../root/images/elecnor/" alt="logo project" id="img_project">
+					<!-- set attribute -->
+					<script type="text/javascript">
+						var element = $("#img_project");
+						var attribute = element.attr("src");
+						element.attr("src", attribute + projects[map][1] + ".png");
+					</script>
+				</div>	
+			</header>
 			<div>
-				<header>
-					<script>document.write("customer = " + customer)</script>
-					<br>
-					<script>document.write(projects[0][2])</script>
-					<br>
-					<script>document.write(projects[0][3])</script>
-				</header>
-			</div>
-			<div>
-				<ul>
-					<li><script>document.write(projects[0]);</script></li>
-					<li><script>document.write(projects[1]);</script></li>
-					<li><script>document.write(projects[2]);</script></li>
-					<li><script>document.write(projects[3]);</script></li>
-					<li><script>document.write(projects[4]);</script></li>
-					<li><script>document.write(projects[5]);</script></li>
-				</ul>
-				
+				<script>document.write(projects[map][4])</script>
 			</div>
             <!-- modal logout -->
 			<div class="modal fade" id="logout">

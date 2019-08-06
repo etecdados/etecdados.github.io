@@ -8,7 +8,7 @@
 	<!-- head -->
 	<head>
 		<!-- title -->
-		<title>ETECDADOS</title>
+		<title>Etecdados</title>
 		<!-- meta -->
 		<meta charset="utf-8">
 		<meta name="viewport"    content="width=device-width, initial-scale=1">
@@ -18,9 +18,9 @@
 		<meta name="keywords"    content="etecdados, empresa, tecnologia, dados, data, technology, company">
 		<!-- link -->
 		<link type="image/x-icon" rel="icon"       href="../root/favicon/etecdados.ico"> <!-- version 1.0.0 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/bootstrap.css">     <!-- version 4.3.1 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/fontawesome.css">   <!-- version 5.9.0 -->
-		<link type="text/css"     rel="stylesheet" href="../root/css/etecdados.css">     <!-- version 1.0.0 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/bootstrap.css"	   > <!-- version 4.3.1 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/fontawesome.css"  > <!-- version 5.9.0 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/etecdados.css"	   > <!-- version 1.0.0 -->
 		<!-- script -->
 		<script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
 		<script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
@@ -116,14 +116,24 @@
 			</div>
 			<!-- modal projects -->
             <div class="modal fade" id="validation">
-				<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-dialog modal-sm" role="document" id="div_modalDialog">
 					<div class="modal-content">
 						<!-- modal header -->
 						<div class="modal-header">
 							<h5 class="modal-title text-primary">
-								<i class="fas fa-exclamation-triangle"></i>
-								<span class="ml-1">
-									<script>document.write(text[14][language])</script>
+								<!-- header access -->
+								<span class="modal_access">
+									<i class="fas fa-exclamation-triangle"></i>
+									<span class="ml-1">
+										<script>document.write(text[14][language])</script>
+									</span>
+								</span>
+								<!-- header map -->
+								<span class="modal_map">
+									<i class="fas fa-globe-americas"></i>
+									<span class="ml-1">
+										<script>document.write(text[15][language])</script>
+									</span>
 								</span>
 							</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -132,11 +142,21 @@
 						</div>
 						<!-- modal body -->
 						<div class="modal-body">
-							<script>document.write(text[15][language])</script>
+							<!-- body access -->
+							<span class="modal_access">
+								<script>document.write(text[16][language])</script>
+							</span>
+							<!-- body map -->
+							<small class="modal_map">
+								<div class="list-group text-left" id="div_modalMap"></div>
+							</small>
 						</div>
 						<!-- modal footer -->
 						<div class="modal-footer">
-							<button type="button" class="button_logout btn btn-primary" data-dismiss="modal">OK</button>
+							<button type="button" class="button_logout modal_access btn btn-primary"   data-dismiss="modal">OK</button>
+							<button type="button" class="button_logout modal_map 	btn btn-secondary" data-dismiss="modal">
+								<script>document.write(text[17][language])</script>
+							</button>
 						</div>
 					</div>
 				</div>
