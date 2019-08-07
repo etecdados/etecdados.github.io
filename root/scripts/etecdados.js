@@ -8,10 +8,10 @@
  */
 
 /* google setup --------------------------------------------- */
-var apiKeySheet   = "AIzaSyBke8vUjVil_hL3-G9OJWWsVYJgn1ZdCRY";
-var apiKeyMaps    = "";
+var apiKeySheets  = "AIzaSyCUHNFWOyP2Y25UKw1swqVQCS2MTaFIpok";
+var apiKeyMaps    = "AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ";
 var accessKey     = "1dZe1ctuPzVp887vb7ttc8zbAdDQew_w761hqemr7O04";
-var clientKey     = "345990898270-gh1f4t9pe4lhgcmgfnubojanrqnsmhs5.apps.googleusercontent.com";
+var clientKey     = "535886128905-4aenaehdlshf0v2f9ehvomk0f4kej16l.apps.googleusercontent.com";
 var databaseKey   = "1ZcP8Rax-xRtegYTHQ_1BJjtOQmnQT8kMQb7Bi9Guls4";
 var discoveryDocs = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 var requestScope  = "https://www.googleapis.com/auth/spreadsheets.readonly";
@@ -20,7 +20,7 @@ var requestScope  = "https://www.googleapis.com/auth/spreadsheets.readonly";
 function initialSetup() {
     gapi.load("client:auth2", function() {
         gapi.client.init({
-            apiKey: apiKeySheet,
+            apiKey: apiKeySheets,
             clientId: clientKey,
             discoveryDocs: discoveryDocs,
             scope: requestScope,
@@ -43,7 +43,7 @@ function initialSetup() {
 function mapSetup() {
     gapi.load("client:auth2", function() {
         gapi.client.init({
-            apiKey: apiKeySheet,
+            apiKey: apiKeySheets,
             clientId: clientKey,
             discoveryDocs: discoveryDocs,
             scope: requestScope,
