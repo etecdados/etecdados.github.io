@@ -26,6 +26,8 @@
         <script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
         <script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
         <script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.0.0  -->
+        <!-- google api -->
+        <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};initialSetup()"></script>
     </head>
     <!-- body -->
     <body>
@@ -121,14 +123,12 @@
                 </div>
             </div>
         </div>
-        <!-- google api -->
-        <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};loadLibrary()"></script>
         <!-- reload -->
         <script>
             if (getCookie("reload") == 0) {
                 setTimeout(function(){
                     window.location.reload();
-                }, 3500);
+                }, 3000);
             }
         </script>
     </body>    

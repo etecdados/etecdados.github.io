@@ -7,36 +7,55 @@
  * last update on 2019/07/25
  */
 
- /* google api ----------------------------------------------- */
+/* google setup --------------------------------------------- */
 var apiKeySheet   = "AIzaSyBke8vUjVil_hL3-G9OJWWsVYJgn1ZdCRY";
 var apiKeyMaps    = "";
-var clientId      = "345990898270-gh1f4t9pe4lhgcmgfnubojanrqnsmhs5.apps.googleusercontent.com";
-var databaseMain  = "1ZcP8Rax-xRtegYTHQ_1BJjtOQmnQT8kMQb7Bi9Guls4";
+var accessKey     = "1dZe1ctuPzVp887vb7ttc8zbAdDQew_w761hqemr7O04";
+var clientKey     = "345990898270-gh1f4t9pe4lhgcmgfnubojanrqnsmhs5.apps.googleusercontent.com";
+var databaseKey   = "1ZcP8Rax-xRtegYTHQ_1BJjtOQmnQT8kMQb7Bi9Guls4";
 var discoveryDocs = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 var requestScope  = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
 /* initial setup -------------------------------------------- */
 function initialSetup() {
-    gapi.client.init({
-        apiKey: apiKeySheet,
-        clientId: clientId,
-        discoveryDocs: discoveryDocs,
-        scope: requestScope,
-    }).then(function() {
-        // listen
-        gapi.auth2.getAuthInstance().isSignedIn.listen(getUsers);
-        gapi.auth2.getAuthInstance().isSignedIn.listen(getLanguage);
-        gapi.auth2.getAuthInstance().isSignedIn.listen(getProjects);
-        // get
-        getUsers(gapi.auth2.getAuthInstance().isSignedIn.get());
-        getLanguage(gapi.auth2.getAuthInstance().isSignedIn.get());
-        getProjects(gapi.auth2.getAuthInstance().isSignedIn.get());
+    gapi.load("client:auth2", function() {
+        gapi.client.init({
+            apiKey: apiKeySheet,
+            clientId: clientKey,
+            discoveryDocs: discoveryDocs,
+            scope: requestScope,
+        }).then(function() {
+            // listen
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getUsers);
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getLanguage);
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getProjects);
+            // get
+            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
+            getUsers(gapi.auth2.getAuthInstance().isSignedIn.get());
+            getLanguage(gapi.auth2.getAuthInstance().isSignedIn.get());
+            getProjects(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
     });
 }
 
-/* load library --------------------------------------------- */
-function loadLibrary() {
-    gapi.load("client:auth2", initialSetup);
+/* map setup ------------------------------------------------ */
+function mapSetup() {
+    gapi.load("client:auth2", function() {
+        gapi.client.init({
+            apiKey: apiKeySheet,
+            clientId: clientKey,
+            discoveryDocs: discoveryDocs,
+            scope: requestScope,
+        }).then(function() {
+            // listen
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getMap);
+            // get
+            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
+            getMap(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+    });
 }
 
 /* get cookie ----------------------------------------------- */
@@ -54,12 +73,37 @@ function getCookie(parameter) {
 /* cookies -------------------------------------------------- */
 var language = getCookie("language") ? getCookie("language") : 0;
 var map      = getCookie("map")      ? getCookie("map")      : null;
+var mapLink  = getCookie("mapLink")  ? getCookie("mapLink")  : null;
 var username = getCookie("username") ? getCookie("username") : null;
+
+/* get access ----------------------------------------------- */
+function getAccess() {
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: accessKey,
+        range: "access!A2:B2",
+    }).then(function(response) {
+        // result
+        var range = response.result;
+        // conditional
+        if (range.values[0][1] == "TRUE") {
+            // split
+            var cookies = document.cookie.split(";");
+            // delete cookies
+            for (var a = 0; a < cookies.length; a++) {
+                var value    = cookies[a];
+                var position = value.indexOf("=");
+                var name     = position > -1 ? value.substr(0, position) : value;
+                document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }
+            location.href = "../info";
+        }
+    });
+}
 
 /* get users ------------------------------------------------ */
 function getUsers() {
     gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: databaseMain,
+        spreadsheetId: databaseKey,
         range: "users!A2:Z",
     }).then(function(response) {
         // result
@@ -75,7 +119,7 @@ function getUsers() {
 /* get projects --------------------------------------------- */
 function getProjects() {
     gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: databaseMain,
+        spreadsheetId: databaseKey,
         range: "projects!A2:Z",
     }).then(function(response) {
         // result
@@ -91,7 +135,7 @@ function getProjects() {
 /* get language --------------------------------------------- */
 function getLanguage() {
     gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: databaseMain,
+        spreadsheetId: databaseKey,
         range: "language!B2:Z",
     }).then(function(response) {
         // result
@@ -113,6 +157,24 @@ function getLanguage() {
                 document.getElementById("a_bible").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
         }
     });
+}
+
+/* get map -------------------------------------------------- */
+function getMap() {
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: mapLink,
+        range: "database!A2:Z"
+        }).then(function(response) {
+            var range = response.result;
+
+
+
+            alert(range.values);
+
+
+
+
+        });
 }
 
 /* set language --------------------------------------------- */
@@ -236,8 +298,8 @@ function logout() {
     // split
     var cookies = document.cookie.split(";");
     // delete cookies
-    for (var i = 0; i < cookies.length; i++) {
-        var value    = cookies[i];
+    for (var a = 0; a < cookies.length; a++) {
+        var value    = cookies[a];
         var position = value.indexOf("=");
         var name     = position > -1 ? value.substr(0, position) : value;
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -252,8 +314,9 @@ function setMap(parameter) {
     var element = parameter.id;
     // replace
     var position = element.replace("map", "");
-    // map cookie
+    // map and link cookie
     document.cookie = "map=" + position + "; path=/";
+    document.cookie = "mapLink=" + projects[position][4] + "; path=/";
 }
 
 /* validation ----------------------------------------------- */
@@ -265,7 +328,7 @@ function validation(parameter) {
     // clear content
     content.innerHTML = "";
     // modal (jQuery)
-    var access = $(".modal_access");
+    var notice = $(".modal_access");
     var list   = $(".modal_map");
     // split
     var split = sessionStorage.getItem("userProjects").split(",");
@@ -287,7 +350,7 @@ function validation(parameter) {
         // conditional
         if (occurrences > 1) {
             // modal
-            access.css("display", "none");
+            notice.css("display", "none");
             list.css("display", "block");
             dialog.setAttribute("class", "modal-dialog");
             // create links
@@ -309,14 +372,15 @@ function validation(parameter) {
         } else {
             // modal
             element.setAttribute("data-target", "");
-            // map cookie
+            // map and link  cookie
             document.cookie = "map=" + position + "; path=/";
+            document.cookie = "mapLink=" + projects[position][4] + "; path=/";
             // redirect
             location.href = "maps";
         }
     } else {
         // modal
-        access.css("display", "block");
+        notice.css("display", "block");
         list.css("display", "none");
         dialog.setAttribute("class", "modal-dialog modal-sm");
     }
