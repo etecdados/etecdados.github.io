@@ -165,15 +165,13 @@ function getMap() {
         spreadsheetId: mapLink,
         range: "database!A2:Z"
         }).then(function(response) {
+            // result
             var range = response.result;
-
-
-
-            alert(range.values);
-
-
-
-
+            // keys
+            var keys = Object.keys(range.values).length;
+            // set item
+            sessionStorage.setItem("mapLength", keys);
+            sessionStorage.setItem("mapValues", range.values);
         });
 }
 
@@ -236,6 +234,16 @@ var projectsValue = sessionStorage.getItem("projectsValues");
 var projectsColumns = 5;
 // push into array
 pushArray(projectsTotal, projects, projectsColumns, projectsValue);
+
+/* data ----------------------------------------------------- */
+var data = new Array();
+// get item
+var dataTotal = sessionStorage.getItem("mapLength");
+var dataValue = sessionStorage.getItem("mapValues");
+// total columns
+var dataColumns = 14;
+// push into array
+pushArray(dataTotal, data, dataColumns, dataValue);
 
 /* login ---------------------------------------------------- */
 function login() {
@@ -363,7 +371,7 @@ function validation(parameter) {
                 } else {
                     link.setAttribute("class", "text-decoration-none list-group-item list-group-item-action d-none");
                 }
-                link.setAttribute("href", "maps");
+                link.setAttribute("href", "map");
                 link.setAttribute("id", "map" + b);
                 link.setAttribute("onclick", "setMap(this)");
                 link.innerHTML = projects[b][2];
@@ -376,7 +384,7 @@ function validation(parameter) {
             document.cookie = "map=" + position + "; path=/";
             document.cookie = "mapLink=" + projects[position][4] + "; path=/";
             // redirect
-            location.href = "maps";
+            location.href = "map";
         }
     } else {
         // modal
