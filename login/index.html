@@ -44,16 +44,8 @@
                 </div>        
             </div>
             <div id="div_login">
-                <!-- check reload -->
-                <script type="text/javascript">
-                    if (text[0] == "") {
-                        document.getElementById("div_login").className = "d-none";
-                        document.cookie = "reload=0";
-                    } else {
-                        document.getElementById("div_spinner").className = "d-none";
-                        document.cookie = "reload=1";
-                    }
-                </script>
+                <!-- check text -->
+                <script type="text/javascript">checkText()</script>
                 <!-- language -->
                 <div class="mt-4">
                     <button type="button" class="button_language" onclick="setLanguage(this)" value="0" id="button_portuguese" title="Portuguese"></button>
@@ -123,13 +115,7 @@
                 </div>
             </div>
         </div>
-        <!-- reload -->
-        <script>
-            if (getCookie("reload") == 0) {
-                setTimeout(function(){
-                    window.location.reload();
-                }, 3500);
-            }
-        </script>
+        <!-- reload page -->
+        <script type="text/javascript">reloadPage()</script>
     </body>    
 </html>

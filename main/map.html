@@ -25,103 +25,90 @@
 		<script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
 		<script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
 		<script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
-		<script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.0.0  -->
-		<!-- security -->
-		<script type="text/javascript">security()</script>
-		<!-- google api -->
-        <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};mapSetup()"></script>
-	</head>
-	<!-- body -->
-	<body>
-		<!-- navbar -->
+        <script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.0.0  -->
+        <!-- google api -->
+        <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};accessSetup()"></script>
+    </head>
+    <body>
+        <!-- navbar -->
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white-50">
-			<!-- logo and username -->
-			<div class="text-left nowrap">
-				<img src="../root/images/favicon.png" alt="logo favicon" id="img_nav">
-				<script>document.write(username)</script>
-			</div>
-			<!-- button toggler -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<!-- navbar menu -->
-			<div class="collapse navbar-collapse" id="div_navbar">
-				<!-- ul auto -->
-				<ul class="navbar-nav mr-auto"></ul>
-				<!-- ul menu -->
-				<ul class="navbar-nav">
-					<!-- files -->
-					<li class="nav-item ml-3">
-						<a href="files" class="text-white-50 text-decoration-none">
-							<i class="fas fa-file-alt"></i>
-							<script>document.write(text[18][language])</script>
-						</a>
-					</li>
-					<!-- projects -->
-					<li class="nav-item ml-3">
-						<a href="../main" class="text-white-50 text-decoration-none">
-							<i class="fas fa-globe"></i>
-							<script>document.write(text[9][language])</script>
-						</a>
-					</li>
-					<!-- logout -->
-					<li class="nav-item ml-3">
-						<a href="#" class="text-white-50 text-decoration-none" data-toggle="modal" data-target="#logout">
-							<i class="fas fa-sign-out-alt"></i>
-							<script>document.write(text[10][language])</script>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-		<!-- container -->
+            <!-- logo and username -->
+            <div class="text-left nowrap">
+                <img src="../root/images/favicon.png" alt="logo favicon" id="img_nav">
+                <script>document.write(username)</script>
+            </div>
+            <!-- button toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navbar menu -->
+            <div class="collapse navbar-collapse" id="div_navbar">
+                <!-- ul auto -->
+                <ul class="navbar-nav mr-auto"></ul>
+                <!-- ul menu -->
+                <ul class="navbar-nav">
+                    <!-- files -->
+                    <li class="nav-item ml-3">
+                        <a href="files" class="text-white-50 text-decoration-none">
+                            <i class="fas fa-file-alt"></i>
+                            <script>document.write(text[18][language])</script>
+                        </a>
+                    </li>
+                    <!-- projects -->
+                    <li class="nav-item ml-3">
+                        <a href="../main" class="text-white-50 text-decoration-none">
+                            <i class="fas fa-globe"></i>
+                            <script>document.write(text[9][language])</script>
+                        </a>
+                    </li>
+                    <!-- logout -->
+                    <li class="nav-item ml-3">
+                        <a href="#" class="text-white-50 text-decoration-none" data-toggle="modal" data-target="#logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <script>document.write(text[10][language])</script>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- container -->
 		<div class="container-fluid text-center mb-3">
-			<!-- header -->
+            <!-- header -->
 			<header class="row pt-1 pb-1">
-				<!-- logo elecnor -->
-				<div class="col-sm-3 m-auto text-left d-none d-sm-block">
-					<img src="../root/images/elecnor/elecnor.png" alt="logo elecnor">
-				</div>
-				<!-- project name -->
-				<div class="col m-auto">
-					<small>
-						<script>document.write(projects[map][2])</script>
-					</small>
-				</div>
-				<!-- logo project -->
-				<div class="col-sm-3 m-auto text-right d-none d-sm-block">
-					<img src="../root/images/elecnor/" alt="logo project" id="img_project">
-					<!-- set attribute -->
-					<script type="text/javascript">
-						var element = $("#img_project");
-						var attribute = element.attr("src");
-						element.attr("src", attribute + projects[map][1] + ".png");
-					</script>
-				</div>	
-			</header>
-			<div>
-				<script>document.write(projects[map][4])</script>
-				<br>
-				<script>document.write(data[0][0])</script>
-				<script>document.write(data[0][1])</script>
-				<script>document.write(data[0][2])</script>
-				<script>document.write(data[0][3])</script>
-				<script>document.write(data[0][4])</script>
-				<script>document.write(data[0][5])</script>
-				<script>document.write(data[0][6])</script>
-				<script>document.write(data[0][7])</script>
-				<script>document.write(data[0][8])</script>
-				<script>document.write(data[0][9])</script>
-				<script>document.write(data[0][10])</script>
-				<script>document.write(data[0][11])</script>
-				<script>document.write(data[0][12])</script>
-				<script>document.write(data[0][13])</script>
-			</div>
-			<div id="div_map">
-
-			</div>
+                <!-- logo elecnor -->
+                <div class="col-sm-3 m-auto text-left d-none d-sm-block">
+                    <img src="../root/images/elecnor/elecnor.png" alt="logo elecnor">
+                </div>
+                <!-- project name -->
+                <div class="col m-auto">
+                    <small>
+                        <script>document.write(projects[map][2])</script>
+                    </small>
+                </div>
+                <!-- logo project -->
+                <div class="col-sm-3 m-auto text-right d-none d-sm-block">
+                    <img src="../root/images/elecnor/" alt="logo project" id="img_project">
+                    <!-- set attribute -->
+                    <script type="text/javascript">
+                        var element = $("#img_project");
+                        var attribute = element.attr("src");
+                        element.attr("src", attribute + projects[map][1] + ".png");
+                    </script>
+                </div>	
+            </header>
+            <!-- spinner -->
+            <div id="div_spinner" class="mt-4">
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only"></span>
+                </div>        
+            </div>
+            <!-- map -->
+            <div id="div_map">                
+                <!-- check data -->
+                <script type="text/javascript">checkData()</script>
+            </div>
             <!-- modal logout -->
-			<div class="modal fade" id="logout">
+            <div class="modal fade" id="logout">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                         <!-- modal header -->
@@ -150,6 +137,6 @@
                     </div>
                 </div>
             </div>
-		</div>
-	</body>
+        </div>
+    </body>
 </html>

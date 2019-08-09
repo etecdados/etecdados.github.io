@@ -7,56 +7,20 @@
  * last update on 2019/07/25
  */
 
-/* google setup --------------------------------------------- */
+/* google set ----------------------------------------------- */
 var apiKeySheets  = "AIzaSyCUHNFWOyP2Y25UKw1swqVQCS2MTaFIpok";
 var apiKeyMaps    = "AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ";
 var accessKey     = "1dZe1ctuPzVp887vb7ttc8zbAdDQew_w761hqemr7O04";
 var clientKey     = "535886128905-4aenaehdlshf0v2f9ehvomk0f4kej16l.apps.googleusercontent.com";
 var databaseKey   = "1ZcP8Rax-xRtegYTHQ_1BJjtOQmnQT8kMQb7Bi9Guls4";
 var discoveryDocs = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
-var requestScope  = "https://www.googleapis.com/auth/spreadsheets.readonly";
+var scopeReadonly = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
-/* initial setup -------------------------------------------- */
-function initialSetup() {
-    gapi.load("client:auth2", function() {
-        gapi.client.init({
-            apiKey: apiKeySheets,
-            clientId: clientKey,
-            discoveryDocs: discoveryDocs,
-            scope: requestScope,
-        }).then(function() {
-            // listen
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getUsers);
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getLanguage);
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getProjects);
-            // get
-            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
-            getUsers(gapi.auth2.getAuthInstance().isSignedIn.get());
-            getLanguage(gapi.auth2.getAuthInstance().isSignedIn.get());
-            getProjects(gapi.auth2.getAuthInstance().isSignedIn.get());
-        });
-    });
-}
-
-/* map setup ------------------------------------------------ */
-function mapSetup() {
-    gapi.load("client:auth2", function() {
-        gapi.client.init({
-            apiKey: apiKeySheets,
-            clientId: clientKey,
-            discoveryDocs: discoveryDocs,
-            scope: requestScope,
-        }).then(function() {
-            // listen
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getMap);
-            // get
-            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
-            getMap(gapi.auth2.getAuthInstance().isSignedIn.get());
-        });
-    });
-}
+/* cookies -------------------------------------------------- */
+var language = getCookie("language") ? getCookie("language") : 0;
+var map      = getCookie("map")      ? getCookie("map")      : null;
+var mapLink  = getCookie("mapLink")  ? getCookie("mapLink")  : null;
+var username = getCookie("username") ? getCookie("username") : null;
 
 /* get cookie ----------------------------------------------- */
 function getCookie(parameter) {
@@ -70,11 +34,47 @@ function getCookie(parameter) {
     };
 }
 
-/* cookies -------------------------------------------------- */
-var language = getCookie("language") ? getCookie("language") : 0;
-var map      = getCookie("map")      ? getCookie("map")      : null;
-var mapLink  = getCookie("mapLink")  ? getCookie("mapLink")  : null;
-var username = getCookie("username") ? getCookie("username") : null;
+/* initial setup -------------------------------------------- */
+function initialSetup() {
+    gapi.load("client:auth2", function() {
+        gapi.client.init({
+            apiKey: apiKeySheets,
+            clientId: clientKey,
+            discoveryDocs: discoveryDocs,
+            scope: scopeReadonly,
+        }).then(function() {
+            // listen
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getData);
+            // get
+            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
+            getData(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+    });
+}
+
+/* access setup --------------------------------------------- */
+function accessSetup() {
+    gapi.load("client:auth2", function() {
+        gapi.client.init({
+            apiKey: apiKeySheets,
+            clientId: clientKey,
+            discoveryDocs: discoveryDocs,
+            scope: scopeReadonly,
+        }).then(function() {
+            // listen
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getMap);
+            // get
+            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
+            getMap(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+    });
+    // conditional
+    if (username == null || text[0] == "") {
+        location.href = "../";
+    }
+}
 
 /* get access ----------------------------------------------- */
 function getAccess() {
@@ -83,68 +83,46 @@ function getAccess() {
         range: "access!A2:B2",
     }).then(function(response) {
         // result
-        var range = response.result;
+        var ranges = response.result;
         // conditional
-        if (range.values[0][1] == "TRUE") {
-            // split
-            var cookies = document.cookie.split(";");
-            // delete cookies
-            for (var a = 0; a < cookies.length; a++) {
-                var value    = cookies[a];
-                var position = value.indexOf("=");
-                var name     = position > -1 ? value.substr(0, position) : value;
-                document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            }
+        if (ranges.values[0][1] == "TRUE") {
+            logout();
+            // redirect
             location.href = "../info";
         }
     });
 }
 
-/* get users ------------------------------------------------ */
-function getUsers() {
+/* get data ------------------------------------------------- */
+function getData() {
+    // variables
+    var ranges;
+    var keys;
+    // users
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: databaseKey,
         range: "users!A2:Z",
     }).then(function(response) {
         // result
-        var range = response.result;
+        ranges = response.result;
         // keys
-        var keys = Object.keys(range.values).length;
+        keys = Object.keys(ranges.values).length;
         // set item
         sessionStorage.setItem("userLength", keys);
-        sessionStorage.setItem("userValues", range.values);
+        sessionStorage.setItem("userValues", ranges.values);
     });
-}
-
-/* get projects --------------------------------------------- */
-function getProjects() {
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: databaseKey,
-        range: "projects!A2:Z",
-    }).then(function(response) {
-        // result
-        var range = response.result;
-        // keys
-        var keys = Object.keys(range.values).length;
-        // set item
-        sessionStorage.setItem("projectsLength", keys);
-        sessionStorage.setItem("projectsValues", range.values);
-    });
-}
-
-/* get language --------------------------------------------- */
-function getLanguage() {
+    // language
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: databaseKey,
         range: "language!B2:Z",
     }).then(function(response) {
         // result
-        var range = response.result;
+        ranges = response.result;
         // keys
-        var keys = Object.keys(range.values).length;
+        keys = Object.keys(ranges.values).length;
         // set item
         sessionStorage.setItem("languageLength", keys);
-        sessionStorage.setItem("languageValues", range.values);
+        sessionStorage.setItem("languageValues", ranges.values);
         // bilble link
         switch(language) {
             case "1":
@@ -157,6 +135,19 @@ function getLanguage() {
                 document.getElementById("a_bible").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
         }
     });
+    // projects
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: databaseKey,
+        range: "projects!A2:Z",
+    }).then(function(response) {
+        // result
+        ranges = response.result;
+        // keys
+        keys = Object.keys(ranges.values).length;
+        // set item
+        sessionStorage.setItem("projectsLength", keys);
+        sessionStorage.setItem("projectsValues", ranges.values);
+    });
 }
 
 /* get map -------------------------------------------------- */
@@ -166,12 +157,12 @@ function getMap() {
         range: "database!A2:Z"
         }).then(function(response) {
             // result
-            var range = response.result;
+            var ranges = response.result;
             // keys
-            var keys = Object.keys(range.values).length;
+            var keys = Object.keys(ranges.values).length;
             // set item
             sessionStorage.setItem("mapLength", keys);
-            sessionStorage.setItem("mapValues", range.values);
+            sessionStorage.setItem("mapValues", ranges.values);
         });
 }
 
@@ -225,6 +216,26 @@ var textColumns = 3;
 // push into array
 pushArray(textTotal, text, textColumns, textValue);
 
+/* check text ----------------------------------------------- */
+function checkText() {
+    if (text[0] == "") {
+        document.getElementById("div_login").className = "d-none";
+        document.cookie = "reload=0";
+    } else {
+        document.getElementById("div_spinner").className = "d-none";
+        document.cookie = "reload=1";
+    }
+}
+
+/* reload --------------------------------------------------- */
+function reloadPage() {
+    if (getCookie("reload") == 0) {
+        setTimeout(function(){
+            window.location.reload();
+        }, 3000);
+    }
+}
+
 /* projects ------------------------------------------------- */
 var projects = new Array();
 // get item
@@ -244,6 +255,33 @@ var dataValue = sessionStorage.getItem("mapValues");
 var dataColumns = 14;
 // push into array
 pushArray(dataTotal, data, dataColumns, dataValue);
+
+/* check data ----------------------------------------------- */
+function checkData() {
+    // get element
+    var element = document.getElementById("div_map");
+    // change class
+    element.className = "d-none";
+    // conditional
+    if (data[0][0] == null || getCookie("reload") == 0) {
+        // reload cookie
+        document.cookie = "reload=1";
+        // reload
+        setTimeout(function(){
+            window.location.reload();
+        }, 1500);
+    } else {
+        // change class
+        element.className = "d-block";
+        document.getElementById("div_spinner").className = "d-none";
+        // create script
+        var script = document.createElement("script");
+        script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=" + apiKeyMaps + "&callback=googleMaps");
+        element.appendChild(script);
+        // reload cookie
+        document.cookie = "reload=0";
+    }
+}
 
 /* login ---------------------------------------------------- */
 function login() {
@@ -290,14 +328,6 @@ function login() {
         document.cookie = "username=" + email + "; path=/";
         // redirect
         location.href = "../main";
-    }
-}
-
-/* security ------------------------------------------------- */
-function security() {
-    // conditional
-    if (username == null || text[0] == "") {
-        location.href = "../";
     }
 }
 
@@ -365,7 +395,7 @@ function validation(parameter) {
             for (var b = 0; b < projects.length - 1; b++) {
                 // create element
                 var link = document.createElement("a");
-                // attributes
+                // set attributes
                 if (total[b] == element.value) {
                     link.setAttribute("class", "text-decoration-none list-group-item list-group-item-action");
                 } else {
@@ -392,4 +422,13 @@ function validation(parameter) {
         list.css("display", "none");
         dialog.setAttribute("class", "modal-dialog modal-sm");
     }
+}
+
+/* google maps ---------------------------------------------- */
+function googleMaps() {
+    // properties
+    var googleMaps = new google.maps.Map(document.getElementById('div_map'), {
+        center: {lat: -3.717963, lng: -40.989187},
+        zoom: 13
+    });
 }
