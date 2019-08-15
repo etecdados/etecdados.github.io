@@ -87,9 +87,15 @@
     background-image: url(../../root/images/elecnor/msg.png);
 }
 
-/* nav ------------------------------------------------------ */
-#img_nav {
+/* navbar --------------------------------------------------- */
+.button_nav {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 21px;
+    border: none;
+    cursor: pointer;
     height: 21px;
+    width: 21px;
 }
 
 /* logout --------------------------------------------------- */
@@ -106,7 +112,40 @@ header img {
     max-width: 144px;
 }
 
-/* map ------------------------------------------------------ */
+/* sidebar -------------------------------------------------- */
+#div_sidebar {
+    height: 100%;
+    left: 0;
+    overflow-x: hidden;
+    position: absolute;
+    transition: 0.5s;
+    width: 0;
+    z-index: 1;
+  }
+
+  #div_sidebar input {
+      cursor: pointer;
+  }
+
+  .ul_sidebar {
+    list-style-type: none;
+    padding: 0;
+ }
+
+ .ul_sidebar li:hover {
+    background-color: #6C757D;
+ }
+
+/* controls ------------------------------------------------- */
+button[data-target="#div_list"], #div_list {
+    transition: 0.5s;
+}
+
+.ul_legend {
+    list-style: none;
+}
+
+ /* map ------------------------------------------------------ */
 #div_map {
     height: 100%;
     min-height: 84vh;

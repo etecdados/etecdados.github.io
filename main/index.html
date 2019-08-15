@@ -33,11 +33,11 @@
 	<body>
 		<!-- navbar -->
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white-50">
-			<!-- logo and username -->
-			<div class="text-left nowrap">
-				<img src="../root/images/favicon.png" alt="logo favicon" id="img_nav">
-				<script>document.write(username)</script>
-			</div>
+            <!-- logo and username -->
+            <div class="text-left text-nowrap">
+                <i class="fas fa-user-alt"></i>
+                <script>document.write(username)</script>
+            </div>
 			<!-- button toggler -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="">
 				<span class="navbar-toggler-icon"></span>
@@ -61,6 +61,12 @@
 							<i class="fas fa-sign-out-alt"></i>
 							<script>document.write(text[10][language])</script>
 						</a>
+					</li>
+					<!-- language -->
+					<li class="nav-item ml-3">
+						<button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="1" id="button_portuguese" title="Portuguese"></button>
+						<button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="2" id="button_spanish"    title="Spanish"   ></button>
+						<button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="3" id="button_english"    title="English"   ></button>
 					</li>
 				</ul>
 			</div>

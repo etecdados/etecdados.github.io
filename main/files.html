@@ -33,11 +33,11 @@
 	<body>
 		<!-- navbar -->
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white-50">
-			<!-- logo and username -->
-			<div class="text-left nowrap">
-				<img src="../root/images/favicon.png" alt="logo favicon" id="img_nav">
-				<script>document.write(username)</script>
-			</div>
+            <!-- logo and username -->
+            <div class="text-left text-nowrap">
+                <i class="fas fa-user-alt"></i>
+                <script>document.write(username)</script>
+            </div>
 			<!-- button toggler -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="">
 				<span class="navbar-toggler-icon"></span>
@@ -48,13 +48,13 @@
 				<ul class="navbar-nav mr-auto"></ul>
 				<!-- ul menu -->
 				<ul class="navbar-nav">
-                    <!-- map -->
+					<!-- files -->
 					<li class="nav-item ml-3">
-                        <a href="map" class="text-white-50 text-decoration-none">
-                            <i class="fas fa-globe-americas"></i>
-                            <script>document.write(text[15][language])</script>
-                        </a>
-                    </li>
+						<a href="map" class="text-white-50 text-decoration-none">
+							<i class="fas fa-globe-americas"></i>
+							<script>document.write(text[15][language])</script>
+						</a>
+					</li>
 					<!-- projects -->
 					<li class="nav-item ml-3">
 						<a href="../main" class="text-white-50 text-decoration-none">
@@ -69,6 +69,12 @@
 							<script>document.write(text[10][language])</script>
 						</a>
 					</li>
+					<!-- language -->
+					<li class="nav-item ml-3">
+						<button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="1" id="button_portuguese" title="Portuguese"></button>
+						<button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="2" id="button_spanish"    title="Spanish"   ></button>
+						<button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="3" id="button_english"    title="English"   ></button>
+					</li>
 				</ul>
 			</div>
 		</nav>
@@ -80,21 +86,16 @@
                 <div class="col-sm-3 m-auto text-left d-none d-sm-block">
                     <img src="../root/images/elecnor/elecnor.png" alt="logo elecnor">
                 </div>
-                <!-- project name -->
+                <!-- files -->
                 <div class="col m-auto">
                     <i class="fas fa-file-alt"></i>
                     <script>document.write(text[18][language])</script>
                 </div>
                 <!-- logo project -->
                 <div class="col-sm-3 m-auto text-right d-none d-sm-block">
-                    <img src="../root/images/elecnor/" alt="logo project" id="img_project">
-                    <!-- set attribute -->
-                    <script type="text/javascript">
-                        var element = $("#img_project");
-                        var attribute = element.attr("src");
-                        element.attr("src", attribute + projects[map][1] + ".png");
-                    </script>
-                </div>	
+					<img src="../root/images/elecnor/" alt="logo project" id="img_project">
+					<script type="text/javascript">$("#img_project").attr("src", "../root/images/elecnor/" + projects[position][1] + ".png");</script>
+				</div>
             </header>
             <!-- modal logout -->
 			<div class="modal fade" id="logout">

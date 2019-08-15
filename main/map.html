@@ -33,12 +33,12 @@
         <!-- navbar -->
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white-50">
             <!-- logo and username -->
-            <div class="text-left nowrap">
-                <img src="../root/images/favicon.png" alt="logo favicon" id="img_nav">
+            <div class="text-left text-nowrap">
+                <i class="fas fa-user-alt"></i>
                 <script>document.write(username)</script>
             </div>
             <!-- button toggler -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="closeSidebar()">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- navbar menu -->
@@ -68,6 +68,12 @@
                             <script>document.write(text[10][language])</script>
                         </a>
                     </li>
+                    <!-- language -->
+                    <li class="nav-item ml-3">
+                        <button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="1" id="button_portuguese" title="Portuguese"></button>
+                        <button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="2" id="button_spanish"    title="Spanish"   ></button>
+                        <button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="3" id="button_english"    title="English"   ></button>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -82,28 +88,116 @@
                 <!-- project name -->
                 <div class="col m-auto">
                     <small>
-                        <script>document.write(projects[map][2])</script>
+                        <script>document.write(projects[position][2])</script>
                     </small>
                 </div>
                 <!-- logo project -->
                 <div class="col-sm-3 m-auto text-right d-none d-sm-block">
-                    <img src="../root/images/elecnor/" alt="logo project" id="img_project">
-                    <!-- set attribute -->
-                    <script type="text/javascript">
-                        var element = $("#img_project");
-                        var attribute = element.attr("src");
-                        element.attr("src", attribute + projects[map][1] + ".png");
-                    </script>
+                    <img src="#" alt="logo project" id="img_project">
+                    <script type="text/javascript">$("#img_project").attr("src", "../root/images/elecnor/" + projects[position][1] + ".png");</script>
                 </div>	
             </header>
             <!-- spinner -->
-            <div id="div_spinner" class="mt-4">
+            <div class="mt-4" id="div_spinner" >
                 <div class="spinner-grow text-primary" role="status">
                     <span class="sr-only"></span>
                 </div>        
             </div>
+            <!-- sidebar -->
+            <div class="bg-dark text-left text-white-50 text-nowrap" id="div_sidebar" >
+                <div class="ml-2">
+                    <!-- menu -->
+                    <button type="button" class="btn btn-dark text-white-50 float-right mr-2" onclick="closeSidebar()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <br>
+                    <i class="fas fa-list-ul"></i>
+                    <script>document.write(text[19][language])</script>
+                    <!-- general -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="far fa-check-square"></i>
+                        <script>document.write(text[20][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <input id="input_path"   type="checkbox" checked onclick="visibility(this)" class="mr-1 align-middle">
+                                <script>document.write(text[21][language])</script>
+                            </li>
+                            <li><input id="ínput_towers" type="checkbox" checked onclick="visibility(this)" class="mr-1 align-middle">
+                                <script>document.write(text[22][language])</script>
+                            </li>
+                            <li><input id="input_area"   type="checkbox"         onclick="visibility(this)" class="mr-1 align-middle">
+                                <script>document.write(text[23][language])</script>
+                            </li>
+                            <li>
+                                <input id="input_site"   type="checkbox"         onclick="visibility(this)" class="mr-1 align-middle">
+                                <script>document.write(text[24][language])</script>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- services -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="far fa-check-square"></i>
+                        <script>document.write(text[25][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <input id="input_preliminary" type="checkbox" onclick="visibility(this)" class="mr-1 align-middle">
+                                <script>document.write(text[26][language])</script>
+                            </li>
+                            <li><input id="ínput_civil"       type="checkbox" onclick="visibility(this)" class="mr-1 align-middle">
+                                <script>document.write(text[27][language])</script>
+                            </li>
+                            <li><input id="input_assembly"    type="checkbox" onclick="visibility(this)" class="mr-1 align-middle">
+                                <script>document.write(text[28][language])</script>
+                            </li>
+                            <li>
+                                <input id="input_cables"      type="checkbox" onclick="visibility(this)" class="mr-1 align-middle">
+                                <script>document.write(text[29][language])</script>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- controls -->
+            <div id="div_controls" hidden>
+                <!-- menu -->
+                <div id="div_menu">
+                    <button type="button" class="btn btn-sm btn-primary m-2" onclick="openSidebar()">
+                        <i class="fas fa-list-ul"></i>
+                        <script>document.write(text[19][language])</script>
+                    </button>
+                </div>
+                <!-- date -->
+                <div class="alert alert-light p-1 m-2" id="div_date">
+                    <span class="text-danger">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </span>
+                    <script>document.write(text[30][language])</script>
+                    <span class="font-weight-bold">
+                        <script>document.write(data[0][dataColumns - 1])</script>
+                    </span>
+                </div>
+                <!-- legend -->
+                <div class="m-2" id="div_legend">
+                    <!-- button -->
+                    <button class="btn btn-sm btn btn-light text-secondary bg-white w-100" type="button" data-toggle="collapse" data-target="#div_list">
+                        <span class="mr-2">
+                            <script>document.write(text[31][language])</script>
+                        </span>
+                        <span class="float-right">
+                            <i class="fas fa-caret-down"></i>
+                        </span>
+                    </button>
+                    <!-- list -->
+                    <div class="collapse bg-white text-left" id="div_list">
+                        <!-- path -->
+                        <div class="d-block" id="div_path"></div>
+                        <!-- towers -->
+                        <div class="d-block" id="div_towers"></div>
+                    </div>
+                </div>
+            </div>
             <!-- map -->
-            <div id="div_map">                
+            <div id="div_map">
                 <!-- check data -->
                 <script type="text/javascript">checkData()</script>
             </div>
