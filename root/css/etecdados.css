@@ -114,8 +114,8 @@ header img {
 
 /* sidebar -------------------------------------------------- */
 #div_sidebar {
-    height: 100%;
     left: 0;
+    min-height: 84vh;
     overflow-x: hidden;
     position: absolute;
     transition: 0.5s;
@@ -149,4 +149,35 @@ button[data-target="#div_list"], #div_list {
 #div_map {
     height: 100%;
     min-height: 84vh;
+}
+
+/* summary -------------------------------------------------- */
+#div_summary table {
+    border-collapse: collapse;
+    font-size: 13px;
+    width: 100%;
+}
+
+#div_tableSummary {
+    height: 500px;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+#div_tableSummary thead {
+    position: sticky;
+    top: 0;
+}
+
+img[src="../root/images/alert_red.png"],
+img[src="../root/images/alert_blue.png"]
+{
+    animation: alert 1s ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes alert {
+    0% {transform: scale(0, 0); opacity: 0;}
+    50% {opacity: 1;}
+    100% {transform: scale(1, 1); opacity: 0;}
 }

@@ -151,10 +151,10 @@ function getDatabase() {
 
 /* get project ---------------------------------------------- */
 function getProject() {
-    // database
+    // data
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: link,
-        range: "data!A3:Z"
+        range: "data!A4:Z"
         }).then(function(response) {
             // result
             var ranges = response.result;
@@ -230,7 +230,7 @@ function pushArray(parameter1, parameter2, parameter3, parameter4) {
     // get item
     var total = parameter1;
     // multidimensional array
-    for (var a = 0; a <= total; a++) {
+    for (var a = 0; a < total; a++) {
         parameter2.push([]);
     }
     // total columns
@@ -257,7 +257,7 @@ pushArray(textTotal, text, textColumns, textValue);
 
 /* check text ----------------------------------------------- */
 function checkText() {
-    if (text[0] == "") {
+    if (text[0] == null) {
         document.getElementById("div_login").className = "d-none";
         document.cookie = "reload=0";
     } else {
@@ -461,42 +461,42 @@ function closeSidebar() {
 
 /* colors --------------------------------------------------- */
 var colors = [
-    /*0*/ "#96989A", // gray
-    /*1*/ "#FF0000", // red
+    /*0*/ "#FF0000", // red
+    /*1*/ "#0000FF", // blue
     /*2*/ "#00FF00", // green
-    /*3*/ "#0000FF", // blue
-    /*4*/ "#FFFF00", // yellow
-    /*5*/ "#FFFFFF", // white
-    /*6*/ "#9900CC", // purple
-    /*7*/ "#00FFFF", // cyan
-    /*8*/ "#FF6600", // orange
-    /*9*/ "#000000", // black
-    /*10*/"#F48884"  // pink
+    /*3*/ "#FFFF00", // yellow
+    /*4*/ "#FFFFFF", // white
+    /*5*/ "#9900CC", // purple
+    /*6*/ "#00FFFF", // cyan
+    /*7*/ "#FF6600", // orange
+    /*8*/ "#000000", // black
+    /*9*/ "#F48884", // pink
+    /*10*/"#96989A"  // gray
 ];
 
 /* marker color --------------------------------------------- */
 var markerColor = [
-    /*0*/ "../root/images/marker_gray.png",
-    /*1*/ "../root/images/marker_red.png",
+    /*0*/ "../root/images/marker_red.png",
+    /*1*/ "../root/images/marker_blue.png",
     /*2*/ "../root/images/marker_green.png",
-    /*3*/ "../root/images/marker_blue.png",
-    /*4*/ "../root/images/marker_yellow.png",
-    /*5*/ "../root/images/marker_white.png",
-    /*6*/ "../root/images/marker_purple.png",
-    /*7*/ "../root/images/marker_cyan.png",
-    /*8*/ "../root/images/marker_orange.png",
-    /*9*/ "../root/images/marker_black.png",
-    /*10*/"../root/images/marker_pink.png",
+    /*3*/ "../root/images/marker_yellow.png",
+    /*4*/ "../root/images/marker_white.png",
+    /*5*/ "../root/images/marker_purple.png",
+    /*6*/ "../root/images/marker_cyan.png",
+    /*7*/ "../root/images/marker_orange.png",
+    /*8*/ "../root/images/marker_black.png",
+    /*9*/ "../root/images/marker_pink.png",
+    /*10*/"../root/images/marker_gray.png"
 ];
 
 /* alert color----------------------------------------------- */
 var alertColor = [
-    /*0*/ "../root/images/alert_transparent.png",
-    /*1*/ "../root/images/alert_red.png",
+    /*0*/ "../root/images/alert_red.png",
+    /*1*/ "../root/images/alert_blue.png",
     /*2*/ "../root/images/alert_green.png",
-    /*3*/ "../root/images/alert_blue.png",
-    /*4*/ "../root/images/alert_yellow.png",
-    /*5*/ "../root/images/alert_white.png"
+    /*3*/ "../root/images/alert_yellow.png",
+    /*4*/ "../root/images/alert_white.png",
+    /*5*/ "../root/images/alert_transparent.png"
 ];
 
 /* check data ----------------------------------------------- */
@@ -504,7 +504,7 @@ function checkData() {
     // get element
     var element = document.getElementById("div_map");
     // conditional
-    if (data[0][0] == null || getCookie("reload") == 0) {
+    if (data[0] == null || getCookie("reload") == 0) {
         // reload cookie
         document.cookie = "reload=1";
         // change class
@@ -523,68 +523,121 @@ function checkData() {
         var script = document.createElement("script");
         script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=" + apiKeyMaps + "&callback=googleMaps");
         element.appendChild(script);
-        // section
-        var section = new Array();
-        // push
-        for (var a = 1; a < data.length - 1; a++) {
-            section.push(data[a][5]);
-        }
-        // filter
-        var filter = Array.from(new Set(section));
-        // get element
-        var legend = document.getElementById("div_towers");
-        // create element
-        var tagDiv = document.createElement("div");
-        var tagUl  = document.createElement("ul");
-        // set attribute
-        tagDiv.setAttribute("class", "bg-primary text-white text-center p-1 mb-1");
-        tagUl.setAttribute("class", "ul_legend p-1");
-        // inner html
-        tagDiv.innerHTML = text[22][language].toUpperCase();
-        // append child
-        legend.appendChild(tagDiv);
-        legend.appendChild(tagUl);
-        // list
-        for (var b = 0; b < filter.length; b++) {
+        // summary
+        for (var c = 0; c < activity.length; c++) {
             // create element
-            var tagLi   = document.createElement("li");
-            var tagImg  = document.createElement("img");
-            var tagSpan = document.createElement("span");
-            // set attribute
-            tagImg.setAttribute("src", markerColor[b + 1]);
-            tagImg.setAttribute("alt", "marker");
-            tagImg.setAttribute("height", "13px");
-            tagImg.setAttribute("class", "mr-2 mb-1");
-            // inner html
-            tagSpan.innerHTML = text[32][language].toUpperCase() + " " + filter[b];
+            var tagTr = document.createElement("tr");
             // append child
-            tagUl.appendChild(tagLi);
-            tagLi.appendChild(tagImg);
-            tagLi.appendChild(tagSpan);
+            document.getElementById("tbody_summary").appendChild(tagTr);
+            // conditional
+            if (activity[c][2] == "") {
+                tagTr.setAttribute("class", "bg-primary text-white");
+            }
+            // td
+            for (var d = 0; d < activity[c].length; d++) {
+                // conditional
+                if (d < 7 && activity[c][1] != "") {
+                    // create element
+                    var tagTd = document.createElement("td");
+                    // inner html
+                    tagTd.innerHTML = activity[c][d];
+                    // append child
+                    tagTr.appendChild(tagTd);
+                    // conditional
+                    if (d == 0 || d == 1) {
+                        tagTd.setAttribute("class", "text-left");
+                    }
+                }
+            }
         }
         // show controls (jQuery)
         setTimeout(function(){
             $('#div_controls').show();
-         }, 2000);
+        }, 2000);
+    }
+}
+
+/* filter data ---------------------------------------------- */
+function filterData(parameter) {
+    // element
+    var element = new Array();
+    // push
+    for (var a = 0; a < data.length; a++) {
+        // conditional
+        if (data[a][parameter] != "") {
+            element.push(data[a][parameter]);
+        }
+    }
+    // filter
+    return Array.from(new Set(element));
+}
+
+function legend(parameter) {
+    // filter
+    var filter = filterData(parameter);
+    // create element
+    var tagUl  = document.createElement("ul");
+    // set attribute
+    tagUl.setAttribute("class", "ul_legend p-1");
+    // append child
+    document.getElementById("div_towers").appendChild(tagUl);
+    // list
+    for (var b = 0; b < filter.length; b++) {;
+        // create element
+        var tagLi   = document.createElement("li");
+        var tagImg  = document.createElement("img");
+        var tagSpan = document.createElement("span");
+        // set attribute
+        tagImg.setAttribute("src", markerColor[b]);
+        tagImg.setAttribute("alt", "marker");
+        tagImg.setAttribute("height", "13px");
+        tagImg.setAttribute("class", "mr-2 mb-1");
+        // inner html
+        tagSpan.innerHTML = filter[b];
+        // append child
+        tagUl.appendChild(tagLi);
+        tagLi.appendChild(tagImg);
+        tagLi.appendChild(tagSpan);
     }
 }
 
 /* google maps ---------------------------------------------- */
 function googleMaps() {
-    // map
+    // variables
+    var auxiliary = 0;
+    var icon;
     var map;
+    var optimized;
+    var size      = new google.maps.Size(50, 50);
+    var pointX    = new google.maps.Point(0, 0);
+    var pointY    = new google.maps.Point(16.5, 5.5);
+    // sheet
+    var tower       = 1;
+    var type        = 1 + tower;
+    var height      = 1 + type;
+    var span        = 1 + height;
+    var section     = 1 + span;
+    var latitude    = 1 + section;
+    var longitude   = 1 + latitude;
+    var preliminary = 5 + longitude;
+    var civil       = 1 + preliminary;
+    var assembly    = 1 + civil;
+    var stringing   = 1 + assembly;
+    var alert       = 2 + stringing;
     // central map
     var central = Math.round(data.length / 2);
     // properties
     var properties = {
-        center: new google.maps.LatLng(data[central][6], data[central][7]),
+        center: new google.maps.LatLng(data[central][latitude], data[central][longitude]),
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
-        mapTypeId: "roadmap", // hybrid
+        mapTypeId: "hybrid", // roadmap
         streetViewControl: false,
         zoom: 13
     };
+    // info window
+    var info = new google.maps.InfoWindow();
     // new map
     map = new google.maps.Map(document.getElementById("div_map"), properties);
     // menu
@@ -593,4 +646,129 @@ function googleMaps() {
     map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById("div_date"));
     // legend
     map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById("div_legend"));
+    // path
+    var path1 = new Array();
+    var path2 = new Array();
+    var path3 = new Array();
+    // coordinates
+    for (var e = 0; e < data.length; e++) {
+        path1.push(new google.maps.LatLng(parseFloat(data[e][latitude + 0]), parseFloat(data[e][longitude + 0])));
+        path2.push(new google.maps.LatLng(parseFloat(data[e][latitude + 2]), parseFloat(data[e][longitude + 2])));
+        path3.push(new google.maps.LatLng(parseFloat(data[e][latitude + 4]), parseFloat(data[e][longitude + 4])));
+    }
+    // polyline
+    function polyline(parameter) {
+        var polyline = new google.maps.Polyline({
+            geodesic: true,
+            map: map,
+            path: parameter,
+            strokeColor: '#FFC107',
+            strokeOpacity: 0.8,
+            strokeWeight: 1.6
+        });
+    }
+    // set polyline
+    polyline(path1);
+    polyline(path2);
+    polyline(path3);
+    // markers
+    function markers(parameter) {
+        // coordinates
+        var coordinates = new google.maps.LatLng(data[auxiliary][latitude], data[auxiliary][longitude]);
+        // marker filter
+        var filterMarker = filterData(parameter);
+        // marker color
+        switch(data[auxiliary][parameter]) {
+            case filterMarker[0]:
+                icon = markerColor[0];
+                break;
+            case filterMarker[1]:
+                icon = markerColor[1];
+                break;
+            case filterMarker[2]:
+                icon = markerColor[2];
+                break;
+            case filterMarker[3]:
+                icon = markerColor[3];
+                break;
+            case filterMarker[4]:
+                icon = markerColor[4];
+                break;
+            case filterMarker[5]:
+                icon = markerColor[5];
+                break;
+            case filterMarker[6]:
+                icon = markerColor[6];
+                break;
+            case filterMarker[7]:
+                icon = markerColor[7];
+                break;
+            case filterMarker[8]:
+                icon = markerColor[8];
+                break;
+            case filterMarker[9]:
+                icon = markerColor[9];
+                break;
+            default:
+                icon = markerColor[10];
+        }
+        // marker
+        var marker = new google.maps.Marker({
+            content: data[auxiliary][tower],
+            icon: icon,
+            map: map,
+            position: coordinates
+        });
+        // add listener
+        marker.addListener("mouseover", function(){
+            info.setContent(marker.content);
+            info.open(map, marker);
+        });
+        // alert filter
+        var filterAlert = filterData(alert);
+        // alert color
+        switch(data[auxiliary][alert]) {
+            case filterAlert[0]:
+                icon = new google.maps.MarkerImage(alertColor[0], size, pointX, pointY);
+                optimized = false;
+                break;
+            case filterAlert[1]:
+                icon = new google.maps.MarkerImage(alertColor[1], size, pointX, pointY);
+                optimized = false;
+                break;
+            case filterAlert[2]:
+                icon = new google.maps.MarkerImage(alertColor[2], size, pointX, pointY);
+                optimized = false;
+                break;
+            case filterAlert[3]:
+                icon = new google.maps.MarkerImage(alertColor[3], size, pointX, pointY);
+                optimized = false;
+                break;
+            case filterAlert[4]:
+                icon = new google.maps.MarkerImage(alertColor[4], size, pointX, pointY);
+                optimized = false;
+                break;
+            default:
+                icon = new google.maps.MarkerImage(alertColor[5], size, pointX, pointY);        
+                optimized = true;
+        }
+        // alert
+        var markerAlert = new google.maps.Marker({
+            icon: icon,
+            map: map,
+            optimized: optimized,
+            position: coordinates,
+            title: data[auxiliary][alert]
+        });
+        // increment
+        auxiliary++;
+    }
+    // set markers
+    for (var f = 0; f < data.length; f++) {
+        markers(preliminary);
+        // conditional
+        if (f == 0) {
+            legend(preliminary);
+        }
+    }
 }
