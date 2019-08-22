@@ -151,6 +151,14 @@ button[data-target="#div_list"], #div_list {
     min-height: 84vh;
 }
 
+.img_info {
+    max-height: 13px;
+}
+
+#div_alert {
+    max-width: 233px;
+}
+
 /* summary -------------------------------------------------- */
 #div_summary table {
     border-collapse: collapse;
@@ -170,8 +178,10 @@ button[data-target="#div_list"], #div_list {
 }
 
 img[src="../root/images/alert_red.png"],
-img[src="../root/images/alert_blue.png"]
-{
+img[src="../root/images/alert_blue.png"],
+img[src="../root/images/alert_green.png"], 
+img[src="../root/images/alert_yellow.png"],
+img[src="../root/images/alert_white.png"] {
     animation: alert 1s ease-out;
     animation-iteration-count: infinite;
 }

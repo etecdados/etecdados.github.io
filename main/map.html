@@ -113,44 +113,27 @@
                     <br>
                     <i class="fas fa-list-ul"></i>
                     <script>document.write(text[19][language])</script>
-                    <!-- general -->
+                    <!-- activity -->
                     <div class="border-top border-secondary mt-3">
                         <i class="far fa-check-square"></i>
                         <script>document.write(text[20][language])</script>
                         <ul class="ul_sidebar">
                             <li>
-                                <input id="input_path"   type="checkbox" checked onclick="visibility(this)" class="mr-1 align-middle">
+                                <input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="0" checked id="input_general">
                                 <script>document.write(text[21][language])</script>
                             </li>
-                            <li><input id="ínput_towers" type="checkbox" checked onclick="visibility(this)" class="mr-1 align-middle">
-                                <script>document.write(text[22][language])</script>
-                            </li>
-                            <li><input id="input_area"   type="checkbox"         onclick="visibility(this)" class="mr-1 align-middle">
-                                <script>document.write(text[23][language])</script>
-                            </li>
                             <li>
-                                <input id="input_site"   type="checkbox"         onclick="visibility(this)" class="mr-1 align-middle">
-                                <script>document.write(text[24][language])</script>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- services -->
-                    <div class="border-top border-secondary mt-3">
-                        <i class="far fa-check-square"></i>
-                        <script>document.write(text[25][language])</script>
-                        <ul class="ul_sidebar">
-                            <li>
-                                <input id="input_preliminary" type="checkbox" onclick="visibility(this)" class="mr-1 align-middle">
+                                <input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="1" id="input_preliminary">
                                 <script>document.write(text[26][language])</script>
                             </li>
-                            <li><input id="ínput_civil"       type="checkbox" onclick="visibility(this)" class="mr-1 align-middle">
+                            <li><input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="2" id="input_civil">
                                 <script>document.write(text[27][language])</script>
                             </li>
-                            <li><input id="input_assembly"    type="checkbox" onclick="visibility(this)" class="mr-1 align-middle">
+                            <li><input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="3" id="input_assembly">
                                 <script>document.write(text[28][language])</script>
                             </li>
                             <li>
-                                <input id="input_cables"      type="checkbox" onclick="visibility(this)" class="mr-1 align-middle">
+                                <input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="4" id="input_cables"      >
                                 <script>document.write(text[29][language])</script>
                             </li>
                         </ul>
@@ -195,16 +178,7 @@
                         </span>
                     </button>
                     <!-- list -->
-                    <div class="collapse bg-white text-left" id="div_list">
-                        <!-- path -->
-                        <div class="d-block" id="div_path"></div>
-                        <!-- towers -->
-                        <div class="d-block" id="div_towers">
-                            <div class="bg-primary text-white text-center p-1 mt-1">
-                                <script>document.write(text[22][language].toUpperCase())</script>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="collapse bg-white text-left" id="div_list"></div>
                 </div>
             </div>
             <!-- modal summary -->
