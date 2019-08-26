@@ -42,12 +42,9 @@ function initialSetup() {
             discoveryDocs: discoveryDocs,
             scope: scopeReadonly,
         }).then(function() {
-            // listen
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getDatabase);
             // get
-            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
-            getDatabase(gapi.auth2.getAuthInstance().isSignedIn.get());
+            gapi.auth2.getAuthInstance().isSignedIn.get(getAccess());
+            gapi.auth2.getAuthInstance().isSignedIn.get(getDatabase());
         });
     });
 }
@@ -61,12 +58,9 @@ function accessSetup() {
             discoveryDocs: discoveryDocs,
             scope: scopeReadonly,
         }).then(function() {
-            // listen
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
-            gapi.auth2.getAuthInstance().isSignedIn.listen(getProject);
             // get
-            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
-            getProject(gapi.auth2.getAuthInstance().isSignedIn.get());
+            gapi.auth2.getAuthInstance().isSignedIn.get(getAccess());
+            gapi.auth2.getAuthInstance().isSignedIn.get(getProject());
         });
     });
     // conditional
@@ -95,8 +89,8 @@ function getAccess() {
 /* get database --------------------------------------------- */
 function getDatabase() {
     // variables
-    var ranges;
     var keys;
+    var ranges;
     // users
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: databaseKey,
@@ -151,15 +145,18 @@ function getDatabase() {
 
 /* get project ---------------------------------------------- */
 function getProject() {
+    // variables
+    var keys;
+    var ranges;
     // data
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: link,
         range: "data!A4:Z"
         }).then(function(response) {
             // result
-            var ranges = response.result;
+            ranges = response.result;
             // keys
-            var keys = Object.keys(ranges.values).length;
+            keys = Object.keys(ranges.values).length;
             // set item
             sessionStorage.setItem("dataLength", keys);
             sessionStorage.setItem("dataValues", ranges.values);
@@ -170,9 +167,9 @@ function getProject() {
         range: "activity!A4:Z"
         }).then(function(response) {
             // result
-            var ranges = response.result;
+            ranges = response.result;
             // keys
-            var keys = Object.keys(ranges.values).length;
+            keys = Object.keys(ranges.values).length;
             // set item
             sessionStorage.setItem("activityLength", keys);
             sessionStorage.setItem("activityValues", ranges.values);
@@ -183,9 +180,9 @@ function getProject() {
         range: "site!A4:Z"
         }).then(function(response) {
             // result
-            var ranges = response.result;
+            ranges = response.result;
             // keys
-            var keys = Object.keys(ranges.values).length;
+            keys = Object.keys(ranges.values).length;
             // set item
             sessionStorage.setItem("siteLength", keys);
             sessionStorage.setItem("siteValues", ranges.values);
@@ -196,9 +193,9 @@ function getProject() {
         range: "alert!A3:Z"
         }).then(function(response) {
             // result
-            var ranges = response.result;
+            ranges = response.result;
             // keys
-            var keys = Object.keys(ranges.values).length;
+            keys = Object.keys(ranges.values).length;
             // set item
             sessionStorage.setItem("alertLength", keys);
             sessionStorage.setItem("alertValues", ranges.values);
@@ -255,26 +252,6 @@ var textColumns = 4;
 // push into array
 pushArray(textTotal, text, textColumns, textValue);
 
-/* check text ----------------------------------------------- */
-function checkText() {
-    if (text[0] == null) {
-        document.getElementById("div_login").className = "d-none";
-        document.cookie = "reload=0";
-    } else {
-        document.getElementById("div_spinner").className = "d-none";
-        document.cookie = "reload=1";
-    }
-}
-
-/* reload --------------------------------------------------- */
-function reloadPage() {
-    if (getCookie("reload") == 0) {
-        setTimeout(function(){
-            window.location.reload();
-        }, 3000);
-    }
-}
-
 /* projects ------------------------------------------------- */
 var projects = new Array();
 // get item
@@ -324,6 +301,26 @@ var alertValue = sessionStorage.getItem("alertValues");
 var alertColumns = 3;
 // push into array
 pushArray(alertTotal, alert, alertColumns, alertValue);
+
+/* check text ----------------------------------------------- */
+function checkText() {
+    if (text[0] == null) {
+        document.getElementById("div_login").className = "d-none";
+        document.cookie = "reload=0";
+    } else {
+        document.getElementById("div_spinner").className = "d-none";
+        document.cookie = "reload=1";
+    }
+}
+
+/* reload --------------------------------------------------- */
+function reloadPage() {
+    if (getCookie("reload") == 0) {
+        setTimeout(function(){
+            window.location.reload();
+        }, 3000);
+    }
+}
 
 /* login ---------------------------------------------------- */
 function login() {
@@ -698,7 +695,7 @@ function googleMaps() {
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
-        mapTypeId: "roadmap", // hybrid
+        mapTypeId: "hybrid", // roadmap
         streetViewControl: false,
         zoom: 13
     };
@@ -909,7 +906,7 @@ function googleMaps() {
                     '</div>' +
                 '</div>' +
                 '<div ' + hidden +'>' +
-                    '<a href="#div_alert" data-toggle="collapse" class="collapsed badge badge-pill badge-dark">' +
+                    '<a href="#div_alert" data-toggle="collapse" class="collapsed badge badge-dark w-100">' +
                         '<img alt="alert icon" class="img_info" src="' + alertColor[position] + '">' +
                         '<span class="ml-1 mr-1">' + data[auxiliary][description] + '</span>' +
                         '<i class="fas fa-caret-down"></i>' +

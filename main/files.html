@@ -107,18 +107,26 @@
 
 			
 			<script>
-
+/*
 				function authenticate() {
 					return gapi.auth2.getAuthInstance()
 						.signIn({scope: "https://www.googleapis.com/auth/drive.readonly"})
-						.then(function() { console.log("Sign-in successful"); },
-							function(err) { console.error("Error signing in", err); });
+						.then(function() {
+							console.log("Sign-in successful");
+						},
+							function(err) {
+								console.error("Error signing in", err);
+							});
 				}
 				function loadClient() {
 					gapi.client.setApiKey("AIzaSyDCkCbZhcCrB6hMeg6gIKYz_CAEQmd0--c");
 					return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/drive/v3/rest")
-						.then(function() { console.log("GAPI client loaded for API"); },
-							function(err) { console.error("Error loading GAPI client for API", err); });
+						.then(function() {
+							console.log("GAPI client loaded for API");
+						},
+							function(err) {
+								console.error("Error loading GAPI client for API", err);
+							});
 				}
 				// Make sure the client is loaded and sign-in is complete before calling this method.
 				function execute() {
@@ -135,13 +143,26 @@
 							
 				}
 				gapi.load("client:auth2", function() {
-					gapi.auth2.init({client_id: "535886128905-4aenaehdlshf0v2f9ehvomk0f4kej16l.apps.googleusercontent.com"});
-				});
+					gapi.auth2.init({
+						client_id: "535886128905-4aenaehdlshf0v2f9ehvomk0f4kej16l.apps.googleusercontent.com"
+					});
+				});*/
 			</script>
 
-
+<!--
 			<button onclick="authenticate().then(loadClient)">authorize and load</button>
 			<button onclick="execute()">execute</button>
+
+
+
+	
+	
+
+
+  
+
+
+
 
 			<script>
 				var person = {fname:"John", lname:"Doe", age:25};
@@ -149,7 +170,7 @@
 			</script>
 			
 
-
+		-->
 
             <!-- modal logout -->
 			<div class="modal fade" id="div_logout">
