@@ -159,6 +159,16 @@ button[data-target="#div_list"], #div_list {
     max-width: 233px;
 }
 
+#div_carousel, #div_carousel img {
+    max-height: 430px;
+}
+
+.carousel-indicators li, .carousel-indicators li.active{
+    height: 21px;
+    line-height: initial;
+    text-indent: 0;
+    width: 21px;
+}
 /* summary -------------------------------------------------- */
 #div_summary table {
     border-collapse: collapse;

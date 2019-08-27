@@ -10,6 +10,7 @@
 /* google set ----------------------------------------------- */
 var apiKeySheets  = "AIzaSyCUHNFWOyP2Y25UKw1swqVQCS2MTaFIpok";
 var apiKeyMaps    = "AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ";
+var apiKeyDrive   = "AIzaSyDCkCbZhcCrB6hMeg6gIKYz_CAEQmd0--c";
 var clientKey     = "535886128905-4aenaehdlshf0v2f9ehvomk0f4kej16l.apps.googleusercontent.com";
 var databaseKey   = "1ZcP8Rax-xRtegYTHQ_1BJjtOQmnQT8kMQb7Bi9Guls4";
 var discoveryDocs = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
@@ -268,7 +269,7 @@ var data = new Array();
 var dataTotal = sessionStorage.getItem("dataLength");
 var dataValue = sessionStorage.getItem("dataValues");
 // total columns
-var dataColumns = 19;
+var dataColumns = 20;
 // push into array
 pushArray(dataTotal, data, dataColumns, dataValue);
 
@@ -695,7 +696,7 @@ function googleMaps() {
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
-        mapTypeId: "hybrid", // roadmap
+        mapTypeId: "roadmap", // hybrid
         streetViewControl: false,
         zoom: 13
     };
@@ -884,7 +885,11 @@ function googleMaps() {
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[24][language] + '</td>' +
-                                '<td>' + '<a href="#">Link</a>' + '</td>' +
+                                '<td>' +
+                                    '<a href="#" data-toggle="modal" data-target="#div_photos">' +
+                                        text[25][language] + ' <i class="far fa-images"></i>' +
+                                    '</a>' +
+                                '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[44][language] + '</td>' +
