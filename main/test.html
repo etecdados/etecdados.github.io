@@ -7,10 +7,12 @@
   <body>
     <p>Drive API Quickstart</p>
 
-    
+    <button onclick="myfunc()">Button</button>
 
     <pre id="content" style="white-space: pre-wrap;"></pre>
     <div id="span"></div>
+
+
 
     <script type="text/javascript">
     
@@ -27,16 +29,13 @@
 
 
         var request = new XMLHttpRequest();
-        var link = "151FfF3KP4F2VLGkRxxinaxweAmpwOaIb";
+        var link = "1cEjNAgInd0io3U31CQc2jf-krJL-_KFZ";
         var key = "AIzaSyDCkCbZhcCrB6hMeg6gIKYz_CAEQmd0--c";
         var url  = "https://www.googleapis.com/drive/v3/files?q='" + link + "'+in+parents&key=" + key;
         request.open("GET", url);
         request.send();
 
-        appendPre(typeof(request));
-        appendPre(typeof(request.response));
-        appendPre(request);
-        appendPre(request.response.length);
+        
 
         
         
@@ -45,29 +44,59 @@
    
               if (request.readyState == XMLHttpRequest.DONE) {
 
-                console.log(request.response);
-                appendPre(request.response.length);
-                var txt = request.response;
-                var aaa = (txt.match(/"id": /g) || []).length;
-                appendPre(aaa);
-                var bbb = txt.search('id": ') + 6;
-                appendPre(bbb);
-                var ccc = (txt.indexOf(",", bbb)) - 1;
-                appendPre(ccc);
-                var ddd = txt.slice(bbb, ccc);
-                appendPre(ddd);
+                
+
+                var id = "id:";
+                var ggg = "mimeType";
+                var hhh = "image";
+                
+                var txt = request.response.replace(/\n|"|{|}| /g, '');
+
+                var sss = txt.split(",");
+
+                
+                console.log(txt);
+                console.log(sss);
+                
+                
+
+              
+
+                var oco = new Array();
+                var mim = new Array();
+                
+
+                for (var a = 0; a < sss.length; a++) {
+                  if (sss[a].search(id) >= 0) {
+                    oco.push(sss[a].replace(id, ""));
+                  } else if (sss[a].search(ggg) >= 0) {
+                    if (sss[a].search(hhh) > 0) {
+                      mim.push(true);
+                    } else {
+                      mim.push(false);
+                    }
+                    
+                  } 
+                    
+                }
+
+                  console.log(oco);
+                  console.log(mim);
+
+               
+
                 var img = document.createElement("img");
-                img.setAttribute("src", "https://drive.google.com/uc?export=view&id=" + ddd);
+                img.setAttribute("src", "https://drive.google.com/uc?export=view&id=" + oco[3]);
+                img.setAttribute("style", "height: 400px");
                 var span = document.getElementById("span");
                 span.appendChild(img);
               
-                
               }
           }
 
 
           
-          
+         
           
           
 

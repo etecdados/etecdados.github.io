@@ -294,14 +294,14 @@ var siteColumns = 4;
 pushArray(siteTotal, site, siteColumns, siteValue);
 
 /* alert ---------------------------------------------------- */
-var alert = new Array();
+var alertText = new Array();
 // get item
-var alertTotal = sessionStorage.getItem("alertLength");
-var alertValue = sessionStorage.getItem("alertValues");
+var alertTextTotal = sessionStorage.getItem("alertLength");
+var alertTextValue = sessionStorage.getItem("alertValues");
 // total columns
-var alertColumns = 3;
+var alertTextColumns = 3;
 // push into array
-pushArray(alertTotal, alert, alertColumns, alertValue);
+pushArray(alertTextTotal, alertText, alertTextColumns, alertTextValue);
 
 /* check text ----------------------------------------------- */
 function checkText() {
@@ -666,10 +666,112 @@ function legend(parameter) {
     }
 }
 
+/* gallery -------------------------------------------------- */
+function gallery(parameter) {
+    // get element
+    var element = parameter.id;
+    var content = document.getElementById("div_inner");
+    var ol      = document.getElementById("ol_indicators");
+    // clear content
+    content.innerHTML = "";
+    ol.innerHTML = "";
+    // remove
+    var remove = [
+        'id:',
+        'https://drive.google.com/drive/folders/',
+        'https://drive.google.com/open?id=',
+        '?usp=sharing'
+    ]
+    // include
+    var include = [
+        'https://drive.google.com/uc?export=view&id=',
+        'https://drive.google.com/file/d/',
+        '/preview'
+    ]
+    // replace
+    for (var a = 0; a < remove.length; a++) {
+        element = element.replace(remove[a], "");
+    }
+    // url
+    var url = "https://www.googleapis.com/drive/v3/files?q='" + element + "'+in+parents&key=" + apiKeyDrive;
+    // request
+    var request = new XMLHttpRequest();
+    request.open("GET", url);
+    request.send();
+    request.onreadystatechange = function() {
+        // conditional
+        if (request.readyState == XMLHttpRequest.DONE) {
+            // replace
+            var result = request.response.replace(/\n|"|{|}| /g, '');
+            // split
+            var values = result.split(",");
+            // new array
+            var idFile   = new Array();
+            var mimeType = new Array();
+            // search and push
+            for (var b = 0; b < values.length; b++) {
+                // conditional
+                if (values[b].search(remove[0]) >= 0) {
+                    // push
+                    idFile.push(values[b].replace(remove[0], ""));
+                } else if (values[b].search("mimeType:") >= 0) {
+                    // conditional
+                    if (values[b].search("image") >= 0) {
+                        mimeType.push(true);
+                    } else {
+                        mimeType.push(false);
+                    }
+                }
+            }
+            // carousel content
+            for (var c = 0; c < idFile.length; c++) {
+                // create element
+                var li     = document.createElement("li");
+                var span   = document.createElement("span");
+                var div    = document.createElement("div");
+                var img    = document.createElement("img");
+                var iframe = document.createElement("iframe");
+                // conditional
+                if (c == 0) {
+                    // set attribute
+                    li.setAttribute("class", "active");
+                    div.setAttribute("class", "carousel-item active");
+                } else {
+                    div.setAttribute("class", "carousel-item");
+                }
+                // set attribute
+                li.setAttribute("data-target", "#div_carousel");
+                li.setAttribute("data-slide-to", c);
+                span.setAttribute("class", "text-primary");
+                img.setAttribute("class", "d-block m-auto");
+                // inner html
+                span.innerHTML =  c + 1;
+                // append child
+                ol.appendChild(li);
+                li.appendChild(span);
+                content.appendChild(div);
+                // conditional
+                if (mimeType[c] == true) {
+                    // set attribute
+                    img.setAttribute("src", include[0] + idFile[c]);
+                    // append child
+                    div.appendChild(img);
+                } else {
+                    // set attribute
+                    iframe.setAttribute("src", include[1] + idFile[c] + include[2]);
+                    // append child
+                    div.appendChild(iframe);
+                }
+            }
+        }
+    }
+}
+
 /* google maps ---------------------------------------------- */
 function googleMaps() {
     // variables
     var auxiliary = 0;
+    var display;
     var hidden;
     var icon;
     var map;
@@ -688,6 +790,7 @@ function googleMaps() {
     var longitude   = 1 + latitude;
     var activities  = 4 + longitude;
     var description = 5 + activities;
+    var link        = 2 + description;
     // central map
     var central = Math.round(data.length / 2);
     // properties
@@ -696,7 +799,7 @@ function googleMaps() {
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
-        mapTypeId: "roadmap", // hybrid
+        mapTypeId: "hybrid", // roadmap
         streetViewControl: false,
         zoom: 13
     };
@@ -812,14 +915,14 @@ function googleMaps() {
             position: coordinates,
         });
         // alert
-        for (var d = 0; d < alert.length; d++) {
+        for (var d = 0; d < alertText.length; d++) {
             // conditional
-            if (alert[d][1] == "" || data[auxiliary][description] == "") {
+            if (alertText[d][1] == "" || data[auxiliary][description] == "") {
                 position = 5;
                 hidden = "hidden";
                 break;
-            } else if (alert[d][1] == data[auxiliary][description]) {
-                position = parseInt(alert[d][0]);
+            } else if (alertText[d][1] == data[auxiliary][description]) {
+                position = parseInt(alertText[d][0]);
                 hidden = "";
                 break;
             }
@@ -857,6 +960,12 @@ function googleMaps() {
             optimized: optimized,
             position: coordinates
         });
+        // display gallery
+        if (data[auxiliary][link] == "") {
+            display = "d-none";
+        } else {
+            display = "";
+        }
         // content
         var content =
             '<div class="accordion" id="div_content">' +
@@ -884,14 +993,6 @@ function googleMaps() {
                                 '<td>' + data[auxiliary][section] + '</td>' +
                             '</tr>' +
                             '<tr>' +
-                                '<td>' + text[24][language] + '</td>' +
-                                '<td>' +
-                                    '<a href="#" data-toggle="modal" data-target="#div_photos">' +
-                                        text[25][language] + ' <i class="far fa-images"></i>' +
-                                    '</a>' +
-                                '</td>' +
-                            '</tr>' +
-                            '<tr>' +
                                 '<td>' + text[44][language] + '</td>' +
                                 '<td>' + parseFloat(data[auxiliary][latitude]).toFixed(6) + '</td>' +
                             '</tr>' +
@@ -902,15 +1003,24 @@ function googleMaps() {
                             '<tr>' +
                                 '<td>' + text[33][language] + '</td>' +
                                 '<td>' +
-                                    '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + data[auxiliary][latitude] + ',' + data[auxiliary][longitude] + '">' + 
+                                    '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + data[auxiliary][latitude] + ',' + data[auxiliary][longitude] + '">' +
                                         '<span>Google Maps</span>' +
                                     '</a>' + 
+                                '</td>' +
+                            '</tr>' +
+                            '<tr class="' + display + '">' +
+                                '<td>' + text[25][language] + '</td>' +
+                                '<td>' +
+                                    '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[auxiliary][link] + '" onclick="gallery(this)">' +
+                                        '<span>' + text[24][language] + '</span>' +
+                                        ' <i class="far fa-images"></i>' +
+                                    '</a>' +
                                 '</td>' +
                             '</tr>' +
                         '</table>' +
                     '</div>' +
                 '</div>' +
-                '<div ' + hidden +'>' +
+                '<div ' + hidden + '>' +
                     '<a href="#div_alert" data-toggle="collapse" class="collapsed badge badge-dark w-100">' +
                         '<img alt="alert icon" class="img_info" src="' + alertColor[position] + '">' +
                         '<span class="ml-1 mr-1">' + data[auxiliary][description] + '</span>' +

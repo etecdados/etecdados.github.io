@@ -159,16 +159,6 @@ button[data-target="#div_list"], #div_list {
     max-width: 233px;
 }
 
-#div_carousel, #div_carousel img {
-    max-height: 430px;
-}
-
-.carousel-indicators li, .carousel-indicators li.active{
-    height: 21px;
-    line-height: initial;
-    text-indent: 0;
-    width: 21px;
-}
 /* summary -------------------------------------------------- */
 #div_summary table {
     border-collapse: collapse;
@@ -200,4 +190,22 @@ img[src="../root/images/alert_white.png"] {
     0% {transform: scale(0, 0); opacity: 0;}
     50% {opacity: 1;}
     100% {transform: scale(1, 1); opacity: 0;}
+}
+
+/* carousel ------------------------------------------------- */
+#div_carousel, #div_carousel img {
+    max-height: 430px;
+}
+
+#div_carousel iframe {
+    border: none;
+    height: 430px;
+    width: 640px;
+}
+
+.carousel-indicators li, .carousel-indicators li.active{
+    height: 21px;
+    line-height: initial;
+    text-indent: 0;
+    width: 21px;
 }
