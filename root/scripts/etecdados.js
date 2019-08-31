@@ -742,10 +742,11 @@ function gallery(parameter) {
                 // set attribute
                 li.setAttribute("data-target", "#div_carousel");
                 li.setAttribute("data-slide-to", c);
-                span.setAttribute("class", "text-primary");
+                li.setAttribute("class", "pl-1 pr-1 border-0")
+                span.setAttribute("class", "text-dark");
                 img.setAttribute("class", "d-block m-auto");
                 // inner html
-                span.innerHTML =  c + 1;
+                span.innerHTML = ('0' + (c + 1)).slice(-2);
                 // append child
                 ol.appendChild(li);
                 li.appendChild(span);
@@ -799,7 +800,7 @@ function googleMaps() {
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
-        mapTypeId: "hybrid", // roadmap
+        mapTypeId: "hybrid", // roadmap or hybrid
         streetViewControl: false,
         zoom: 13
     };

@@ -193,19 +193,28 @@ img[src="../root/images/alert_white.png"] {
 }
 
 /* carousel ------------------------------------------------- */
-#div_carousel, #div_carousel img {
-    max-height: 430px;
+#div_carousel {
+    height: 430px;
+}
+
+#div_carousel img {
+    max-height: 377px;
 }
 
 #div_carousel iframe {
     border: none;
-    height: 430px;
-    width: 640px;
+    height: 377px;
+    width: 610px;
 }
 
-.carousel-indicators li, .carousel-indicators li.active{
+#ol_indicators {
+    justify-content: initial;
+    margin: 0;
+    overflow: auto;
+}
+
+#ol_indicators li {
     height: 21px;
     line-height: initial;
     text-indent: 0;
-    width: 21px;
 }
