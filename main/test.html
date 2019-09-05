@@ -7,123 +7,59 @@
   <body>
     <p>Drive API Quickstart</p>
 
-    <button onclick="myfunc()">Button</button>
+    <style>
+      #map {
+        height: 500px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-    <div id="span"></div>
+    </style>
+
+    <button type="button" id="btn1" value="roadmap" onclick="mapType(this)">Roadmap</button>
+    <button type="button" id="btn2" value="hybrid" onclick="mapType(this)">Sattelite</button>
+    
 
 
+
+    <div id="map"></div>
 
     <script type="text/javascript">
-    
-    
+     
+      var map;
 
-      
-       function appendPre(message) {
-           var pre = document.getElementById('content');
-           var textContent = document.createTextNode(message + '\n');
-           pre.appendChild(textContent);
+      // Initialize and add the map
+      function initMap() {
+        // The location of Uluru
+        var uluru = {lat: -25.344, lng: 131.036};
+        var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+          zoom: 8,
+          center: myLatlng,
+          mapTypeId: 'terrain'
+        };
+        map = new google.maps.Map(document.getElementById('map'),mapOptions);
+        
+        
+
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
       }
+    
       
 
-
-
-        var request = new XMLHttpRequest();
-        var link = "1cEjNAgInd0io3U31CQc2jf-krJL-_KFZ";
-        var key = "AIzaSyDCkCbZhcCrB6hMeg6gIKYz_CAEQmd0--c";
-        var url  = "https://www.googleapis.com/drive/v3/files?q='" + link + "'+in+parents&key=" + key;
-        request.open("GET", url);
-        request.send();
-
-        
-
-        
-        
-        
-        request.onreadystatechange = function() {
-   
-              if (request.readyState == XMLHttpRequest.DONE) {
-
-                
-
-                var id = "id:";
-                var ggg = "mimeType";
-                var hhh = "image";
-                
-                var txt = request.response.replace(/\n|"|{|}| /g, '');
-
-                var sss = txt.split(",");
-
-                
-                console.log(txt);
-                console.log(sss);
-                
-                
-
-              
-
-                var oco = new Array();
-                var mim = new Array();
-                
-
-                for (var a = 0; a < sss.length; a++) {
-                  if (sss[a].search(id) >= 0) {
-                    oco.push(sss[a].replace(id, ""));
-                  } else if (sss[a].search(ggg) >= 0) {
-                    if (sss[a].search(hhh) > 0) {
-                      mim.push(true);
-                    } else {
-                      mim.push(false);
-                    }
-                    
-                  } 
-                    
-                }
-
-                  console.log(oco);
-                  console.log(mim);
-
-               
-
-                var img = document.createElement("img");
-                img.setAttribute("src", "https://drive.google.com/uc?export=view&id=" + oco[3]);
-                img.setAttribute("style", "height: 400px");
-                var span = document.getElementById("span");
-                span.appendChild(img);
-              
-              }
-          }
-
-
-          
-         
-          
-          
-
-        /*
-
-        request.onreadystatechange = (e) => {
-          
-
-            var files = request.responseText;
-
-            
-
-            if (files && files.length > 0) {
-                for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                appendPre(file.name + ' (' + file.id + ')');
-                }
-            } else {
-                appendPre('No files found.');
-            }
-        }
-
-        */
-        
       
 
     </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ&callback=initMap" async defer></script>
 
 
   </body>

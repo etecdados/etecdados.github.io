@@ -115,26 +115,45 @@
                     <script>document.write(text[19][language])</script>
                     <!-- activity -->
                     <div class="border-top border-secondary mt-3">
-                        <i class="far fa-check-square"></i>
+                        <i class="far fa-dot-circle"></i>
                         <script>document.write(text[20][language])</script>
                         <ul class="ul_sidebar">
                             <li>
-                                <input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="0" checked id="input_general">
+                                <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="0" id="input_general" checked>
                                 <script>document.write(text[21][language])</script>
                             </li>
                             <li>
-                                <input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="1" id="input_preliminary">
+                                <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="1" id="input_preliminary">
                                 <script>document.write(text[26][language])</script>
                             </li>
-                            <li><input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="2" id="input_civil">
+                            <li><input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="2" id="input_civil">
                                 <script>document.write(text[27][language])</script>
                             </li>
-                            <li><input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="3" id="input_assembly">
+                            <li><input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="3" id="input_assembly">
                                 <script>document.write(text[28][language])</script>
                             </li>
                             <li>
-                                <input type="checkbox" class="mr-1 align-middle" onclick="visibility(this)" value="4" id="input_cables"      >
+                                <input type="radio" name="activity" class="mr-1 align-middle" onclick="addPolyline(this)" value="4" id="input_cables"      >
                                 <script>document.write(text[29][language])</script>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- map type -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="far fa-dot-circle"></i>
+                        <script>document.write(text[46][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="hybrid" id="input_hybrid" checked>
+                                <script>document.write(text[47][language])</script>
+                            </li>
+                            <li>
+                                <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="roadmap" id="input_roadmap">
+                                <script>document.write(text[48][language])</script>
+                            </li>
+                            <li>
+                                <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="terrain" id="input_terrain">
+                                <script>document.write(text[49][language])</script>
                             </li>
                         </ul>
                     </div>
@@ -251,7 +270,8 @@
                         <div class="modal-header">
                             <h5 class="modal-title text-primary">
                                 <i class="far fa-images"></i>
-                                <script>document.write(text[25][language])</script>
+                                <script>document.write(text[24][language])</script>
+                                <span id="span_tower"></span>
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>

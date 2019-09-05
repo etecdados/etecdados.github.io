@@ -99,6 +99,94 @@
 			</header>
 			
 
+
+			<style>
+				#map {
+				  height: 500px;
+				}
+				/* Optional: Makes the sample page fill the window. */
+				html, body {
+				  height: 100%;
+				  margin: 0;
+				  padding: 0;
+				}
+		  
+			  </style>
+
+
+			<div id="map"></div>
+
+	<script type="text/javascript">
+	
+	console.log(activity.length);
+	console.log(activity[0][0]);
+	console.log(activity[1][7]);
+
+	var parameter = 4;
+	var filter = new Array();
+	
+	var number;
+	
+	
+	for (var a = 0; a < activity.length; a++) {
+		// conditional
+		if (parameter == parseInt(activity[a][0])) {
+			// auxiliary 1
+			var auxiliary = a + 1;
+			// 
+			for (var b = 0; b < 8; b++) {
+				// 
+				var c = auxiliary + b;
+				// conditional
+				if (activity[c][7].search(2) > 0) {
+					number = 2;
+				} else if (activity[c][7].search(3) > 0) {
+					number = 4;
+				} else {
+					number = 0;
+				}
+				filter[b] = [activity[c][1], number];
+				
+			}
+			break;
+		}
+	}
+	console.log(auxiliary);
+	console.log(filter);
+
+
+    /* 
+      var map;
+
+      // Initialize and add the map
+      function initMap() {
+        // The location of Uluru
+        var uluru = {lat: -25.344, lng: 131.036};
+        var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+          zoom: 8,
+          center: myLatlng,
+          mapTypeId: 'terrain'
+        };
+        map = new google.maps.Map(document.getElementById('map'),mapOptions);
+        
+        
+
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    
+      
+
+      */
+
+	</script>
+	
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ&callback=initMap" async defer></script>
+
 				
 			
 

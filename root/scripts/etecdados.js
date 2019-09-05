@@ -207,6 +207,13 @@ function getProject() {
 function setLanguage(parameter) {
     // get element
     var element = document.getElementById(parameter.id).value;
+    var input   = document.getElementById("input_general");
+    // conditional
+    if (input != null) {
+        // checked (sidebar)
+        input.checked = true;
+        document.getElementById("input_hybrid").checked  = true;
+    }
     // switch
     switch(element) {
         case "2":
@@ -289,7 +296,7 @@ var site = new Array();
 var siteTotal = sessionStorage.getItem("siteLength");
 var siteValue = sessionStorage.getItem("siteValues");
 // total columns
-var siteColumns = 4;
+var siteColumns = 6;
 // push into array
 pushArray(siteTotal, site, siteColumns, siteValue);
 
@@ -387,7 +394,7 @@ function logout() {
 
 /* set map -------------------------------------------------- */
 function setMap(parameter) {
-    // element
+    // get element
     var element = parameter.id;
     // replace
     var index = element.replace("map", "");
@@ -488,8 +495,7 @@ var colors = [
     /*6*/ "#FF6600", // orange
     /*7*/ "#000000", // black
     /*8*/ "#F48884", // pink
-    /*9*/ "#FFFFFF", // white
-    /*10*/"#96989A"  // gray
+    /*9*/ "#96989A"  // gray
 ];
 
 /* marker color --------------------------------------------- */
@@ -503,8 +509,7 @@ var markerColor = [
     /*6*/ "../root/images/marker_orange.png",
     /*7*/ "../root/images/marker_black.png",
     /*8*/ "../root/images/marker_pink.png",
-    /*9*/ "../root/images/marker_white.png",
-    /*10*/"../root/images/marker_gray.png"
+    /*9*/ "../root/images/marker_gray.png"
 ];
 
 /* alert color----------------------------------------------- */
@@ -513,8 +518,7 @@ var alertColor = [
     /*1*/ "../root/images/alert_blue.png",
     /*2*/ "../root/images/alert_green.png",
     /*3*/ "../root/images/alert_yellow.png",
-    /*4*/ "../root/images/alert_white.png",
-    /*5*/ "../root/images/alert_transparent.png"
+    /*4*/ "../root/images/alert_transparent.png"
 ];
 
 /* check data ----------------------------------------------- */
@@ -581,11 +585,14 @@ function legend(parameter) {
     var auxiliary;
     var filter;
     var title;
-    var total = new Array();
     // get element
     var element = document.getElementById("div_list");
+    // clear div
+    element.innerHTML = "";
     // conditional
     if (parameter == 0) {
+        // array
+        var total = new Array();
         // push
         for (var a = 0; a < data.length; a++) {
             total.push(data[a][5]);
@@ -611,7 +618,7 @@ function legend(parameter) {
     tagDiv.setAttribute("class", "bg-primary text-white text-center p-1 mt-1");
     tagUl.setAttribute("class", "ul_legend p-1");
     // switch
-    switch(parameter) {
+    switch(parseInt(parameter)) {
         case 1:
             title = text[26][language];
             break;
@@ -625,7 +632,7 @@ function legend(parameter) {
             title = text[29][language];
             break;
         default:
-            title = text[22][language];
+            title = text[23][language];
     }
     // inner html
     tagDiv.innerHTML = title.toUpperCase();
@@ -667,27 +674,30 @@ function legend(parameter) {
 }
 
 /* gallery -------------------------------------------------- */
-function gallery(parameter) {
+function gallery(parameter1, parameter2) {
     // get element
-    var element = parameter.id;
+    var element = parameter1.id;
     var content = document.getElementById("div_inner");
     var ol      = document.getElementById("ol_indicators");
+    var span    = document.getElementById("span_tower");
     // clear content
     content.innerHTML = "";
-    ol.innerHTML = "";
+    ol.innerHTML      = "";
+    // number tower
+    span.innerHTML = parameter2;
     // remove
     var remove = [
         'id:',
         'https://drive.google.com/drive/folders/',
         'https://drive.google.com/open?id=',
         '?usp=sharing'
-    ]
+    ];
     // include
     var include = [
         'https://drive.google.com/uc?export=view&id=',
         'https://drive.google.com/file/d/',
         '/preview'
-    ]
+    ];
     // replace
     for (var a = 0; a < remove.length; a++) {
         element = element.replace(remove[a], "");
@@ -768,108 +778,90 @@ function gallery(parameter) {
     }
 }
 
-/* google maps ---------------------------------------------- */
-function googleMaps() {
-    // variables
-    var auxiliary = 0;
-    var display;
-    var hidden;
-    var icon;
-    var map;
-    var optimized;
-    var pointX    = new google.maps.Point(0, 0);
-    var pointY    = new google.maps.Point(16.5, 5.5);
-    var position;
-    var size      = new google.maps.Size(50, 50);
-    // sheet
-    var tower       = 1;
-    var type        = 1 + tower;
-    var height      = 1 + type;
-    var span        = 1 + height;
-    var section     = 1 + span;
-    var latitude    = 1 + section;
-    var longitude   = 1 + latitude;
-    var activities  = 4 + longitude;
-    var description = 5 + activities;
-    var link        = 2 + description;
-    // central map
-    var central = Math.round(data.length / 2);
-    // properties
-    var properties = {
-        center: new google.maps.LatLng(data[central][latitude], data[central][longitude]),
-        fullscreenControl: true,
-        fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
-        mapTypeControl: false,
-        mapTypeId: "hybrid", // roadmap or hybrid
-        streetViewControl: false,
-        zoom: 13
-    };
+/* map ------------------------------------------------------ */
+var map;
+// sheet columns
+var tower       = 1;
+var type        = 1 + tower;
+var height      = 1 + type;
+var span        = 1 + height;
+var section     = 1 + span;
+var latitude    = 1 + section;
+var longitude   = 1 + latitude;
+var activities  = 4 + longitude;
+var description = 5 + activities;
+var hyperlink   = 2 + description;
+
+/* markers -------------------------------------------------- */
+var towerMarkers = new Array();
+var alertMarkers = new Array();
+// add markers
+function addMarkers(parameter) {
+    // variable
+    var element;
+    // conditional;
+    if (typeof parameter == "number") {
+        element = parameter;
+    } else {
+        // get element
+        element = document.getElementById(parameter.id).value;
+    }
+    // legend
+    legend(element);
     // info window
     var info = new google.maps.InfoWindow();
-    // new map
-    map = new google.maps.Map(document.getElementById("div_map"), properties);
-    // menu
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("div_menu"));
-    // date
-    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById("div_date"));
-    // legend
-    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById("div_legend"));
-    // path
-    var path1 = new Array();
-    var path2 = new Array();
-    var path3 = new Array();
-    // coordinates
-    for (var a = 0; a < data.length; a++) {
-        path1.push(new google.maps.LatLng(parseFloat(data[a][latitude + 0]), parseFloat(data[a][longitude + 0])));
-        path2.push(new google.maps.LatLng(parseFloat(data[a][latitude + 2]), parseFloat(data[a][longitude + 2])));
-        path3.push(new google.maps.LatLng(parseFloat(data[a][latitude + 4]), parseFloat(data[a][longitude + 4])));
-    }
-    // polyline
-    function polyline(parameter) {
-        new google.maps.Polyline({
-            geodesic: true,
-            map: map,
-            path: parameter,
-            strokeColor: '#FFC107',
-            strokeOpacity: 0.8,
-            strokeWeight: 1.0
-        });
-    }
-    // set polyline
-    polyline(path1);
-    polyline(path2);
-    polyline(path3);
-    // markers
-    function markers(parameter) {
+    // set map
+    for (var a = 0;  a < data.length; a++) {
+        // variables
+        var display;
+        var hidden;
+        var icon;
+        var optimized;
+        var position;
+        // points
+        var pointX = new google.maps.Point(0, 0);
+        var pointY = new google.maps.Point(16.5, 5.5);
+        var pointZ = new google.maps.Size(50, 50);
         // coordinates
-        var coordinates = new google.maps.LatLng(data[auxiliary][latitude], data[auxiliary][longitude]);
+        var coordinates = new google.maps.LatLng(data[a][latitude], data[a][longitude]);
+        // conditional
+        if (a == 0) {
+            // clear markers on map
+            for (var b = 0; b < towerMarkers.length; b++) {
+                towerMarkers[b].setMap(null);
+                alertMarkers[b].setMap(null);
+            }
+            // clear array
+            towerMarkers = [];
+            alertMarkers = [];
+        }
         // position
-        if (parameter == 0) {
+        if (element == 0) {
             // variables
             var total = new Array();
             // push
-            for (var a = 0; a < data.length; a++) {
-                total.push(data[a][section]);
-            }
+            for (var c = 0; c < data.length; c++) {
+                total.push(data[c][section]);
+            }        
             // filter
             var filter = Array.from(new Set(total));
             // check
-            for (var b = 0; b < filter.length; b++) {
+            for (var d = 0; d < filter.length; d++) {
                 // conditional
-                if (filter[b] == data[auxiliary][section]) {
-                    position = b;
+                if (filter[d] == data[a][section]) {
+                    position = d;
                     break;
                 }
             }
         } else {
             // activity
-            for (var c = 0; c < activity.length; c++) {
+            for (var e = 0; e < activity.length; e++) {
                 // conditional
-                if (activity[c][1] == "") {
+                if (activity[e][1] == "") {
                     position = 10;
                     break;
-                } else if (activity[c][1] == data[auxiliary][activities + parameter]) {
-                    position = parseInt(activity[c][8]);
+                } else if (activity[e][1] == data[a][activities + parseInt(element)]) {
+                    position = parseInt(activity[e][8]);
                     break;
                 }
             }
@@ -903,27 +895,26 @@ function googleMaps() {
             case 8:
                 icon = markerColor[8];
                 break;
-            case 9:
-                icon = markerColor[9];
-                break;
             default:
-                icon = markerColor[10];
+                icon = markerColor[9];
         }
-        // marker
+        // create new marker
         var marker = new google.maps.Marker({
             icon: icon,
             map: map,
-            position: coordinates,
+            position: coordinates
         });
+        // push
+        towerMarkers.push(marker);
         // alert
-        for (var d = 0; d < alertText.length; d++) {
+        for (var f = 0; f < alertText.length; f++) {
             // conditional
-            if (alertText[d][1] == "" || data[auxiliary][description] == "") {
+            if (alertText[f][1] == "" || data[a][description] == "") {
                 position = 5;
                 hidden = "hidden";
                 break;
-            } else if (alertText[d][1] == data[auxiliary][description]) {
-                position = parseInt(alertText[d][0]);
+            } else if (alertText[f][1] == data[a][description]) {
+                position = parseInt(alertText[f][0]);
                 hidden = "";
                 break;
             }
@@ -931,38 +922,36 @@ function googleMaps() {
         // alert color
         switch(position) {
             case 0:
-                icon = new google.maps.MarkerImage(alertColor[0], size, pointX, pointY);
+                icon = new google.maps.MarkerImage(alertColor[0], pointZ, pointX, pointY);
                 optimized = false;
                 break;
             case 1:
-                icon = new google.maps.MarkerImage(alertColor[1], size, pointX, pointY);
+                icon = new google.maps.MarkerImage(alertColor[1], pointZ, pointX, pointY);
                 optimized = false;
                 break;
             case 2:
-                icon = new google.maps.MarkerImage(alertColor[2], size, pointX, pointY);
+                icon = new google.maps.MarkerImage(alertColor[2], pointZ, pointX, pointY);
                 optimized = false;
                 break;
             case 3:
-                icon = new google.maps.MarkerImage(alertColor[3], size, pointX, pointY);
-                optimized = false;
-                break;
-            case 4:
-                icon = new google.maps.MarkerImage(alertColor[4], size, pointX, pointY);
+                icon = new google.maps.MarkerImage(alertColor[3], pointZ, pointX, pointY);
                 optimized = false;
                 break;
             default:
-                icon = new google.maps.MarkerImage(alertColor[5], size, pointX, pointY);        
+                icon = new google.maps.MarkerImage(alertColor[4], pointZ, pointX, pointY);        
                 optimized = true;
         }
-        // marker (alert)
-        new google.maps.Marker({
+        // create new marker (alert)
+        var alertMarker = new google.maps.Marker({
             icon: icon,
             map: map,
             optimized: optimized,
             position: coordinates
         });
+        // push (alert)
+        alertMarkers.push(alertMarker);
         // display gallery
-        if (data[auxiliary][link] == "") {
+        if (data[a][hyperlink] == "") {
             display = "d-none";
         } else {
             display = "";
@@ -970,7 +959,7 @@ function googleMaps() {
         // content
         var content =
             '<div class="accordion" id="div_content">' +
-                '<span class="text-primary">' + data[auxiliary][tower] + '</span>' +
+                '<span class="text-primary">' + data[a][tower] + '</span>' +
                 '<div>' +
                     '<a href="#div_table" data-toggle="collapse">' +
                         '<i class="fas fa-caret-down"></i>' +
@@ -979,32 +968,32 @@ function googleMaps() {
                         '<table class="table table-sm text-left">' +
                             '<tr>' +
                                 '<td>' + text[41][language] + '</td>' +
-                                '<td>' + data[auxiliary][type] + '</td>' +
+                                '<td>' + data[a][type] + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[42][language] + '</td>' +
-                                '<td>' + data[auxiliary][height] + '</td>' +
+                                '<td>' + data[a][height] + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[43][language] + '</td>' +
-                                '<td>' + data[auxiliary][span] + '</td>' +
+                                '<td>' + data[a][span] + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[23][language] + '</td>' +
-                                '<td>' + data[auxiliary][section] + '</td>' +
+                                '<td>' + data[a][section] + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[44][language] + '</td>' +
-                                '<td>' + parseFloat(data[auxiliary][latitude]).toFixed(6) + '</td>' +
+                                '<td>' + parseFloat(data[a][latitude]).toFixed(6) + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[45][language] + '</td>' +
-                                '<td>' + parseFloat(data[auxiliary][longitude]).toFixed(6) + '</td>' +
+                                '<td>' + parseFloat(data[a][longitude]).toFixed(6) + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[33][language] + '</td>' +
                                 '<td>' +
-                                    '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + data[auxiliary][latitude] + ',' + data[auxiliary][longitude] + '">' +
+                                    '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + data[a][latitude] + ',' + data[a][longitude] + '">' +
                                         '<span>Google Maps</span>' +
                                     '</a>' + 
                                 '</td>' +
@@ -1012,9 +1001,9 @@ function googleMaps() {
                             '<tr class="' + display + '">' +
                                 '<td>' + text[25][language] + '</td>' +
                                 '<td>' +
-                                    '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[auxiliary][link] + '" onclick="gallery(this)">' +
-                                        '<span>' + text[24][language] + '</span>' +
-                                        ' <i class="far fa-images"></i>' +
+                                    '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[a][hyperlink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][tower] + '&apos;)">' +
+                                    '<i class="far fa-images"></i> ' +    
+                                    '<span>' + text[24][language] + '</span>' +
                                     '</a>' +
                                 '</td>' +
                             '</tr>' +
@@ -1022,41 +1011,158 @@ function googleMaps() {
                     '</div>' +
                 '</div>' +
                 '<div ' + hidden + '>' +
-                    '<a href="#div_alert" data-toggle="collapse" class="collapsed badge badge-dark w-100">' +
+                    '<div class="collapsed badge badge-pill badge-dark w-100 text-left">' +
                         '<img alt="alert icon" class="img_info" src="' + alertColor[position] + '">' +
-                        '<span class="ml-1 mr-1">' + data[auxiliary][description] + '</span>' +
+                        '<span class="ml-1 mr-1">' + data[a][description] + '</span>' +
+                    '</div>' +
+                    '<a href="#div_alert" data-toggle="collapse" class="text-dark">' +
                         '<i class="fas fa-caret-down"></i>' +
                     '</a>' +
-                    '<div id="div_alert" class="collapse" data-parent="#div_content">' +
-                        '<div class="p-2">' + data[auxiliary][description + 1] + '</div>' +
+                    '<div id="div_alert" class="collapse border-top" data-parent="#div_content">' +
+                        '<div class="p-2">' + data[a][description + 1] + '</div>' +
                     '</div>' +
                 '</div>' +
             '</div>'
         ;
-        // mouseover
-        marker.addListener("mouseover", function(){
-            info.setContent(content);
-            info.open(map, marker);
-        });
-        // click
-        marker.addListener("click", function(){
-            info.setContent(content);
-            info.open(map, marker);
-        });
-        // increment
-        auxiliary++;
-    }
-    // execute
-    function execute(parameter) {
-        // set markers
-        for (var x = 0; x < data.length; x++) {
-            markers(parameter);
-            // conditional
-            if (x == 0) {
-                legend(parameter);
-            }
+        // info (mouseover)
+        function infoMouseover(marker) {
+            google.maps.event.addListener(marker, 'mouseover', (function(marker, content, info) {
+                return function() {
+                    info.setContent(content);
+                    info.open(map, marker);
+                };
+            })(marker, content, info));
         }
+        // info (click)
+        function infoClick(marker) {
+            google.maps.event.addListener(marker, 'click', (function(marker, content, info) {
+                return function() {
+                    info.setContent(content);
+                    info.open(map, marker);
+                };
+            })(marker, content, info));
+        }
+        // execute
+        infoMouseover(marker);
+        infoClick(marker);
     }
+}
 
-    execute(1);
+/* google maps ---------------------------------------------- */
+function googleMaps() {
+    // central map
+    var central = Math.round(data.length / 2);
+    // properties
+    var properties = {
+        center: new google.maps.LatLng(data[central][latitude], data[central][longitude]),
+        fullscreenControl: true,
+        fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
+        mapTypeControl: false,
+        mapTypeId: "hybrid", // roadmap or hybrid
+        streetViewControl: false,
+        zoom: 13
+    };
+    // new map
+    map = new google.maps.Map(document.getElementById("div_map"), properties);
+    // menu
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("div_menu"));
+    // date
+    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById("div_date"));
+    // legend
+    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById("div_legend"));
+    // info window
+    var info = new google.maps.InfoWindow();
+    // site
+    for (var a = 0; a < site.length; a++) {
+        // marker
+        var marker = new google.maps.Marker({
+            icon: "../root/images/marker_site.png",
+            map: map,
+            position: new google.maps.LatLng(parseFloat(site[a][3]), parseFloat(site[a][4])),
+        });
+        // content
+        var content =
+            '<div id="div_site">' +
+                '<strong class="p-2 text-primary">' + site[a][1] + '</strong>' +
+                '<table class="table table-sm mt-2 text-left">' +
+                    '<tr>' +
+                        '<td>' + text[50][language] + '</td>' +
+                        '<td>' + site[a][2] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td>' + text[44][language] + '</td>' +
+                        '<td>' + parseFloat(site[a][3]).toFixed(6) + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td>' + text[45][language] + '</td>' +
+                        '<td>' + parseFloat(site[a][4]).toFixed(6) + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td>' + text[33][language] + '</td>' +
+                        '<td>' +
+                            '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + site[a][3] + ',' + site[a][4] + '">' +
+                                '<span>Google Maps</span>' +
+                            '</a>' +
+                        '</td>' +
+                    '</tr>' +
+                '</table>' +
+            '</div>'
+        ;
+        // info (mouseover)
+        function infoMouseover(marker) {
+            google.maps.event.addListener(marker, 'mouseover', (function(marker, content, info) {
+                return function() {
+                    info.setContent(content);
+                    info.open(map, marker);
+                };
+            })(marker, content, info));
+        }
+        // info (click)
+        function infoClick(marker) {
+            google.maps.event.addListener(marker, 'click', (function(marker, content, info) {
+                return function() {
+                    info.setContent(content);
+                    info.open(map, marker);
+                };
+            })(marker, content, info));
+        }
+        // execute
+        infoMouseover(marker);
+        infoClick(marker);
+    }
+    // path
+    var path1 = new Array();
+    var path2 = new Array();
+    var path3 = new Array();
+    // coordinates
+    for (var a = 0; a < data.length; a++) {
+        path1.push(new google.maps.LatLng(parseFloat(data[a][latitude + 0]), parseFloat(data[a][longitude + 0])));
+        path2.push(new google.maps.LatLng(parseFloat(data[a][latitude + 2]), parseFloat(data[a][longitude + 2])));
+        path3.push(new google.maps.LatLng(parseFloat(data[a][latitude + 4]), parseFloat(data[a][longitude + 4])));
+    }
+    // polyline
+    function polyline(parameter) {
+        new google.maps.Polyline({
+            geodesic: true,
+            map: map,
+            path: parameter,
+            strokeColor: '#FFC107',
+            strokeOpacity: 0.8,
+            strokeWeight: 1.0
+        });
+    }
+    // set polyline
+    polyline(path1);
+    polyline(path2);
+    polyline(path3);
+    // set markers
+    addMarkers(0);
+}
+
+/* map type ------------------------------------------------- */
+function mapType(parameter) {
+    // get element
+    var element = document.getElementById(parameter.id).value;
+    // set map
+    map.setMapTypeId(element);
 }

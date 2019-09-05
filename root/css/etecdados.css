@@ -155,8 +155,8 @@ button[data-target="#div_list"], #div_list {
     max-height: 13px;
 }
 
-#div_alert {
-    max-width: 233px;
+#div_alert, #div_site {
+    max-width: 180px;
 }
 
 /* summary -------------------------------------------------- */
