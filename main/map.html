@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+ <!--
+	 For God so loved the world that he gave his one and only Son,
+	 that whoever believes in him shall not perish but have eternal life.
+	 (John 3:16)
+ -->
+<html lang="pt-br">
+	<!-- head -->
+	<head>
+		<!-- title -->
+		<title>Etecdados</title>
+		<!-- meta -->
+		<meta charset="utf-8">
+		<meta name="viewport"    content="width=device-width, initial-scale=1">
+		<meta name="author"      content="fernando silva">
+		<meta name="contact"     content="etecdados@gmail.com / +55 (021) 98363-3263">
+		<meta name="description" content="etecdados">
+		<meta name="keywords"    content="etecdados, empresa, tecnologia, dados, data, technology, company">
+		<!-- link -->
+		<link type="image/x-icon" rel="icon"       href="../root/favicon/etecdados.ico"> <!-- version 1.0.0 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/bootstrap.css"	   > <!-- version 4.3.1 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/fontawesome.css"  > <!-- version 5.9.0 -->
+		<link type="text/css"     rel="stylesheet" href="../root/css/etecdados.css"    > <!-- version 1.0.0 -->
+		<!-- script -->
+		<script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
+		<script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
+		<script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
+        <script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.0.0  -->
+        <!-- google api -->
+        <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};accessSetup()"></script>
+    </head>
+    <body>
+        <!-- navbar -->
+		<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white-50">
+            <!-- logo and username -->
+            <div class="text-left text-nowrap">
+                <i class="fas fa-user-alt"></i>
+                <script>document.write(username)</script>
+            </div>
+            <!-- button toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="closeSidebar()">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navbar menu -->
+            <div class="collapse navbar-collapse" id="div_navbar">
+                <!-- ul auto -->
+                <ul class="navbar-nav mr-auto"></ul>
+                <!-- ul menu -->
+                <ul class="navbar-nav">
+                    <!-- files -->
+                    <li class="nav-item ml-3">
+                        <a href="files" class="text-white-50 text-decoration-none">
+                            <i class="fas fa-file-alt"></i>
+                            <script>document.write(text[18][language])</script>
+                        </a>
+                    </li>
+                    <!-- projects -->
+                    <li class="nav-item ml-3">
+                        <a href="../main" class="text-white-50 text-decoration-none">
+                            <i class="fas fa-globe"></i>
+                            <script>document.write(text[9][language])</script>
+                        </a>
+                    </li>
+                    <!-- logout -->
+                    <li class="nav-item ml-3">
+                        <a href="#" class="text-white-50 text-decoration-none" data-toggle="modal" data-target="#div_logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <script>document.write(text[10][language])</script>
+                        </a>
+                    </li>
+                    <!-- language -->
+                    <li class="nav-item ml-3">
+                        <button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="1" id="button_portuguese" title="Portuguese"></button>
+                        <button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="2" id="button_spanish"    title="Spanish"   ></button>
+                        <button type="button" class="button_nav align-middle" onclick="setLanguage(this)" value="3" id="button_english"    title="English"   ></button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- container -->
+		<div class="container-fluid text-center mb-3">
+            <!-- header -->
+			<header class="row pt-1 pb-1">
+                <!-- logo elecnor -->
+                <div class="col-sm-3 m-auto text-left d-none d-sm-block">
+                    <img src="../root/images/elecnor/elecnor.png" alt="logo elecnor">
+                </div>
+                <!-- project name -->
+                <div class="col m-auto">
+                    <small>
+                        <script>document.write(projects[position][2])</script>
+                    </small>
+                </div>
+                <!-- logo project -->
+                <div class="col-sm-3 m-auto text-right d-none d-sm-block">
+                    <img src="#" alt="logo project" id="img_project">
+                    <script type="text/javascript">$("#img_project").attr("src", "../root/images/elecnor/" + projects[position][1] + ".png");</script>
+                </div>	
+            </header>
+            <!-- spinner -->
+            <div class="mt-4" id="div_spinner" >
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only"></span>
+                </div>        
+            </div>
+            <!-- sidebar -->
+            <div class="bg-dark text-left text-white-50 text-nowrap" id="div_sidebar" >
+                <div class="ml-2">
+                    <!-- menu -->
+                    <button type="button" class="btn btn-dark text-white-50 float-right mr-2" onclick="closeSidebar()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <br>
+                    <i class="fas fa-list-ul"></i>
+                    <script>document.write(text[19][language])</script>
+                    <!-- activity -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="far fa-dot-circle"></i>
+                        <script>document.write(text[20][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="0" id="input_general" checked>
+                                <script>document.write(text[21][language])</script>
+                            </li>
+                            <li>
+                                <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="1" id="input_preliminary">
+                                <script>document.write(text[26][language])</script>
+                            </li>
+                            <li><input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="2" id="input_civil">
+                                <script>document.write(text[27][language])</script>
+                            </li>
+                            <li><input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="3" id="input_assembly">
+                                <script>document.write(text[28][language])</script>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- cables -->
+                    <div class="border-top border-secondary mt-3">
+                        <span id="span_cables"></span>
+                        <script>document.write(text[29][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="4" id="input_lightning">
+                                <script>document.write("Cabo Para-raios")</script>
+                            </li>
+                            <li>
+                                <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="5" id="input_optical">
+                                <script>document.write("Cabo Fibra Óptica")</script>
+                            </li>
+                            <li>
+                                <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="6" id="input_conductor">
+                                <script>document.write("Cabo Condutor")</script>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- map type -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="far fa-dot-circle"></i>
+                        <script>document.write(text[46][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="hybrid" id="input_hybrid" checked>
+                                <script>document.write(text[47][language])</script>
+                            </li>
+                            <li>
+                                <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="roadmap" id="input_roadmap">
+                                <script>document.write(text[48][language])</script>
+                            </li>
+                            <li>
+                                <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="terrain" id="input_terrain">
+                                <script>document.write(text[49][language])</script>
+                            </li>
+                        </ul>
+                    </div>
+                     <!-- summary -->
+                     <div class="border-top border-secondary mt-3 mb-3">
+                         <a href="" data-toggle="modal" data-target="#div_summary">
+                            <i class="fas fa-table"></i>
+                            <script>document.write(text[30][language])</script>
+                         </a>
+                    </div>
+                </div>
+            </div>
+            <!-- controls -->
+            <div id="div_controls" hidden>
+                <!-- menu -->
+                <div id="div_menu">
+                    <button type="button" class="btn btn-sm btn-primary m-2" onclick="openSidebar()">
+                        <i class="fas fa-list-ul"></i>
+                        <script>document.write(text[19][language])</script>
+                    </button>
+                </div>
+                <!-- date -->
+                <div class="alert alert-light p-1 m-2" id="div_date">
+                    <span class="text-danger">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </span>
+                    <script>document.write(text[31][language])</script>
+                    <span class="font-weight-bold">
+                        <script>document.write(data[0][dataColumns - 1])</script>
+                    </span>
+                </div>
+                <!-- legend -->
+                <div class="m-2" id="div_legend">
+                    <!-- button -->
+                    <button class="btn btn-sm btn btn-light text-secondary bg-white w-100" type="button" data-toggle="collapse" data-target="#div_list">
+                        <span class="mr-2">
+                            <script>document.write(text[32][language])</script>
+                        </span>
+                        <span class="float-right">
+                            <i class="fas fa-caret-down"></i>
+                        </span>
+                    </button>
+                    <!-- list -->
+                    <div class="collapse bg-white text-left" id="div_list"></div>
+                </div>
+            </div>
+            <!-- modal summary -->
+            <div class="modal fade" id="div_summary">
+                <div class="modal-fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                        <div class="modal-content">
+                            <!-- modal header -->
+                            <div class="modal-header">
+                                <h5 class="modal-title text-primary">
+                                    <i class="fas fa-table"></i>
+                                    <script>document.write(text[30][language])</script>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!-- modal body -->
+                            <div class="modal-body pt-0" id="div_tableSummary">
+                                <div class="mt-2 mb-2 text-center">
+                                    <script>document.write(projects[position][2])</script>
+                                </div>
+                                <table class="table table-sm">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="text-left">
+                                                <script>document.write(text[34][language].toUpperCase())</script>
+                                            </th>
+                                            <th scope="col" class="text-left">
+                                                <script>document.write(text[35][language].toUpperCase())</script>
+                                            </th>
+                                            <th scope="col">
+                                                <script>document.write(text[36][language].toUpperCase())</script>
+                                            </th>
+                                            <th scope="col">
+                                                <script>document.write(text[37][language].toUpperCase())</script>
+                                            </th>
+                                            <th scope="col">
+                                                <script>document.write(text[38][language].toUpperCase())</script>
+                                            </th>
+                                            <th scope="col">
+                                                <script>document.write(text[39][language].toUpperCase())</script>
+                                            </th>
+                                            <th scope="col">
+                                                <script>document.write(text[40][language].toUpperCase())</script>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_summary"></tbody>
+                                </table>
+                            </div>
+                            <!-- modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="button_logout btn btn-primary" data-dismiss="modal">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- map -->
+            <div id="div_map">
+                <!-- check data -->
+                <script type="text/javascript">checkData()</script>
+            </div>
+            <!-- modal gallery -->
+            <div class="modal fade" id="div_gallery">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <!-- modal header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title text-primary">
+                                <i class="far fa-images"></i>
+                                <script>document.write(text[24][language])</script>
+                                <span id="span_tower"></span>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!-- modal body -->
+                        <div class="modal-body bg-dark">
+                            <div class="carousel slide" data-ride="carousel" id="div_carousel">
+                                <ol class="carousel-indicators p-1" id="ol_indicators"></ol>
+                                <div class="carousel-inner" id="div_inner"></div>
+                                <div>
+                                    <a class="carousel-control-prev" href="#div_carousel" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#div_carousel" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="button_logout btn btn-primary" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal logout -->
+            <div class="modal fade" id="div_logout">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <!-- modal header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title text-primary">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <script>document.write(text[10][language])</script>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!-- modal body -->
+                        <div class="modal-body">
+                            <script>document.write(text[11][language])</script>
+                        </div>
+                        <!-- modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="button_logout btn btn-primary" onclick="logout()">
+                                <script>document.write(text[12][language])</script>
+                            </button>
+                            <button type="button" class="button_logout btn btn-secondary" data-dismiss="modal">
+                                <script>document.write(text[13][language])</script>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
