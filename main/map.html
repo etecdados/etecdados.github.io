@@ -132,9 +132,27 @@
                             <li><input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="3" id="input_assembly">
                                 <script>document.write(text[28][language])</script>
                             </li>
+                        </ul>
+                    </div>
+                    <!-- cables -->
+                    <div class="border-top border-secondary mt-3">
+                        <span id="span_cables">
+                            <i class="far fa-square"></i>
+                            <!-- <i class="far fa-check-square"></i> -->
+                        </span>
+                        <script>document.write(text[29][language])</script>
+                        <ul class="ul_sidebar">
                             <li>
-                                <input type="radio" name="activity" class="mr-1 align-middle" onclick="addPolyline(this)" value="4" id="input_cables"      >
-                                <script>document.write(text[29][language])</script>
+                                <input type="checkbox" class="mr-1 align-middle" onclick="addPolyline(this)" value="4" id="input_lightning">
+                                <script>document.write("Cabo Para-raios")</script>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="mr-1 align-middle" onclick="addPolyline(this)" value="5" id="input_optical">
+                                <script>document.write("Cabo Fibra Óptica")</script>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="mr-1 align-middle" onclick="addPolyline(this)" value="6" id="input_conductor">
+                                <script>document.write("Cabo Condutor")</script>
                             </li>
                         </ul>
                     </div>

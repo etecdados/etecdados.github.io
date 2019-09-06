@@ -122,37 +122,38 @@
 	console.log(activity[0][0]);
 	console.log(activity[1][7]);
 
-	var parameter = 4;
-	var filter = new Array();
-	
-	var number;
+	var parameter = 6;
+	var activityValues = new Array();
+	var activityAxis = 7;
+	var activityLines = 8;
+	var activityDescription = 1;
 	
 	
 	for (var a = 0; a < activity.length; a++) {
 		// conditional
 		if (parameter == parseInt(activity[a][0])) {
-			// auxiliary 1
-			var auxiliary = a + 1;
-			// 
-			for (var b = 0; b < 8; b++) {
-				// 
-				var c = auxiliary + b;
+			// search number
+			for (var b = 0; b < activityLines; b++) {
+				// auxiliary
+				var auxiliary = a + b + 1;
+				var number;
 				// conditional
-				if (activity[c][7].search(2) > 0) {
+				if (activity[auxiliary][activityAxis].search(2) > 0) {
 					number = 2;
-				} else if (activity[c][7].search(3) > 0) {
+				} else if (activity[auxiliary][activityAxis].search(3) > 0) {
 					number = 4;
 				} else {
 					number = 0;
 				}
-				filter[b] = [activity[c][1], number];
+				// values
+				activityValues[b] = [activity[auxiliary][1], number];
 				
 			}
 			break;
 		}
 	}
-	console.log(auxiliary);
-	console.log(filter);
+	
+	console.log(activityValues);
 
 
     /* 
@@ -184,9 +185,9 @@
       */
 
 	</script>
-	
+	<!--
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ&callback=initMap" async defer></script>
-
+-->
 				
 			
 

@@ -276,7 +276,7 @@ var data = new Array();
 var dataTotal = sessionStorage.getItem("dataLength");
 var dataValue = sessionStorage.getItem("dataValues");
 // total columns
-var dataColumns = 20;
+var dataColumns = 22;
 // push into array
 pushArray(dataTotal, data, dataColumns, dataValue);
 
