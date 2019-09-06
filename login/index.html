@@ -63,7 +63,7 @@
                     <label for="input_password" class="mt-2">
                         <script>document.write(text[1][language])</script>
                     </label>
-                    <input type="password" class="form-control" id="input_password" placeholder="******" required>
+                    <input type="password" class="form-control" id="input_password" placeholder="******" required onkeypress="triggerLogin(event)">
                     <!-- validation -->
                     <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#login" id="button_login" onclick="login()">
                         <script>document.write(text[2][language])</script>

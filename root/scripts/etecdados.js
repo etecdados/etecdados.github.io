@@ -240,12 +240,15 @@ function pushArray(parameter1, parameter2, parameter3, parameter4) {
     }
     // total columns
     var columns = parameter3;
-    // split
-    var split = parameter4.split(",");
-    // push into array
-    for (var b = 0; b < total; b++) {
-        for (var c = 0; c < columns; c++) {
-            parameter2[b].push(split[b * columns + c]);
+    // conditional
+    if (parameter4 != null) {
+        // split
+        var split = parameter4.split(",");
+        // push into array
+        for (var b = 0; b < total; b++) {
+            for (var c = 0; c < columns; c++) {
+                parameter2[b].push(split[b * columns + c]);
+            }
         }
     }
 }
@@ -374,6 +377,15 @@ function login() {
         document.cookie = "username=" + email + "; path=/";
         // redirect
         location.href = "../main";
+    }
+}
+
+/* trigger login  ------------------------------------------- */
+function triggerLogin(e) {
+    // conditional
+    if (e.keyCode == 13) {
+        // click
+        document.getElementById("button_login").click();
     }
 }
 
@@ -1145,7 +1157,7 @@ function addMarkers(parameter) {
                     '</div>' +
                 '</div>' +
                 '<div ' + hidden + '>' +
-                    '<div class="collapsed badge badge-pill badge-dark w-100 text-left">' +
+                    '<div class="collapsed badge badge-pill badge-dark w-100">' +
                         '<img alt="alert icon" class="img_info" src="' + alertColor[position] + '">' +
                         '<span class="ml-1 mr-1">' + data[a][sheetDescription] + '</span>' +
                     '</div>' +
