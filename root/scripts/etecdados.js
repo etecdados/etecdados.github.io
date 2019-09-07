@@ -592,17 +592,18 @@ function checkData() {
 }
 
 /* legend --------------------------------------------------- */
-function legend(parameter) {
+function legend(parameter1, parameter2) {
     // variable
     var auxiliary;
     var filter;
     var title;
     // get element
     var element = document.getElementById("div_list");
+    var cables  = document.getElementById("div_cables");
     // clear div
-    element.innerHTML = "";
+    cables.innerHTML = "";
     // conditional
-    if (parameter == 0) {
+    if (parameter1 == 0) {
         // array
         var total = new Array();
         // push
@@ -615,7 +616,7 @@ function legend(parameter) {
         // check parameter
         for (var b = 0; b < activity.length; b++) {
             // conditional
-            if (parameter == parseInt(activity[b][0])) {
+            if (parameter1 == parseInt(activity[b][0])) {
                 // filter (activity)
                 filter    = new Array(8);
                 auxiliary = b + 1;
@@ -625,12 +626,14 @@ function legend(parameter) {
     }
     // create element
     var tagDiv = document.createElement("div");
+    var tagP   = document.createElement("p");
     var tagUl  = document.createElement("ul");
     // set attribute
     tagDiv.setAttribute("class", "bg-primary text-white text-center p-1 mt-1");
-    tagUl.setAttribute("class", "ul_legend p-1");
+    tagP.setAttribute("class", "text-center text-primary pt-1 m-0");
+    tagUl.setAttribute("class", "ul_legend p-1 mb-0");
     // switch
-    switch(parseInt(parameter)) {
+    switch(parseInt(parameter1)) {
         case 1:
             title = text[26][language];
             break;
@@ -642,28 +645,51 @@ function legend(parameter) {
             break;
         case 4:
             title = text[29][language];
+            tagP.innerHTML = text[51][language].toUpperCase();
+            break;
+        case 5:
+            title = text[29][language];
+            tagP.innerHTML = text[52][language].toUpperCase();
+            break;
+        case 6:
+            title = text[29][language];
+            tagP.innerHTML = text[53][language].toUpperCase();
             break;
         default:
             title = text[23][language];
     }
     // inner html
     tagDiv.innerHTML = title.toUpperCase();
-    // append child
-    element.appendChild(tagDiv);
-    element.appendChild(tagUl);
+    // conditional
+    if (parameter2 == true) {
+        // clear div
+        element.innerHTML = "";
+        // append child
+        element.appendChild(tagDiv);
+        element.appendChild(tagUl);
+    } else {
+        // append child
+        cables.appendChild(tagDiv);
+        cables.appendChild(tagP);
+        cables.appendChild(tagUl);
+    }
+    
     // list
     for (var c = 0; c < filter.length; c++) {
         // create element
         var tagLi   = document.createElement("li");
         var tagImg  = document.createElement("img");
         var tagSpan = document.createElement("span");
+        var tagI    = document.createElement("i");
         // set attribute
         tagImg.setAttribute("src", markerColor[c]);
         tagImg.setAttribute("alt", "marker");
         tagImg.setAttribute("height", "13px");
         tagImg.setAttribute("class", "mr-2 mb-1");
+        tagI.setAttribute("class", "mr-2 mb-1 fas fa-minus");
+        tagI.setAttribute("style", "color:" + colors[c]);
         // conditional
-        if (parameter == 0) {
+        if (parameter1 == 0) {
             // inner html
             tagSpan.innerHTML = filter[c];    
         } else {
@@ -673,6 +699,7 @@ function legend(parameter) {
             if (description == "") {
                 // set attribute
                 tagImg.setAttribute("class", "d-none");
+                tagI.setAttribute("class", "d-none");
             } else {
                 // inner html
                 tagSpan.innerHTML = description;
@@ -680,7 +707,12 @@ function legend(parameter) {
         }
         // append child
         tagUl.appendChild(tagLi);
-        tagLi.appendChild(tagImg);
+        // conditional
+        if (parameter2 == true) {
+            tagLi.appendChild(tagImg);
+        } else {
+            tagLi.appendChild(tagI);
+        }
         tagLi.appendChild(tagSpan);
     }
 }
@@ -822,7 +854,7 @@ function addPolyline(parameter) {
         element = document.getElementById(parameter.id).value;
     }
     // legend
-	//legend(element);
+	legend(element, false);
 	// set map
 	for (var a = 0; a < data.length; a++) {
         // variables
@@ -865,11 +897,11 @@ function addPolyline(parameter) {
                             if (activity[auxiliary][1] == "") {
                                 position = 9;
                                 break;
-                        } else if (activity[auxiliary][1] == data[a][sheetActivity + parseInt(element)]) {
-                            position = parseInt(activity[auxiliary][activityColor]);
-                            break;
+                            } else if (activity[auxiliary][1] == data[a][sheetActivity + parseInt(element)]) {
+                                position = parseInt(activity[auxiliary][activityColor]);
+                                break;
+                            }
                         }
-                    }
                     break;
                     }
                 }
@@ -944,7 +976,7 @@ function addMarkers(parameter) {
         element = document.getElementById(parameter.id).value;
     }
     // legend
-    legend(element);
+    legend(element, true);
     // info window
     var info = new google.maps.InfoWindow();
     // set map

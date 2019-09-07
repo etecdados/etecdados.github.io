@@ -141,15 +141,15 @@
                         <ul class="ul_sidebar">
                             <li>
                                 <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="4" id="input_lightning">
-                                <script>document.write("Cabo Para-raios")</script>
+                                <script>document.write(text[51][language])</script>
                             </li>
                             <li>
                                 <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="5" id="input_optical">
-                                <script>document.write("Cabo Fibra Óptica")</script>
+                                <script>document.write(text[52][language])</script>
                             </li>
                             <li>
                                 <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="6" id="input_conductor">
-                                <script>document.write("Cabo Condutor")</script>
+                                <script>document.write(text[53][language])</script>
                             </li>
                         </ul>
                     </div>
@@ -212,7 +212,9 @@
                         </span>
                     </button>
                     <!-- list -->
-                    <div class="collapse bg-white text-left" id="div_list"></div>
+                    <div id="div_list"   class="bg-white text-left collapse.show"></div>
+                    <div id="div_cables" class="bg-white text-left"></div>
+                    
                 </div>
             </div>
             <!-- modal summary -->
