@@ -180,8 +180,7 @@ button[data-target="#div_list"], #div_list {
 img[src="../root/images/alert_red.png"],
 img[src="../root/images/alert_blue.png"],
 img[src="../root/images/alert_green.png"], 
-img[src="../root/images/alert_yellow.png"],
-img[src="../root/images/alert_white.png"] {
+img[src="../root/images/alert_yellow.png"]{
     animation: alert 1s ease-out;
     animation-iteration-count: infinite;
 }
@@ -198,12 +197,12 @@ img[src="../root/images/alert_white.png"] {
 }
 
 #div_carousel img {
-    max-height: 377px;
+    max-height: 390px;
 }
 
 #div_carousel iframe {
     border: none;
-    height: 377px;
+    height: 390px;
     width: 610px;
 }
 
@@ -217,4 +216,9 @@ img[src="../root/images/alert_white.png"] {
     height: 21px;
     line-height: initial;
     text-indent: 0;
+}
+
+/* search --------------------------------------------------- */
+#div_search {
+    max-width: 987px;
 }

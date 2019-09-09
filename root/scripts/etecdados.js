@@ -161,7 +161,8 @@ function getProject() {
             // set item
             sessionStorage.setItem("dataLength", keys);
             sessionStorage.setItem("dataValues", ranges.values);
-        });
+        }
+    );
     // activity
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: link,
@@ -174,7 +175,8 @@ function getProject() {
             // set item
             sessionStorage.setItem("activityLength", keys);
             sessionStorage.setItem("activityValues", ranges.values);
-        });
+        }
+    );
     // site
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: link,
@@ -187,7 +189,8 @@ function getProject() {
             // set item
             sessionStorage.setItem("siteLength", keys);
             sessionStorage.setItem("siteValues", ranges.values);
-        });
+        }
+    );
     // alert
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: link,
@@ -200,7 +203,22 @@ function getProject() {
             // set item
             sessionStorage.setItem("alertLength", keys);
             sessionStorage.setItem("alertValues", ranges.values);
-        });
+        }
+    );
+    // files
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: link,
+        range: "files!A4:Z"
+        }).then(function(response) {
+            // result
+            ranges = response.result;
+            // keys
+            keys = Object.keys(ranges.values).length;
+            // set item
+            sessionStorage.setItem("filesLength", keys);
+            sessionStorage.setItem("filesValues", ranges.values);
+        }
+    );
 }
 
 /* set language --------------------------------------------- */
@@ -312,6 +330,16 @@ var alertTextValue = sessionStorage.getItem("alertValues");
 var alertTextColumns = 3;
 // push into array
 pushArray(alertTextTotal, alertText, alertTextColumns, alertTextValue);
+
+/* files ---------------------------------------------------- */
+var filesText = new Array();
+// get item
+var filesTextTotal = sessionStorage.getItem("filesLength");
+var filesTextValue = sessionStorage.getItem("filesValues");
+// total columns
+var filesTextColumns = 6;
+// push into array
+pushArray(filesTextTotal, filesText, filesTextColumns, filesTextValue);
 
 /* check text ----------------------------------------------- */
 function checkText() {
@@ -1171,16 +1199,16 @@ function addMarkers(parameter) {
                             '<tr>' +
                                 '<td>' + text[33][language] + '</td>' +
                                 '<td>' +
-                                    '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + data[a][sheetLatitude] + ',' + data[a][sheetLongitude] + '">' +
+                                    '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + parseFloat(data[a][sheetLatitude]) + ',' + parseFloat(data[a][sheetLongitude]) + '">' +
                                         '<span>Google Maps</span>' +
-                                    '</a>' + 
+                                    '</a>' +
                                 '</td>' +
                             '</tr>' +
                             '<tr class="' + display + '">' +
                                 '<td>' + text[25][language] + '</td>' +
                                 '<td>' +
                                     '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[a][sheetLink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][sheetTower] + '&apos;)">' +
-                                    '<i class="far fa-images"></i> ' +    
+                                    '<i class="far fa-images"></i> ' +
                                     '<span>' + text[24][language] + '</span>' +
                                     '</a>' +
                                 '</td>' +
@@ -1278,7 +1306,7 @@ function googleMaps() {
                     '<tr>' +
                         '<td>' + text[33][language] + '</td>' +
                         '<td>' +
-                            '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + site[a][3] + ',' + site[a][4] + '">' +
+                            '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + parseFloat(site[a][3]) + ',' + parseFloat(site[a][4]) + '">' +
                                 '<span>Google Maps</span>' +
                             '</a>' +
                         '</td>' +
@@ -1320,4 +1348,57 @@ function mapType(parameter) {
     var element = document.getElementById(parameter.id).value;
     // set map
     map.setMapTypeId(element);
+}
+
+/* search (jQuery) ------------------------------------------ */
+$(document).ready(function(){
+    $("#input_search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tbody_search tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+});
+
+/* list files ----------------------------------------------- */
+function listFiles() {
+    // get element
+    var element = document.getElementById("tbody_search");
+    // list
+    for (var a = 0; a < filesText.length; a++) {
+        // create element
+        var tagTr = document.createElement("tr");
+        var tagTd = document.createElement("td");
+        var tagA  = document.createElement("a");
+        // append child
+        element.appendChild(tagTr);
+        // td
+        for (var b = 0; b < filesTextColumns - 1; b++) {
+            // clone
+            var clone = tagTd.cloneNode(true);
+            // append child
+            tagTr.appendChild(clone);
+            // switch
+            switch(b) {
+                case 0:
+                    clone.innerHTML = ('00' + (a + 1)).slice(-3);
+                    break;
+                case 1:
+                    clone.setAttribute("class", "text-left");
+                    clone.innerHTML = filesText[a][1];
+                    break;
+                case 2:
+                    clone.innerHTML = filesText[a][2];
+                    break;
+                case 3:
+                    clone.innerHTML = filesText[a][3];
+                    break;
+                default:
+                    clone.appendChild(tagA);
+                    tagA.setAttribute("target", "_blank");
+                    tagA.setAttribute("href", filesText[a][4]);
+                    tagA.innerHTML = '<i class="fas fa-external-link-alt"></i>';
+            }
+        }
+    }
 }

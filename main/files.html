@@ -86,21 +86,62 @@
                 <div class="col-sm-3 m-auto text-left d-none d-sm-block">
                     <img src="../root/images/elecnor/elecnor.png" alt="logo elecnor">
                 </div>
-                <!-- files -->
+                <!-- project name -->
                 <div class="col m-auto">
-                    <i class="fas fa-file-alt"></i>
-                    <script>document.write(text[18][language])</script>
-                </div>
+					<small>
+						<script>document.write(projects[position][2])</script>
+					</small>
+				</div>
                 <!-- logo project -->
                 <div class="col-sm-3 m-auto text-right d-none d-sm-block">
 					<img src="../root/images/elecnor/" alt="logo project" id="img_project">
 					<script type="text/javascript">$("#img_project").attr("src", "../root/images/elecnor/" + projects[position][1] + ".png");</script>
 				</div>
 			</header>
-			
-
-
-
+			<!-- files -->
+			<div class="mt-3">
+				<i class="fas fa-file-alt"></i>
+				<script>document.write(text[18][language])</script>
+			</div>
+			<!-- search -->
+			<div id="div_search" class="m-auto">
+				<!-- search input -->
+				<div class="input-group mb-3 mt-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">
+							<i class="fas fa-search"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" placeholder="Pesquisar" id="input_search">
+				</div>
+				<!-- search table -->
+				<table class="table table-sm table-striped">
+					<!-- thead -->
+					<thead class="bg-info text-white">
+						<tr>
+							<th>
+								<script>document.write(text[34][language])</script>
+							</th>
+							<th>
+								<script>document.write(text[35][language])</script>
+							</th>
+							<th>
+								<script>document.write(text[54][language])</script>
+							</th>
+							<th>
+								<script>document.write(text[55][language])</script>
+							</th>
+							<th>
+								<script>document.write(text[56][language])</script>
+							</th>
+						</tr>
+					</thead>
+					<!-- tbody -->
+					<tbody id="tbody_search">
+						<script type="text/javascript">listFiles()</script>
+					</tbody>
+				</table>
+			</div>
             <!-- modal logout -->
 			<div class="modal fade" id="div_logout">
                 <div class="modal-dialog modal-sm" role="document">
