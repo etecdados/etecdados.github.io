@@ -167,14 +167,7 @@ button[data-target="#div_list"], #div_list {
 }
 
 #div_tableSummary {
-    height: 500px;
-    overflow-y: auto;
     white-space: nowrap;
-}
-
-#div_tableSummary thead {
-    position: sticky;
-    top: 0;
 }
 
 img[src="../root/images/alert_red.png"],

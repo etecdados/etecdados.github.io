@@ -297,7 +297,7 @@ var data = new Array();
 var dataTotal = sessionStorage.getItem("dataLength");
 var dataValue = sessionStorage.getItem("dataValues");
 // total columns
-var dataColumns = 18;
+var dataColumns = 19;
 // push into array
 pushArray(dataTotal, data, dataColumns, dataValue);
 
@@ -861,7 +861,7 @@ var sheetSection     = 1 + sheetSpan;
 var sheetLatitude    = 1 + sheetSection;
 var sheetLongitude   = 1 + sheetLatitude;
 var sheetActivity    = 0 + sheetLongitude;
-var sheetDescription = 7 + sheetActivity;
+var sheetDescription = 8 + sheetActivity;
 var sheetLink        = 2 + sheetDescription;
 // sheet activity
 var activityColor = 7;
@@ -1063,11 +1063,11 @@ function addMarkers(parameter) {
 						if (activity[auxiliary][1] == "") {
 							position = 9;
 							break;
-					} else if (activity[auxiliary][1] == data[a][sheetActivity + parseInt(element)]) {
-						position = parseInt(activity[auxiliary][activityColor]);
-						break;
-					}
-				}
+					    } else if (activity[auxiliary][1] == data[a][sheetActivity + parseInt(element)]) {
+						    position = parseInt(activity[auxiliary][activityColor]);
+						    break;
+					    }
+				    }
 				break;
 				}
             }

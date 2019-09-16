@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="300px" height="55px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 293 48" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <metadata>
+        https://etecdados.github.io
+        etecdados v1.0.0
+        copyright 2019 by etecdados
+        created on 2013/06/24 12:10
+        author fernando silva
+        last update on 2019/09/16
+    </metadata>
+    <defs>
+        <style type="text/css">
+            <![CDATA[
+                .primary    {fill:#6C757D}
+                .secondary  {fill:#007BFF}
+                .tertiary   {fill:#FFFFFF}
+            ]]>
+        </style>
+    </defs>
+    <!-- icon -->
+    <polygon class="primary"  points="25.51,-0.09,5.50,11.46,5.50,23.97,12.04,27.75,13.71,24.86,8.84,22.05,8.84,15.31,23.84,23.97,23.84,41.30,5.50,30.71,5.50,34.56,25.51,46.12,36.35,39.86,36.35,32.31,33.01,32.31,33.01,37.93,27.18,41.30,27.18,23.97,42.18,15.31,42.18,36.49,45.52,34.56,45.52,11.46,34.68,5.2,28.14,8.98,29.81,11.86,34.68,9.05,40.52,12.42,25.51,21.09,10.5,12.42,28.84,1.83"/>
+    <circle  class="primary"  cx="25.51" cy="12.42" r="4.34"/>
+    <circle  class="primary"  cx="16.34" cy="28.31" r="4.34"/>
+    <circle  class="primary"  cx="34.68" cy="28.31" r="4.34"/>
+    <circle  class="tertiary" cx="25.51" cy="12.42" r="1.67"/>
+    <circle  class="tertiary" cx="16.34" cy="28.31" r="1.67"/>
+    <circle  class="tertiary" cx="34.68" cy="28.31" r="1.67"/>
+    <!-- e -->
+    <polygon class="primary"   points="54.19,11.67,54.19,34.35,76.87,34.35,76.87,29.01,59.53,29.01,59.53,25.68,71.53,25.68,71.53,20.34,59.53,20.34,59.53,17.01,76.87,17.01,76.87,11.67"/>
+    <!-- t -->
+    <polygon class="primary"   points="80.20,11.67,80.20,17.01,88.87,17.01,88.87,34.35,94.21,34.35,94.21,17.01,102.88,17.01,102.88,11.67"/>
+    <!-- e -->
+    <polygon class="primary"   points="106.21,11.67,106.21,34.35,128.89,34.35,128.89,29.01,111.55,29.01,111.55,25.68,123.56,25.68,123.56,20.34,111.55,20.34,111.55,17.01,128.89,17.01,128.89,11.67"/>
+    <!-- c -->
+    <polygon class="primary"   points="132.23,11.67,132.23,34.35,154.9,34.35,154.9,29.01,137.56,29.01,137.56,17.01,154.9,17.01,154.9,11.67"/>
+    <!-- d -->
+    <polygon class="secondary" points="158.24,11.67,158.24,17.01,175.58,17.01,175.58,29.01,158.24,29.01,158.24,34.35,180.92,34.35,180.92,11.67"/>
+    <!-- a -->
+    <polygon class="secondary" points="184.25,11.67,184.25,17.01,201.59,17.01,201.59,20.34,184.25,20.34,184.25,34.35,189.59,34.35,189.59,25.68,201.59,25.68,201.59,34.35,206.93,34.35,206.93,11.67"/>
+    <!-- d -->
+    <polygon class="secondary" points="210.26,11.67,210.26,17.01,227.6,17.01,227.6,29.01,210.26,29.01,210.26,34.35,232.94,34.35,232.94,11.67"/>
+    <!-- o -->
+    <polygon class="secondary" points="236.27,11.67,236.27,34.35,258.95,34.35,258.95,11.67"/>
+    <polygon class="tertiary"  points="241.61,17.01,241.61,29.01,253.62,29.01,253.62,17.01"/>
+    <!-- s -->
+    <polygon class="secondary" points="262.29,11.67,262.29,25.68,279.63,25.68,279.63,29.01,262.29,29.01,262.29,34.35,284.96,34.35,284.96,20.34,267.62,20.34,267.62,17.01,284.96,17.01,284.96,11.67"/>
+</svg>
