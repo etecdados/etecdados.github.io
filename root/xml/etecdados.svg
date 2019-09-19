@@ -12,8 +12,8 @@
     <defs>
         <style type="text/css">
             <![CDATA[
-                .primary    {fill:#6C757D}
-                .secondary  {fill:#007BFF}
+                .primary    {fill:#007BFF}
+                .secondary  {fill:#6C757D}
             ]]>
         </style>
     </defs>
