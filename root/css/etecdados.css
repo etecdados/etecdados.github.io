@@ -14,6 +14,10 @@
     margin: auto;
 }
 
+.info_content {
+    align-items: center;
+}
+
 #div_login footer {
     font-size: 13px;
 }
@@ -34,15 +38,15 @@
 }
 
 #button_portuguese {
-    background-image: url(../images/flag_brazil.png);
+    background-image: url(../xml/flag-brazil.svg);
 }
 
 #button_spanish {
-    background-image: url(../images/flag_spain.png);
+    background-image: url(../xml/flag-spain.svg);
 }
 
 #button_english {
-    background-image: url(../images/flag_uk.png);
+    background-image: url(../xml/flag-uk.svg);
 }
 
 /* projects ------------------------------------------------- */
@@ -114,27 +118,25 @@ header img {
 
 /* sidebar -------------------------------------------------- */
 #div_sidebar {
+    bottom: 0;
     left: 0;
-    min-height: 84vh;
     overflow-x: hidden;
+    overflow-y: auto;
     position: absolute;
     transition: 0.5s;
+    top: 0;
     width: 0;
     z-index: 1;
-  }
+}
 
-  #div_sidebar input {
-      cursor: pointer;
-  }
+#div_sidebar input, .ul_sidebar label {
+    cursor: pointer;
+}
 
-  .ul_sidebar {
+.ul_sidebar {
     list-style-type: none;
     padding: 0;
- }
-
- .ul_sidebar li:hover {
-    background-color: #6C757D;
- }
+}
 
 /* controls ------------------------------------------------- */
 button[data-target="#div_list"], #div_list {
@@ -170,10 +172,10 @@ button[data-target="#div_list"], #div_list {
     white-space: nowrap;
 }
 
-img[src="../root/images/alert_red.png"],
-img[src="../root/images/alert_blue.png"],
-img[src="../root/images/alert_green.png"], 
-img[src="../root/images/alert_yellow.png"]{
+img[src="../root/xml/alert-red.svg"],
+img[src="../root/xml/alert-blue.svg"],
+img[src="../root/xml/alert-green.svg"],
+img[src="../root/xml/alert-yellow.svg"] {
     animation: alert 1s ease-out;
     animation-iteration-count: infinite;
 }
@@ -211,7 +213,12 @@ img[src="../root/images/alert_yellow.png"]{
     text-indent: 0;
 }
 
-/* search --------------------------------------------------- */
-#div_search {
+/* files ---------------------------------------------------- */
+.div_search {
     max-width: 987px;
+}
+
+#div_tableSearch {
+    overflow: auto;
+    white-space: nowrap;
 }

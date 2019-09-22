@@ -297,7 +297,7 @@ var data = new Array();
 var dataTotal = sessionStorage.getItem("dataLength");
 var dataValue = sessionStorage.getItem("dataValues");
 // total columns
-var dataColumns = 19;
+var dataColumns = 20;
 // push into array
 pushArray(dataTotal, data, dataColumns, dataValue);
 
@@ -514,7 +514,7 @@ function validation(parameter) {
 
 /* open sidebar --------------------------------------------- */
 function openSidebar() {
-    document.getElementById("div_sidebar").style.width = "233px";
+    document.getElementById("div_sidebar").style.width = "280px";
     // collapse navbar (jQuery)
     $(".collapse").collapse("hide");
 }
@@ -530,35 +530,35 @@ var colors = [
     /*1*/ "#0000FF", // blue
     /*2*/ "#00FF00", // green
     /*3*/ "#FFFF00", // yellow
-    /*4*/ "#9900CC", // purple
+    /*4*/ "#FF00FF", // magenta
     /*5*/ "#00FFFF", // cyan
-    /*6*/ "#FF6600", // orange
+    /*6*/ "#FFA500", // orange
     /*7*/ "#000000", // black
-    /*8*/ "#F48884", // pink
-    /*9*/ "#96989A"  // gray
+    /*8*/ "#A0500A", // brown
+    /*9*/ "#A5A5A5"  // gray
 ];
 
 /* marker color --------------------------------------------- */
 var markerColor = [
-    /*0*/ "../root/images/marker_red.png",
-    /*1*/ "../root/images/marker_blue.png",
-    /*2*/ "../root/images/marker_green.png",
-    /*3*/ "../root/images/marker_yellow.png",
-    /*4*/ "../root/images/marker_purple.png",
-    /*5*/ "../root/images/marker_cyan.png",
-    /*6*/ "../root/images/marker_orange.png",
-    /*7*/ "../root/images/marker_black.png",
-    /*8*/ "../root/images/marker_pink.png",
-    /*9*/ "../root/images/marker_gray.png"
+    /*0*/ "../root/xml/marker-red.svg",
+    /*1*/ "../root/xml/marker-blue.svg",
+    /*2*/ "../root/xml/marker-green.svg",
+    /*3*/ "../root/xml/marker-yellow.svg",
+    /*4*/ "../root/xml/marker-magenta.svg",
+    /*5*/ "../root/xml/marker-cyan.svg",
+    /*6*/ "../root/xml/marker-orange.svg",
+    /*7*/ "../root/xml/marker-black.svg",
+    /*8*/ "../root/xml/marker-brown.svg",
+    /*9*/ "../root/xml/marker-transparent.svg"
 ];
 
 /* alert color----------------------------------------------- */
 var alertColor = [
-    /*0*/ "../root/images/alert_red.png",
-    /*1*/ "../root/images/alert_blue.png",
-    /*2*/ "../root/images/alert_green.png",
-    /*3*/ "../root/images/alert_yellow.png",
-    /*4*/ "../root/images/alert_transparent.png"
+    /*0*/ "../root/xml/alert-red.svg",
+    /*1*/ "../root/xml/alert-blue.svg",
+    /*2*/ "../root/xml/alert-green.svg",
+    /*3*/ "../root/xml/alert-yellow.svg",
+    /*4*/ "../root/xml/alert-transparent.svg"
 ];
 
 /* check data ----------------------------------------------- */
@@ -682,6 +682,12 @@ function legend(parameter1, parameter2) {
         case 6:
             title = text[29][language];
             tagP.innerHTML = text[53][language].toUpperCase();
+            break;
+        case 7:
+            title = text[58][language];
+            break;
+        case 8:
+            title = text[59][language];
             break;
         default:
             title = text[23][language];
@@ -861,7 +867,7 @@ var sheetSection     = 1 + sheetSpan;
 var sheetLatitude    = 1 + sheetSection;
 var sheetLongitude   = 1 + sheetLatitude;
 var sheetActivity    = 0 + sheetLongitude;
-var sheetDescription = 8 + sheetActivity;
+var sheetDescription = 9 + sheetActivity;
 var sheetLink        = 2 + sheetDescription;
 // sheet activity
 var activityColor = 7;
@@ -933,6 +939,8 @@ function addPolyline(parameter) {
                     break;
                     }
                 }
+                // weight
+                weight = 5.0;
                 // stroke color
                 switch(position) {
                     case 0:
@@ -964,9 +972,8 @@ function addPolyline(parameter) {
                         break;
                     default:
                         stroke = colors[9];
+                        weight = 1.0;
                 }
-                // weight
-                weight = 5.0;
             }
             // new polyline
             var polyline = new google.maps.Polyline({
@@ -980,7 +987,6 @@ function addPolyline(parameter) {
             // push
             polylines.push(polyline);
 		}
-		
 	}
 }
 
@@ -991,7 +997,7 @@ var alertMarkers = new Array();
 function addMarkers(parameter) {
     // polyline
     addPolyline(0);
-    // span cables
+    // icon cables
     document.getElementById("span_cables").innerHTML = '<i class="far fa-circle"></i>';
     // radio cables (jQuery)
     $("input[name=cables]").prop("checked", false);
@@ -1007,6 +1013,17 @@ function addMarkers(parameter) {
     legend(element, true);
     // info window
     var info = new google.maps.InfoWindow();
+    // icon activity and others
+    var spanActivity = document.getElementById("span_activity");
+    var spanOthers   = document.getElementById("span_others");
+    // conditional
+    if (element < 4) {
+        spanActivity.innerHTML = '<i class="far fa-dot-circle"></i>';
+        spanOthers.innerHTML   = '<i class="far fa-circle"></i>';
+    } else {
+        spanActivity.innerHTML = '<i class="far fa-circle"></i>';
+        spanOthers.innerHTML   = '<i class="far fa-dot-circle"></i>';
+    }
     // set map
     for (var a = 0;  a < data.length; a++) {
         // variables
@@ -1018,7 +1035,7 @@ function addMarkers(parameter) {
         // points
         var pointX = new google.maps.Point(0, 0);
         var pointY = new google.maps.Point(16.5, 5.5);
-        var pointZ = new google.maps.Size(50, 50);
+        var pointZ = new google.maps.Size(34, 13);
         // coordinates
         var coordinates = new google.maps.LatLng(data[a][sheetLatitude], data[a][sheetLongitude]);
         // conditional
@@ -1058,15 +1075,18 @@ function addMarkers(parameter) {
 					// position
 					for (var f = 0; f < activityRows; f++) {
 						// auxiliary
-						var auxiliary = e + f + 1;
+                        var auxiliary = e + f + 1;
 						// conditional
 						if (activity[auxiliary][1] == "") {
 							position = 9;
 							break;
 					    } else if (activity[auxiliary][1] == data[a][sheetActivity + parseInt(element)]) {
-						    position = parseInt(activity[auxiliary][activityColor]);
+                            position = parseInt(activity[auxiliary][activityColor]);
 						    break;
-					    }
+					    } else {
+                            // no break
+                            position = 9;
+                        }
 				    }
 				break;
 				}
@@ -1282,7 +1302,7 @@ function googleMaps() {
     for (var a = 0; a < site.length; a++) {
         // marker
         var marker = new google.maps.Marker({
-            icon: "../root/images/marker_site.png",
+            icon: "../root/xml/marker-site.svg",
             map: map,
             position: new google.maps.LatLng(parseFloat(site[a][3]), parseFloat(site[a][4])),
         });
