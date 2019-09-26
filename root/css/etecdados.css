@@ -4,7 +4,7 @@
  * copyright 2019 by etecdados
  * created on 2013/06/24 12:10
  * author fernando silva
- * last update on 2019/07/25
+ * last update on 2019/09/26
  */
 
 @charset "utf-8";
@@ -118,13 +118,12 @@ header img {
 
 /* sidebar -------------------------------------------------- */
 #div_sidebar {
-    bottom: 0;
+    height: 84vh;
     left: 0;
     overflow-x: hidden;
     overflow-y: auto;
     position: absolute;
     transition: 0.5s;
-    top: 0;
     width: 0;
     z-index: 1;
 }

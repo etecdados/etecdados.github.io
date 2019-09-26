@@ -4,7 +4,7 @@
  * copyright 2019 by etecdados
  * created on 2013/06/24 12:10
  * author fernando silva
- * last update on 2019/07/25
+ * last update on 2019/09/26
  */
 
 /* google set ----------------------------------------------- */
@@ -87,138 +87,61 @@ function getAccess() {
     });
 }
 
+/* get values ----------------------------------------------- */
+function getValues(parameter1, parameter2, parameter3, parameter4) {
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: parameter1,
+        range: parameter2,
+    }).then(function(response) {
+        // result
+        var ranges = response.result;
+        // keys
+        var keys = Object.keys(ranges.values).length;
+        // set item
+        sessionStorage.setItem(parameter3, keys);
+        sessionStorage.setItem(parameter4, ranges.values);
+    });
+}
+
 /* get database --------------------------------------------- */
 function getDatabase() {
-    // variables
-    var keys;
-    var ranges;
-    // users
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: databaseKey,
-        range: "users!A2:Z",
-    }).then(function(response) {
-        // result
-        ranges = response.result;
-        // keys
-        keys = Object.keys(ranges.values).length;
-        // set item
-        sessionStorage.setItem("userLength", keys);
-        sessionStorage.setItem("userValues", ranges.values);
-    });
-    // projects
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: databaseKey,
-        range: "projects!A2:Z",
-    }).then(function(response) {
-        // result
-        ranges = response.result;
-        // keys
-        keys = Object.keys(ranges.values).length;
-        // set item
-        sessionStorage.setItem("projectsLength", keys);
-        sessionStorage.setItem("projectsValues", ranges.values);
-    });
-    // language
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: databaseKey,
-        range: "language!A2:Z",
-    }).then(function(response) {
-        // result
-        ranges = response.result;
-        // keys
-        keys = Object.keys(ranges.values).length;
-        // set item
-        sessionStorage.setItem("languageLength", keys);
-        sessionStorage.setItem("languageValues", ranges.values);
-        // bilble
-        switch(language) {
-            case "2":
-                document.getElementById("a_bible").href = "https://www.bible.com/es/bible/128/JHN.3.16.NVI";
-                break;
-            case "3":
-                document.getElementById("a_bible").href = "https://www.bible.com/bible/111/JHN.3.16.NIV";
-                break;
-            default:
-                document.getElementById("a_bible").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
-        }
-    });
+    // sheets
+    var sheets = [
+        ["users!A2:Z",    "userLength",     "userValues"],
+        ["projects!A2:Z", "projectsLength", "projectsValues"],
+        ["language!A2:Z", "languageLength", "languageValues"]
+    ];
+    // get values
+    for (var a = 0; a < sheets.length; a++) {
+        getValues(databaseKey, sheets[a][0], sheets[a][1], sheets[a][2]);
+    }
+    // bilble
+    switch(language) {
+        case "2":
+            document.getElementById("a_bible").href = "https://www.bible.com/es/bible/128/JHN.3.16.NVI";
+            break;
+        case "3":
+            document.getElementById("a_bible").href = "https://www.bible.com/bible/111/JHN.3.16.NIV";
+            break;
+        default:
+            document.getElementById("a_bible").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
+    }
 }
 
 /* get project ---------------------------------------------- */
 function getProject() {
-    // variables
-    var keys;
-    var ranges;
-    // data
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: link,
-        range: "data!A4:Z"
-        }).then(function(response) {
-            // result
-            ranges = response.result;
-            // keys
-            keys = Object.keys(ranges.values).length;
-            // set item
-            sessionStorage.setItem("dataLength", keys);
-            sessionStorage.setItem("dataValues", ranges.values);
-        }
-    );
-    // activity
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: link,
-        range: "activity!A4:Z"
-        }).then(function(response) {
-            // result
-            ranges = response.result;
-            // keys
-            keys = Object.keys(ranges.values).length;
-            // set item
-            sessionStorage.setItem("activityLength", keys);
-            sessionStorage.setItem("activityValues", ranges.values);
-        }
-    );
-    // site
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: link,
-        range: "site!A4:Z"
-        }).then(function(response) {
-            // result
-            ranges = response.result;
-            // keys
-            keys = Object.keys(ranges.values).length;
-            // set item
-            sessionStorage.setItem("siteLength", keys);
-            sessionStorage.setItem("siteValues", ranges.values);
-        }
-    );
-    // alert
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: link,
-        range: "alert!A3:Z"
-        }).then(function(response) {
-            // result
-            ranges = response.result;
-            // keys
-            keys = Object.keys(ranges.values).length;
-            // set item
-            sessionStorage.setItem("alertLength", keys);
-            sessionStorage.setItem("alertValues", ranges.values);
-        }
-    );
-    // files
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: link,
-        range: "files!A4:Z"
-        }).then(function(response) {
-            // result
-            ranges = response.result;
-            // keys
-            keys = Object.keys(ranges.values).length;
-            // set item
-            sessionStorage.setItem("filesLength", keys);
-            sessionStorage.setItem("filesValues", ranges.values);
-        }
-    );
+    // sheets
+    var sheets = [
+        ["data!A4:Z",     "dataLength",     "dataValues"],
+        ["activity!A4:Z", "activityLength", "activityValues"],
+        ["site!A4:Z",     "siteLength",     "siteValues"],
+        ["alert!A3:Z",    "alertLength",    "alertValues"],
+        ["files!A4:Z",    "filesLength",    "filesValues"]
+    ];
+    // get values
+    for (var a = 0; a < sheets.length; a++) {
+        getValues(link, sheets[a][0], sheets[a][1], sheets[a][2]);
+    }
 }
 
 /* set language --------------------------------------------- */
@@ -514,7 +437,7 @@ function validation(parameter) {
 
 /* open sidebar --------------------------------------------- */
 function openSidebar() {
-    document.getElementById("div_sidebar").style.width = "280px";
+    document.getElementById("div_sidebar").style.width = "233px";
     // collapse navbar (jQuery)
     $(".collapse").collapse("hide");
 }
@@ -1284,7 +1207,7 @@ function googleMaps() {
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
-        mapTypeId: "hybrid", // roadmap or hybrid
+        mapTypeId: "hybrid",
         streetViewControl: false,
         zoom: 13
     };
@@ -1326,7 +1249,7 @@ function googleMaps() {
                     '<tr>' +
                         '<td>' + text[33][language] + '</td>' +
                         '<td>' +
-                            '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + parseFloat(site[a][3]) + ',' + parseFloat(site[a][4]) + '">' +
+                            '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + parseFloat(site[a][3]).toFixed(6) + ',' + parseFloat(site[a][4]).toFixed(6) + '">' +
                                 '<span>Google Maps</span>' +
                             '</a>' +
                         '</td>' +
