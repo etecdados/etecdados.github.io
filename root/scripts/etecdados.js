@@ -1309,38 +1309,41 @@ function listFiles() {
     var element = document.getElementById("tbody_search");
     // list
     for (var a = 0; a < filesText.length; a++) {
-        // create element
-        var tagTr = document.createElement("tr");
-        var tagTd = document.createElement("td");
-        var tagA  = document.createElement("a");
-        // append child
-        element.appendChild(tagTr);
-        // td
-        for (var b = 0; b < filesTextColumns - 1; b++) {
-            // clone
-            var clone = tagTd.cloneNode(true);
+        // check empty
+        if (filesText[a][1] != "") {
+            // create element
+            var tagTr = document.createElement("tr");
+            var tagTd = document.createElement("td");
+            var tagA  = document.createElement("a");
             // append child
-            tagTr.appendChild(clone);
-            // switch
-            switch(b) {
-                case 0:
-                    clone.innerHTML = ('00' + (a + 1)).slice(-3);
-                    break;
-                case 1:
-                    clone.setAttribute("class", "text-left");
-                    clone.innerHTML = filesText[a][1];
-                    break;
-                case 2:
-                    clone.innerHTML = filesText[a][2];
-                    break;
-                case 3:
-                    clone.innerHTML = filesText[a][3];
-                    break;
-                default:
-                    clone.appendChild(tagA);
-                    tagA.setAttribute("target", "_blank");
-                    tagA.setAttribute("href", filesText[a][4]);
-                    tagA.innerHTML = '<i class="fas fa-external-link-alt"></i>';
+            element.appendChild(tagTr);
+            // td
+            for (var b = 0; b < filesTextColumns - 1; b++) {
+                // clone
+                var clone = tagTd.cloneNode(true);
+                // append child
+                tagTr.appendChild(clone);
+                // switch
+                switch(b) {
+                    case 0:
+                        clone.innerHTML = ('00' + (a + 1)).slice(-3);
+                        break;
+                    case 1:
+                        clone.setAttribute("class", "text-left");
+                        clone.innerHTML = filesText[a][1];
+                        break;
+                    case 2:
+                        clone.innerHTML = filesText[a][2];
+                        break;
+                    case 3:
+                        clone.innerHTML = filesText[a][3];
+                        break;
+                    default:
+                        clone.appendChild(tagA);
+                        tagA.setAttribute("target", "_blank");
+                        tagA.setAttribute("href", filesText[a][4]);
+                        tagA.innerHTML = '<i class="fas fa-external-link-alt"></i>';
+                }
             }
         }
     }

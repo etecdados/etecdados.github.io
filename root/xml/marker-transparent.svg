@@ -15,7 +15,7 @@
             <stop offset="100%" style="stop-opacity:1; stop-color:#A5A5A5;" />
         </radialGradient>
     </defs>
-    <polygon points="6.75,14.95 6.75,19.00 7.50,20.00 7.50,15.00" fill="#D2D3D5" opacity="0.4" />
-    <polygon points="7.50,15.00 7.50,20.00 8.25,19.00 8.25,14.95" fill="#848688" opacity="0.4" />
-    <circle id="delta" cx="7.5" cy="7.5" r="7.5" fill="url(#gradient)" opacity="0.4" />
+    <polygon points="6.75,14.95 6.75,19.00 7.50,20.00 7.50,15.00" fill="#D2D3D5" opacity="0.6" />
+    <polygon points="7.50,15.00 7.50,20.00 8.25,19.00 8.25,14.95" fill="#848688" opacity="0.6" />
+    <circle id="delta" cx="7.5" cy="7.5" r="7.5" fill="url(#gradient)" opacity="0.6" />
 </svg>
