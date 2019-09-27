@@ -472,7 +472,7 @@ var markerColor = [
     /*6*/ "../root/xml/marker-orange.svg",
     /*7*/ "../root/xml/marker-black.svg",
     /*8*/ "../root/xml/marker-brown.svg",
-    /*9*/ "../root/xml/marker-transparent.svg"
+    /*9*/ "../root/xml/marker-gray.svg"
 ];
 
 /* alert color----------------------------------------------- */
@@ -481,7 +481,7 @@ var alertColor = [
     /*1*/ "../root/xml/alert-blue.svg",
     /*2*/ "../root/xml/alert-green.svg",
     /*3*/ "../root/xml/alert-yellow.svg",
-    /*4*/ "../root/xml/alert-transparent.svg"
+    /*4*/ "../root/xml/alert-gray.svg"
 ];
 
 /* check data ----------------------------------------------- */
