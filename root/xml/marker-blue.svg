@@ -11,8 +11,7 @@
     </metadata>
     <polygon points="6.75,14.95 6.75,19.00 7.50,20.00 7.50,15.00" fill="#D2D3D5" />
     <polygon points="7.50,15.00 7.50,20.00 8.25,19.00 8.25,14.95" fill="#848688" />
-    <circle cx="7.5" cy="7.5" r="7.5" fill="#5990E9" />
-    <circle cx="5.0" cy="5.0" r="6.5" fill="#FFFFFF" opacity="0.1" />
-    <circle cx="5.0" cy="5.0" r="4.5" fill="#FFFFFF" opacity="0.2" />
-    <circle cx="5.0" cy="5.0" r="2.5" fill="#FFFFFF" opacity="0.3" />
+    <circle cx="7.5" cy="7.5" r="7.5" fill="#0B80B0" />
+    <path d="M12,2 A7,7 0 0,0 2,12 A7.25,7.25 0 0,0 12,2 Z" fill="#5990E9" opacity="0.5"/>
+    <circle cx="5" cy="5" r="2" fill="#80B5E9" opacity="0.5"/>
 </svg>
