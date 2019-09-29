@@ -161,13 +161,13 @@ button[data-target="#div_list"], #div_list {
 }
 
 /* summary -------------------------------------------------- */
-#div_summary table {
+#div_summary table, #div_tableTechnical table {
     border-collapse: collapse;
     font-size: 13px;
     width: 100%;
 }
 
-#div_tableSummary {
+#div_tableSummary, #div_tableTechnical {
     white-space: nowrap;
 }
 

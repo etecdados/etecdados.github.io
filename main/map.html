@@ -213,12 +213,22 @@
                             </li>
                         </ul>
                     </div>
-                     <!-- summary -->
+                     <!-- tables -->
                      <div class="border-top border-secondary mt-3 mb-5">
-                         <a href="" data-toggle="modal" data-target="#div_summary">
-                            <i class="fas fa-table"></i>
-                            <script>document.write(text[30][language])</script>
-                         </a>
+                         <ul class="ul_sidebar">
+                             <li class="mt-2">
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
+                                    <i class="fas fa-table"></i>
+                                    <script>document.write(text[30][language])</script>
+                                </a>
+                             </li>
+                             <li class="mt-2">
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_technical">
+                                    <i class="fas fa-table"></i>
+                                    <script>document.write(text[60][language])</script>
+                                </a>
+                             </li>
+                         </ul>  
                     </div>
                 </div>
             </div>
@@ -315,6 +325,48 @@
                     </div>
                 </div>
             </div>
+            <!-- modal technical -->
+            <div class="modal fade" id="div_technical">
+                    <div class="modal-fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <!-- modal header -->
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-primary">
+                                        <i class="fas fa-table"></i>
+                                        <script>document.write(text[60][language])</script>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <!-- modal body -->
+                                <div class="modal-body pt-0" id="div_tableTechnical">
+                                    <div class="mt-2 mb-2 text-center">
+                                        <script>document.write(projects[position][2])</script>
+                                    </div>
+                                    <table class="table table-sm">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="text-left font-weight-bold small">
+                                                    <script>document.write(text[34][language].toUpperCase())</script>
+                                                </th>
+                                                <th scope="col" class="text-left font-weight-bold small">
+                                                    <script>document.write(text[35][language].toUpperCase())</script>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_technical"></tbody>
+                                    </table>
+                                </div>
+                                <!-- modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="button_logout btn btn-primary" data-dismiss="modal">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <!-- map -->
             <div id="div_map">
                 <!-- check data -->

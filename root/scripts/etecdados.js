@@ -132,11 +132,12 @@ function getDatabase() {
 function getProject() {
     // sheets
     var sheets = [
-        ["data!A4:Z",     "dataLength",     "dataValues"],
-        ["activity!A4:Z", "activityLength", "activityValues"],
-        ["site!A4:Z",     "siteLength",     "siteValues"],
-        ["alert!A3:Z",    "alertLength",    "alertValues"],
-        ["files!A4:Z",    "filesLength",    "filesValues"]
+        ["data!A4:Z",      "dataLength",      "dataValues"],
+        ["activity!A4:Z",  "activityLength",  "activityValues"],
+        ["site!A4:Z",      "siteLength",      "siteValues"],
+        ["alert!A3:Z",     "alertLength",     "alertValues"],
+        ["files!A4:Z",     "filesLength",     "filesValues"],
+        ["technical!A3:Z", "technicalLength", "technicalValues"]
     ];
     // get values
     for (var a = 0; a < sheets.length; a++) {
@@ -263,6 +264,17 @@ var filesTextValue = sessionStorage.getItem("filesValues");
 var filesTextColumns = 6;
 // push into array
 pushArray(filesTextTotal, filesText, filesTextColumns, filesTextValue);
+
+/* technical ------------------------------------------------ */
+var technical = new Array();
+// get item
+var technicalTotal = sessionStorage.getItem("technicalLength");
+var technicalValue = sessionStorage.getItem("technicalValues");
+// total columns
+var technicalColumns = 3;
+// push into array
+pushArray(technicalTotal, technical, technicalColumns, technicalValue);
+
 
 /* check text ----------------------------------------------- */
 function checkText() {
@@ -449,16 +461,16 @@ function closeSidebar() {
 
 /* colors --------------------------------------------------- */
 var colors = [
-    /*0*/ "#FF0000", // red
-    /*1*/ "#0000FF", // blue
-    /*2*/ "#00FF00", // green
-    /*3*/ "#FFFF00", // yellow
-    /*4*/ "#FF00FF", // magenta
-    /*5*/ "#00FFFF", // cyan
-    /*6*/ "#FFA500", // orange
-    /*7*/ "#000000", // black
-    /*8*/ "#A0500A", // brown
-    /*9*/ "#A5A5A5"  // gray
+    /*0*/ "#E95959", // red
+    /*1*/ "#5990E9", // blue
+    /*2*/ "#59E990", // green
+    /*3*/ "#E9E959", // yellow
+    /*4*/ "#E900E9", // magenta
+    /*5*/ "#00E9E9", // cyan
+    /*6*/ "#E95900", // orange
+    /*7*/ "#595959", // black
+    /*8*/ "#905959", // brown
+    /*9*/ "#909090"  // gray
 ];
 
 /* marker color --------------------------------------------- */
@@ -508,10 +520,13 @@ function checkData() {
         var script = document.createElement("script");
         script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=" + apiKeyMaps + "&callback=googleMaps");
         element.appendChild(script);
+        // tag element
+        var tagTr;
+        var tagTd;
         // summary
         for (var c = 0; c < activity.length; c++) {
             // create element
-            var tagTr = document.createElement("tr");
+            tagTr = document.createElement("tr");
             // append child
             document.getElementById("tbody_summary").appendChild(tagTr);
             // conditional
@@ -523,7 +538,7 @@ function checkData() {
                 // conditional
                 if (d < 7 && activity[c][1] != "") {
                     // create element
-                    var tagTd = document.createElement("td");
+                    tagTd = document.createElement("td");
                     // inner html
                     tagTd.innerHTML = activity[c][d];
                     // append child
@@ -532,6 +547,28 @@ function checkData() {
                     if (d == 0 || d == 1) {
                         tagTd.setAttribute("class", "text-left");
                     }
+                }
+            }
+        }
+        // technical
+        for (var e = 0; e < technical.length; e++) {
+            // create element
+            tagTr = document.createElement("tr");
+            // append child
+            document.getElementById("tbody_technical").appendChild(tagTr);
+            // td
+            for (var f = 0; f < technical[e].length - 1; f++) {
+                // create element
+                tagTd = document.createElement("td");
+                // inner html
+                tagTd.innerHTML = technical[e][f];
+                // append child
+                tagTr.appendChild(tagTd);
+                // conditional
+                if (f == 0) {
+                    tagTd.setAttribute("class", "text-left small");
+                } else {
+                    tagTd.setAttribute("class", "text-left small font-weight-bold");
                 }
             }
         }
