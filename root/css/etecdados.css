@@ -1,0 +1,223 @@
+/*
+ * https://etecdados.github.io
+ * etecdados v1.0.0
+ * copyright 2019 by etecdados
+ * created on 2013/06/24 12:10
+ * author fernando silva
+ * last update on 2019/09/26
+ */
+
+@charset "utf-8";
+/* container ------------------------------------------------ */
+#div_login, #div_info {
+    max-width: 377px;
+    margin: auto;
+}
+
+.info_content {
+    align-items: center;
+}
+
+#div_login footer {
+    font-size: 13px;
+}
+
+#div_projects {
+    max-width: 987px;
+}
+
+/* language ------------------------------------------------- */
+.button_language {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 34px;
+    border: none;
+    cursor: pointer;
+    height: 34px;
+    width: 34px;
+}
+
+#button_portuguese {
+    background-image: url(../xml/flag-brazil.svg);
+}
+
+#button_spanish {
+    background-image: url(../xml/flag-spain.svg);
+}
+
+#button_english {
+    background-image: url(../xml/flag-uk.svg);
+}
+
+/* projects ------------------------------------------------- */
+.button_projects {
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    height: 120px;
+    width: 280px;
+}
+
+.button_projects:hover {
+    box-shadow: 5px 5px 13px rgba(89, 89, 89, 0.8);
+    transition: 0.3s;
+}
+
+#button_project2 {
+    background-image: url(../../root/images/elecnor/site.png);
+}
+
+#button_project3 {
+    background-image: url(../../root/images/elecnor/pate.png);
+}
+
+#button_project4 {
+    background-image: url(../../root/images/elecnor/sjpiaui.png);
+}
+
+#button_project5 {
+    background-image: url(../../root/images/elecnor/sfernando.png);
+}
+
+#button_project6 {
+    background-image: url(../../root/images/elecnor/equatorial.png);
+}
+
+#button_project7 {
+    background-image: url(../../root/images/elecnor/msg.png);
+}
+
+/* navbar --------------------------------------------------- */
+.button_nav {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 21px;
+    border: none;
+    cursor: pointer;
+    height: 21px;
+    width: 21px;
+}
+
+/* logout --------------------------------------------------- */
+.button_logout {
+    width: 89px;
+}
+
+/* header --------------------------------------------------- */
+header{
+    border-bottom: 1px solid rgba(144, 144, 144, 0.5);
+}
+header img {
+    max-height: 34px;
+    max-width: 144px;
+}
+
+/* sidebar -------------------------------------------------- */
+#div_sidebar {
+    height: 84vh;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    transition: 0.5s;
+    width: 0;
+    z-index: 1;
+}
+
+#div_sidebar input, .ul_sidebar label {
+    cursor: pointer;
+}
+
+.ul_sidebar {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* controls ------------------------------------------------- */
+button[data-target="#div_list"], #div_list {
+    transition: 0.5s;
+}
+
+.ul_legend {
+    list-style: none;
+}
+
+ /* map ------------------------------------------------------ */
+#div_map {
+    height: 100%;
+    min-height: 84vh;
+}
+
+.img_info {
+    max-height: 13px;
+}
+
+#div_alert, #div_site {
+    max-width: 180px;
+}
+
+/* summary -------------------------------------------------- */
+#div_summary table, #div_tableTechnical table {
+    border-collapse: collapse;
+    font-size: 13px;
+    width: 100%;
+}
+
+#div_tableSummary, #div_tableTechnical {
+    white-space: nowrap;
+}
+
+img[src="../root/xml/alert-red.svg"],
+img[src="../root/xml/alert-blue.svg"],
+img[src="../root/xml/alert-green.svg"],
+img[src="../root/xml/alert-yellow.svg"] {
+    animation: alert 1s ease-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes alert {
+    0% {transform: scale(0, 0); opacity: 0;}
+    50% {opacity: 1;}
+    100% {transform: scale(1, 1); opacity: 0;}
+}
+
+/* carousel ------------------------------------------------- */
+#div_carousel {
+    height: 430px;
+}
+
+#div_carousel img {
+    max-height: 390px;
+}
+
+#div_carousel iframe {
+    border: none;
+    height: 390px;
+    width: 610px;
+}
+
+#ol_indicators {
+    justify-content: initial;
+    margin: 0;
+    overflow: auto;
+}
+
+#ol_indicators li {
+    height: 21px;
+    line-height: initial;
+    text-indent: 0;
+}
+
+/* files ---------------------------------------------------- */
+.div_search {
+    max-width: 987px;
+}
+
+#div_tableSearch {
+    overflow: auto;
+    white-space: nowrap;
+}

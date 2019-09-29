@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="34px" height="34px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <metadata>
+        // https://etecdados.github.io
+        // etecdados v1.0.0
+        // copyright 2019 by etecdados
+        // created on 2013/06/24 12:10
+        // author fernando silva
+        // last update on 2019/09/26
+    </metadata>
+    <circle  fill="#F1BF00" cx="17" cy="17" r="17" />
+    <path    fill="#AA151B" d="M32.69,10.37 A17,17 0 0,0 1.30,10.37"/>
+    <path    fill="#AA151B" d="M32.69,23.64 A17,17 0 0,1 1.30,23.64"/>
+</svg>
