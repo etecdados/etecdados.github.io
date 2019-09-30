@@ -339,7 +339,7 @@ function login() {
         // username cookie
         document.cookie = "username=" + email + "; path=/";
         // redirect
-        location.href = "../main";
+        location.href = "../elecnor";
     }
 }
 
