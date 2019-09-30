@@ -1052,13 +1052,27 @@ function addMarkers(parameter) {
 				}
             }
         }
+
+        var typeTowers = [
+            ["i5el", "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 5.62,-23.80 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.76 3.33,-23.80 1.16,-19.72 2.54,-18.03 1.00,-18.03 0.58,-2.70 Z M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
+        ];
+
+        function drawTower(parameter) {
+            return {
+              path: parameter,
+              strokeColor: "#FFFFFF",
+              strokeOpacity: 1,
+              strokeWeight: 0.5,
+              scale: 1
+            };
+          }
         // marker color
         switch(position) {
             case 0:
                 icon = markerColor[0];
                 break;
             case 1:
-                icon = markerColor[1];
+                icon = drawTower(typeTowers[0][1]);
                 break;
             case 2:
                 icon = markerColor[2];
@@ -1084,6 +1098,7 @@ function addMarkers(parameter) {
             default:
                 icon = markerColor[9];
         }
+        
         // create new marker
         var marker = new google.maps.Marker({
             icon: icon,
