@@ -1078,8 +1078,8 @@ function addMarkers(parameter) {
                 break;
             default:
                 color = colors[9];
-                opacity = 0.4;
-                weight  = 1.0;
+                opacity = 0.0;
+                weight  = 0.9;
         }
         // create new marker
         var marker = new google.maps.Marker({
@@ -1089,7 +1089,7 @@ function addMarkers(parameter) {
                 path: "M0.00,-38.00 m-5.50, 0 a5.50,5.50 0 1,0 11.00,0.00 a5.50,5.50 0 1,0 -11.00,0.00",
                 scale: 1,
                 strokeColor: "#909090",
-                strokeOpacity: 0.4,
+                strokeOpacity: 1.0,
                 strokeWeight: weight
             },
             map: map,
@@ -1115,7 +1115,7 @@ function addMarkers(parameter) {
         function convertRGB(parameter) {
             // match
             var string = parameter.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i);
-            return "rgb(" + parseInt(string[1], 16) + "," +  parseInt(string[2], 16) + "," + parseInt(string[3], 16) + ")";
+            return "rgb(" + parseInt(string[1], 16) + "," + parseInt(string[2], 16) + "," + parseInt(string[3], 16) + ")";
         }
         // alert color
         switch(position) {
@@ -1132,7 +1132,7 @@ function addMarkers(parameter) {
                 color = convertRGB(colors[3]);
                 break;
             default:
-                opacity = 0.0;
+                color = "rgba(0, 0, 0, 0.0)";
         }
         // create new marker (alert)
         var alertMarker = new google.maps.Marker({
@@ -1146,8 +1146,7 @@ function addMarkers(parameter) {
             },
             map: map,
             optimized: false,
-            position: coordinates,
-            opacity: opacity
+            position: coordinates
         });
         // push (alert)
         alertMarkers.push(alertMarker);
@@ -1261,7 +1260,7 @@ var towers = [
 ];
 
 /* map type ------------------------------------------------- */
-var towerMarker = new Array();
+var towerMarkers = new Array();
 // map type
 function mapType(parameter) {
     // variables
@@ -1291,11 +1290,11 @@ function mapType(parameter) {
         // conditional
         if (a == 0) {
             // clear markers on map
-            for (var b = 0; b < towerMarker.length; b++) {
-                towerMarker[b].setMap(null);
+            for (var b = 0; b < towerMarkers.length; b++) {
+                towerMarkers[b].setMap(null);
             }
             // clear array
-            towerMarker = [];
+            towerMarkers = [];
         }
         // tower type
         for (var c = 0; c < towers.length; c++) {
@@ -1323,7 +1322,7 @@ function mapType(parameter) {
             position: coordinates
         });
         // set markers
-        towerMarker.push(marker);
+        towerMarkers.push(marker);
     }
 }
 
