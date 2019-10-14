@@ -275,7 +275,6 @@ var technicalColumns = 3;
 // push into array
 pushArray(technicalTotal, technical, technicalColumns, technicalValue);
 
-
 /* check text ----------------------------------------------- */
 function checkText() {
     if (text[0] == null) {
@@ -459,43 +458,6 @@ function closeSidebar() {
     document.getElementById("div_sidebar").style.width = "0";
 }
 
-/* colors --------------------------------------------------- */
-var colors = [
-    /*0*/ "#E95959", // red
-    /*1*/ "#5990E9", // blue
-    /*2*/ "#59E990", // green
-    /*3*/ "#E9E959", // yellow
-    /*4*/ "#E900E9", // magenta
-    /*5*/ "#00E9E9", // cyan
-    /*6*/ "#E95900", // orange
-    /*7*/ "#595959", // black
-    /*8*/ "#905959", // brown
-    /*9*/ "#909090"  // gray
-];
-
-/* marker color --------------------------------------------- */
-var markerColor = [
-    /*0*/ "../root/xml/marker-red.svg",
-    /*1*/ "../root/xml/marker-blue.svg",
-    /*2*/ "../root/xml/marker-green.svg",
-    /*3*/ "../root/xml/marker-yellow.svg",
-    /*4*/ "../root/xml/marker-magenta.svg",
-    /*5*/ "../root/xml/marker-cyan.svg",
-    /*6*/ "../root/xml/marker-orange.svg",
-    /*7*/ "../root/xml/marker-black.svg",
-    /*8*/ "../root/xml/marker-brown.svg",
-    /*9*/ "../root/xml/marker-gray.svg"
-];
-
-/* alert color----------------------------------------------- */
-var alertColor = [
-    /*0*/ "../root/xml/alert-red.svg",
-    /*1*/ "../root/xml/alert-blue.svg",
-    /*2*/ "../root/xml/alert-green.svg",
-    /*3*/ "../root/xml/alert-yellow.svg",
-    /*4*/ "../root/xml/alert-gray.svg"
-];
-
 /* check data ----------------------------------------------- */
 function checkData() {
     // get element
@@ -578,6 +540,42 @@ function checkData() {
         }, 2000);
     }
 }
+
+/* colors --------------------------------------------------- */
+var colors1 = [
+    /*0*/ "#E95959", // red
+    /*1*/ "#5990E9", // blue
+    /*2*/ "#59E990", // green
+    /*3*/ "#E9E959", // yellow
+    /*4*/ "#E900E9", // magenta
+    /*5*/ "#00E9E9", // cyan
+    /*6*/ "#E95900", // orange
+    /*7*/ "#595959", // black
+    /*8*/ "#905959", // brown
+    /*9*/ "#909090"  // gray
+];
+
+var colors = [
+    /*0*/ "#DC143C", // Crimson
+    /*1*/ "#4169E1", // RoyalBlue
+    /*2*/ "#3CB371", // MediumSeaGreen
+    /*3*/ "#FFD700", // Gold
+    /*4*/ "#EE82EE", // Violet
+    /*5*/ "#87CEFA", // LightSkyBlue
+    /*6*/ "#FFA07A", // LightSalmon
+    /*7*/ "#90EE90", 
+    /*8*/ "#00FF7F",
+    /*9*/ "#909090"  
+];
+
+/* alert color----------------------------------------------- */
+var alertColor = [
+    /*0*/ "../root/xml/alert-red.svg",
+    /*1*/ "../root/xml/alert-blue.svg",
+    /*2*/ "../root/xml/alert-green.svg",
+    /*3*/ "../root/xml/alert-yellow.svg",
+    /*4*/ "../root/xml/alert-gray.svg"
+];
 
 /* legend --------------------------------------------------- */
 function legend(parameter1, parameter2) {
@@ -667,21 +665,18 @@ function legend(parameter1, parameter2) {
         cables.appendChild(tagP);
         cables.appendChild(tagUl);
     }
-    
     // list
     for (var c = 0; c < filter.length; c++) {
         // create element
-        var tagLi   = document.createElement("li");
-        var tagImg  = document.createElement("img");
-        var tagSpan = document.createElement("span");
-        var tagI    = document.createElement("i");
+        var tagLi       = document.createElement("li");
+        var tagSpan     = document.createElement("span");
+        var tagICicrcle = document.createElement("i");
+        var tagIMinus   = document.createElement("i");
         // set attribute
-        tagImg.setAttribute("src", markerColor[c]);
-        tagImg.setAttribute("alt", "marker");
-        tagImg.setAttribute("height", "13px");
-        tagImg.setAttribute("class", "mr-2 mb-1");
-        tagI.setAttribute("class", "mr-2 mb-1 fas fa-minus");
-        tagI.setAttribute("style", "color:" + colors[c]);
+        tagICicrcle.setAttribute("class", "mr-2 fas fa-circle");
+        tagICicrcle.setAttribute("style", "color:" + colors[c] + "; opacity: 0.8");
+        tagIMinus.setAttribute("class", "mr-2 mb-1 fas fa-minus");
+        tagIMinus.setAttribute("style", "color:" + colors[c]);
         // conditional
         if (parameter1 == 0) {
             // inner html
@@ -692,8 +687,8 @@ function legend(parameter1, parameter2) {
             // conditional
             if (description == "") {
                 // set attribute
-                tagImg.setAttribute("class", "d-none");
-                tagI.setAttribute("class", "d-none");
+                tagICicrcle.setAttribute("class", "d-none");
+                tagIMinus.setAttribute("class", "d-none");
             } else {
                 // inner html
                 tagSpan.innerHTML = description;
@@ -703,9 +698,9 @@ function legend(parameter1, parameter2) {
         tagUl.appendChild(tagLi);
         // conditional
         if (parameter2 == true) {
-            tagLi.appendChild(tagImg);
+            tagLi.appendChild(tagICicrcle);
         } else {
-            tagLi.appendChild(tagI);
+            tagLi.appendChild(tagIMinus);
         }
         tagLi.appendChild(tagSpan);
     }
@@ -1353,7 +1348,7 @@ function googleMaps() {
     for (var a = 0; a < site.length; a++) {
         // marker
         var marker = new google.maps.Marker({
-            icon: "../root/xml/marker-site.svg",
+            icon: "../root/xml/marker.svg",
             map: map,
             position: new google.maps.LatLng(parseFloat(site[a][3]), parseFloat(site[a][4])),
         });
