@@ -68,27 +68,27 @@
 }
 
 #button_project2 {
-    background-image: url(../../root/images/elecnor/site.png);
+    background-image: url(../../elecnor/images/site.png);
 }
 
 #button_project3 {
-    background-image: url(../../root/images/elecnor/pate.png);
+    background-image: url(../../elecnor/images/pate.png);
 }
 
 #button_project4 {
-    background-image: url(../../root/images/elecnor/sjpiaui.png);
+    background-image: url(../../elecnor/images/sjpiaui.png);
 }
 
 #button_project5 {
-    background-image: url(../../root/images/elecnor/sfernando.png);
+    background-image: url(../../elecnor/images/sfernando.png);
 }
 
 #button_project6 {
-    background-image: url(../../root/images/elecnor/equatorial.png);
+    background-image: url(../../elecnor/images/equatorial.png);
 }
 
 #button_project7 {
-    background-image: url(../../root/images/elecnor/msg.png);
+    background-image: url(../../elecnor/images/msg.png);
 }
 
 /* navbar --------------------------------------------------- */
@@ -171,15 +171,12 @@ button[data-target="#div_list"], #div_list {
     white-space: nowrap;
 }
 
-img[src="../root/xml/alert-red.svg"],
-img[src="../root/xml/alert-blue.svg"],
-img[src="../root/xml/alert-green.svg"],
-img[src="../root/xml/alert-yellow.svg"] {
-    animation: alert 1s ease-out;
+img[src*='data:image/svg+xml;utf-8'] {
+    animation: pulse 1s ease-out;
     animation-iteration-count: infinite;
 }
 
-@keyframes alert {
+@keyframes pulse {
     0% {transform: scale(0, 0); opacity: 0;}
     50% {opacity: 1;}
     100% {transform: scale(1, 1); opacity: 0;}

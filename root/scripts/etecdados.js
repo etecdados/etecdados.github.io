@@ -854,7 +854,7 @@ function addPolyline(parameter) {
         // variables
 		var position;
 		var stroke;
-		var weight;
+		var weight = 5.0;
 		// conditional
 		if (a == 0) {
 			for (var b = 0; b < polylines.length; b++) {
@@ -899,8 +899,6 @@ function addPolyline(parameter) {
                     break;
                     }
                 }
-                // weight
-                weight = 5.0;
                 // stroke color
                 switch(position) {
                     case 0:
@@ -951,7 +949,7 @@ function addPolyline(parameter) {
 }
 
 /* markers -------------------------------------------------- */
-var towerMarkers = new Array();
+var iconMarkers  = new Array();
 var alertMarkers = new Array();
 // add markers
 function addMarkers(parameter) {
@@ -987,26 +985,23 @@ function addMarkers(parameter) {
     // set map
     for (var a = 0;  a < data.length; a++) {
         // variables
+        var color;
         var display;
         var hidden;
-        var icon;
-        var optimized;
+        var opacity = 0.8;
         var position;
-        // points
-        var pointX = new google.maps.Point(0, 0);
-        var pointY = new google.maps.Point(16.5, 5.5);
-        var pointZ = new google.maps.Size(34, 13);
+        var weight = 0.0;
         // coordinates
         var coordinates = new google.maps.LatLng(data[a][sheetLatitude], data[a][sheetLongitude]);
         // conditional
         if (a == 0) {
             // clear markers on map
-            for (var b = 0; b < towerMarkers.length; b++) {
-                towerMarkers[b].setMap(null);
+            for (var b = 0; b < iconMarkers.length; b++) {
+                iconMarkers[b].setMap(null);
                 alertMarkers[b].setMap(null);
             }
             // clear array
-            towerMarkers = [];
+            iconMarkers = [];
             alertMarkers = [];
         }
         // conditional
@@ -1052,61 +1047,56 @@ function addMarkers(parameter) {
 				}
             }
         }
-
-        var typeTowers = [
-            ["i5el", "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 5.62,-23.80 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.72 -1.16,-19.72 -0.99,-18.03 0.99,-18.03 1.16,-19.72 0.00,-21.72 3.50,-23.80 1.16,-19.72 2.54,-18.03 1.00,-18.03 0.58,-2.70 Z M-1.15,19.72 L1.15,19.72 M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
-        ];
-
-        function drawTower(parameter) {
-            return {
-              path: parameter,
-              strokeColor: "#FFFFFF",
-              strokeOpacity: 1,
-              strokeWeight: 0.7,
-              scale: 1
-            };
-          }
         // marker color
         switch(position) {
             case 0:
-                icon = markerColor[0];
+                color = colors[0];
                 break;
             case 1:
-                icon = drawTower(typeTowers[0][1]);
+                color = colors[1];
                 break;
             case 2:
-                icon = markerColor[2];
+                color = colors[2];
                 break;
             case 3:
-                icon = markerColor[3];
+                color = colors[3];
                 break;
             case 4:
-                icon = markerColor[4];
+                color = colors[4];
                 break;
             case 5:
-                icon = markerColor[5];
+                color = colors[5];
                 break;
             case 6:
-                icon = markerColor[6];
+                color = colors[6];
                 break;
             case 7:
-                icon = markerColor[7];
+                color = colors[7];
                 break;
             case 8:
-                icon = markerColor[8];
+                color = colors[8];
                 break;
             default:
-                icon = markerColor[9];
+                color = colors[9];
+                opacity = 0.4;
+                weight  = 1.0;
         }
-        
         // create new marker
         var marker = new google.maps.Marker({
-            icon: icon,
+            icon: {
+                fillColor: color,
+                fillOpacity: opacity,
+                path: "M0.00,-38.00 m-5.50, 0 a5.50,5.50 0 1,0 11.00,0.00 a5.50,5.50 0 1,0 -11.00,0.00",
+                scale: 1,
+                strokeColor: "#909090",
+                strokeOpacity: 0.4,
+                strokeWeight: weight
+            },
             map: map,
             position: coordinates
         });
         // push
-        towerMarkers.push(marker);
+        iconMarkers.push(marker);
         // alert
         for (var g = 0; g < alertText.length; g++) {
             // conditional
@@ -1115,39 +1105,49 @@ function addMarkers(parameter) {
                 hidden = "hidden";
                 break;
             } else if (alertText[g][1] == data[a][sheetDescription]) {
+                opacity = 1.0;
                 position = parseInt(alertText[g][0]);
                 hidden = "";
                 break;
             }
         }
+        // convert rgb
+        function convertRGB(parameter) {
+            // match
+            var string = parameter.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i);
+            return "rgb(" + parseInt(string[1], 16) + "," +  parseInt(string[2], 16) + "," + parseInt(string[3], 16) + ")";
+        }
         // alert color
         switch(position) {
             case 0:
-                icon = new google.maps.MarkerImage(alertColor[0], pointZ, pointX, pointY);
-                optimized = false;
+                color = convertRGB(colors[0]);
                 break;
             case 1:
-                icon = new google.maps.MarkerImage(alertColor[1], pointZ, pointX, pointY);
-                optimized = false;
+                color = convertRGB(colors[1]);
                 break;
             case 2:
-                icon = new google.maps.MarkerImage(alertColor[2], pointZ, pointX, pointY);
-                optimized = false;
+                color = convertRGB(colors[2]);
                 break;
             case 3:
-                icon = new google.maps.MarkerImage(alertColor[3], pointZ, pointX, pointY);
-                optimized = false;
+                color = convertRGB(colors[3]);
                 break;
             default:
-                icon = new google.maps.MarkerImage(alertColor[4], pointZ, pointX, pointY);        
-                optimized = true;
+                opacity = 0.0;
         }
         // create new marker (alert)
         var alertMarker = new google.maps.Marker({
-            icon: icon,
+            clickable: false,
+            icon: {
+                anchor: new google.maps.Point(17, 6.5),
+                url: 'data:image/svg+xml;utf-8,' +
+                        '<svg width="34" height="17" viewBox="0 0 34 17" xmlns="http://www.w3.org/2000/svg">' +
+                            '<path fill="' + color + '" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z" />' +
+                        '</svg>'
+            },
             map: map,
-            optimized: optimized,
-            position: coordinates
+            optimized: false,
+            position: coordinates,
+            opacity: opacity
         });
         // push (alert)
         alertMarkers.push(alertMarker);
@@ -1249,6 +1249,84 @@ function addMarkers(parameter) {
     }
 }
 
+/* towers --------------------------------------------------- */
+var towers = [
+    ["TOWER", "M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0"],
+    ["I5EL",  "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 5.62,-23.80 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.72 -1.16,-19.72 -0.99,-18.03 0.99,-18.03 1.16,-19.72 0.00,-21.72 3.50,-23.80 1.16,-19.72 2.54,-18.03 1.00,-18.03 0.58,-2.70 Z M-1.15,-19.72 L1.15,-19.72 M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
+    ["I5SL",  "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"],
+    ["I5SP",  "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"],
+    ["I5AA",  "M-1.15,-19.72 L1.15,-19.72 M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
+    ["I5TR",  "M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
+    ["I5AT",  "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"]
+];
+
+/* map type ------------------------------------------------- */
+var towerMarker = new Array();
+// map type
+function mapType(parameter) {
+    // variables
+    var color;
+    var position;
+    var type;
+    // get element
+    var element = document.getElementById(parameter.id);
+    // conditional
+    if (element == null) {
+        type = parameter;
+    } else {
+        type = element.value;
+    }
+    // set map
+    map.setMapTypeId(type);
+    // conditional
+    if (type == "hybrid") {
+        color = "#FFFFFF";
+    } else {
+        color = "#3C3C3C";
+    }
+    // change marker
+    for (var a = 0;  a < data.length; a++) {
+        // coordinates
+        var coordinates = new google.maps.LatLng(data[a][sheetLatitude], data[a][sheetLongitude]);
+        // conditional
+        if (a == 0) {
+            // clear markers on map
+            for (var b = 0; b < towerMarker.length; b++) {
+                towerMarker[b].setMap(null);
+            }
+            // clear array
+            towerMarker = [];
+        }
+        // tower type
+        for (var c = 0; c < towers.length; c++) {
+            // upper
+            var towerType = data[a][2].toUpperCase();
+            // conditional
+            if (towers[c][0] == towerType.trim()) {
+                position = c;
+                break;
+            } else {
+                position = 0;
+            }
+        }
+          // create new marker
+        var marker = new google.maps.Marker({
+            clickable: false,
+            icon: {
+                path: towers[position][1],
+                scale: 1.0,
+                strokeColor: color,
+                strokeOpacity: 1.0,
+                strokeWeight: 0.7,
+            },
+            map: map,
+            position: coordinates
+        });
+        // set markers
+        towerMarker.push(marker);
+    }
+}
+
 /* google maps ---------------------------------------------- */
 function googleMaps() {
     // central map
@@ -1259,7 +1337,6 @@ function googleMaps() {
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
-        mapTypeId: "hybrid",
         streetViewControl: false,
         zoom: 13
     };
@@ -1335,14 +1412,8 @@ function googleMaps() {
     addPolyline(0);
     // set markers
     addMarkers(0);
-}
-
-/* map type ------------------------------------------------- */
-function mapType(parameter) {
-    // get element
-    var element = document.getElementById(parameter.id).value;
-    // set map
-    map.setMapTypeId(element);
+    // set map type
+    mapType("hybrid");
 }
 
 /* search (jQuery) ------------------------------------------ */
