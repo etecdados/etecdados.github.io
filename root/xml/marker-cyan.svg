@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="15px" height="20px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <metadata>
+        // https://etecdados.github.io
+        // etecdados v1.0.0
+        // copyright 2019 by etecdados
+        // created on 2013/06/24 12:10
+        // author fernando silva
+        // last update on 2019/09/26
+    </metadata>
+    <polygon points="6.75,14.95 6.75,19.00 7.50,20.00 7.50,15.00" fill="#D2D3D5" />
+    <polygon points="7.50,15.00 7.50,20.00 8.25,19.00 8.25,14.95" fill="#848688" />
+    <circle cx="7.5" cy="7.5" r="7.5" fill="#00E9E9" />
+    <circle cx="5.0" cy="5.0" r="6.5" fill="#FFFFFF" opacity="0.1" />
+    <circle cx="5.0" cy="5.0" r="4.5" fill="#FFFFFF" opacity="0.2" />
+    <circle cx="5.0" cy="5.0" r="2.5" fill="#FFFFFF" opacity="0.3" />
+</svg>
