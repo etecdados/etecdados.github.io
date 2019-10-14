@@ -1132,7 +1132,7 @@ function addMarkers(parameter) {
                 color = convertRGB(colors[3]);
                 break;
             default:
-		color = convertRGB(colors[9]);
+		color = "rgba(0, 0, 0, 0.0)";
                 opacity = 0.0;
         }
         // create new marker (alert)
