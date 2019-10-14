@@ -1148,7 +1148,7 @@ function addMarkers(parameter) {
             map: map,
             optimized: false,
             position: coordinates,
-            opacity: opacity
+            opacity: 0.0
         });
         // push (alert)
         alertMarkers.push(alertMarker);
