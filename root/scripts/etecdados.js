@@ -1142,13 +1142,12 @@ function addMarkers(parameter) {
                 anchor: new google.maps.Point(17, 6.5),
                 url: 'data:image/svg+xml;utf-8,' +
                         '<svg width="34" height="17" viewBox="0 0 34 17" xmlns="http://www.w3.org/2000/svg">' +
-                            '<path fill="' + color + '" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z" />' +
+                            '<path fill="' + color + '" opacity="' + opacity + '" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z" />' +
                         '</svg>'
             },
             map: map,
             optimized: false,
-            position: coordinates,
-            opacity: 0.0
+            position: coordinates
         });
         // push (alert)
         alertMarkers.push(alertMarker);
