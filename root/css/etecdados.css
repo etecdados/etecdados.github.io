@@ -68,27 +68,27 @@
 }
 
 #button_project2 {
-    background-image: url(../../elecnor/images/site.png);
+    background-image: url(../../root/images/site.png);
 }
 
 #button_project3 {
-    background-image: url(../../elecnor/images/pate.png);
+    background-image: url(../../root/images/pate.png);
 }
 
 #button_project4 {
-    background-image: url(../../elecnor/images/sjpiaui.png);
+    background-image: url(../../root/images/sjpiaui.png);
 }
 
 #button_project5 {
-    background-image: url(../../elecnor/images/sfernando.png);
+    background-image: url(../../root/images/sfernando.png);
 }
 
 #button_project6 {
-    background-image: url(../../elecnor/images/equatorial.png);
+    background-image: url(../../root/images/equatorial.png);
 }
 
 #button_project7 {
-    background-image: url(../../elecnor/images/msg.png);
+    background-image: url(../../root/images/msg.png);
 }
 
 /* navbar --------------------------------------------------- */
@@ -171,7 +171,7 @@ button[data-target="#div_list"], #div_list {
     white-space: nowrap;
 }
 
-img[src*='data:image/svg+xml;utf-8'] {
+img[src*='data:image/svg+xml;utf-8'], #alert {
     animation: pulse 1s ease-out;
     animation-iteration-count: infinite;
 }

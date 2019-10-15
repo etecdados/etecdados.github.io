@@ -542,39 +542,16 @@ function checkData() {
 }
 
 /* colors --------------------------------------------------- */
-var colors1 = [
-    /*0*/ "#E95959", // red
-    /*1*/ "#5990E9", // blue
-    /*2*/ "#59E990", // green
-    /*3*/ "#E9E959", // yellow
-    /*4*/ "#E900E9", // magenta
-    /*5*/ "#00E9E9", // cyan
-    /*6*/ "#E95900", // orange
-    /*7*/ "#595959", // black
-    /*8*/ "#905959", // brown
-    /*9*/ "#909090"  // gray
-];
-
 var colors = [
-    /*0*/ "#DC143C", // Crimson
-    /*1*/ "#4169E1", // RoyalBlue
-    /*2*/ "#3CB371", // MediumSeaGreen
-    /*3*/ "#FFD700", // Gold
-    /*4*/ "#EE82EE", // Violet
-    /*5*/ "#87CEFA", // LightSkyBlue
-    /*6*/ "#FFA07A", // LightSalmon
-    /*7*/ "#90EE90", 
-    /*8*/ "#00FF7F",
-    /*9*/ "#909090"  
-];
-
-/* alert color----------------------------------------------- */
-var alertColor = [
-    /*0*/ "../root/xml/alert-red.svg",
-    /*1*/ "../root/xml/alert-blue.svg",
-    /*2*/ "../root/xml/alert-green.svg",
-    /*3*/ "../root/xml/alert-yellow.svg",
-    /*4*/ "../root/xml/alert-gray.svg"
+    /*0*/ "#DC143C", // crimson
+    /*1*/ "#4169E1", // royal blue
+    /*2*/ "#3CB371", // medium sea green
+    /*3*/ "#FFD700", // gold
+    /*4*/ "#DA70D6", // orchid
+    /*5*/ "#87CEFA", // light sky blue
+    /*6*/ "#FF7F50", // coral
+    /*7*/ "#131313", // black
+    /*8*/ "#808080", // gray  
 ];
 
 /* legend --------------------------------------------------- */
@@ -884,7 +861,7 @@ function addPolyline(parameter) {
                             var auxiliary = b + c + 1;
                             // conditional
                             if (activity[auxiliary][1] == "") {
-                                position = 9;
+                                position = 8;
                                 break;
                             } else if (activity[auxiliary][1] == data[a][sheetActivity + parseInt(element)]) {
                                 position = parseInt(activity[auxiliary][activityColor]);
@@ -920,11 +897,8 @@ function addPolyline(parameter) {
                     case 7:
                         stroke = colors[7];
                         break;
-                    case 8:
-                        stroke = colors[8];
-                        break;
                     default:
-                        stroke = colors[9];
+                        stroke = colors[8];
                         weight = 1.0;
                 }
             }
@@ -981,10 +955,14 @@ function addMarkers(parameter) {
     for (var a = 0;  a < data.length; a++) {
         // variables
         var color;
-        var display;
+        var displayGallery;
+        var displayMarker;
         var hidden;
         var opacity = 0.8;
         var position;
+        var rgb;
+        var shape = 'opacity="0.8" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z"';
+        var status;
         var weight = 0.0;
         // coordinates
         var coordinates = new google.maps.LatLng(data[a][sheetLatitude], data[a][sheetLongitude]);
@@ -1014,6 +992,7 @@ function addMarkers(parameter) {
                 // conditional
                 if (filter[d] == data[a][sheetSection]) {
                     position = d;
+                    status = filter[d];
                     break;
                 }
             }
@@ -1026,19 +1005,23 @@ function addMarkers(parameter) {
 					for (var f = 0; f < activityRows; f++) {
 						// auxiliary
                         var auxiliary = e + f + 1;
+                        // status
+                        status = activity[auxiliary][1];
 						// conditional
-						if (activity[auxiliary][1] == "") {
-							position = 9;
+						if (status == "") {
+                            position = 8;
+                            displayMarker = "d-none";
 							break;
-					    } else if (activity[auxiliary][1] == data[a][sheetActivity + parseInt(element)]) {
+					    } else if (status == data[a][sheetActivity + parseInt(element)]) {
                             position = parseInt(activity[auxiliary][activityColor]);
+                            displayMarker = "";
 						    break;
 					    } else {
                             // no break
-                            position = 9;
+                            position = 8;
                         }
 				    }
-				break;
+				    break;
 				}
             }
         }
@@ -1068,11 +1051,8 @@ function addMarkers(parameter) {
             case 7:
                 color = colors[7];
                 break;
-            case 8:
-                color = colors[8];
-                break;
             default:
-                color = colors[9];
+                color = colors[8];
                 opacity = 0.0;
                 weight  = 0.9;
         }
@@ -1115,19 +1095,19 @@ function addMarkers(parameter) {
         // alert color
         switch(position) {
             case 0:
-                color = convertRGB(colors[0]);
+                rgb = convertRGB(colors[0]);
                 break;
             case 1:
-                color = convertRGB(colors[1]);
+                rgb = convertRGB(colors[1]);
                 break;
             case 2:
-                color = convertRGB(colors[2]);
+                rgb = convertRGB(colors[2]);
                 break;
             case 3:
-                color = convertRGB(colors[3]);
+                rgb = convertRGB(colors[3]);
                 break;
             default:
-                color = "rgba(0, 0, 0, 0.0)";
+                rgb = "rgba(0, 0, 0, 0.0)";
         }
         // create new marker (alert)
         var alertMarker = new google.maps.Marker({
@@ -1136,7 +1116,7 @@ function addMarkers(parameter) {
                 anchor: new google.maps.Point(17, 6.5),
                 url: 'data:image/svg+xml;utf-8,' +
                         '<svg width="34" height="17" viewBox="0 0 34 17" xmlns="http://www.w3.org/2000/svg">' +
-                            '<path fill="' + color + '" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z" />' +
+                            '<path fill="' + rgb + '" ' + shape + '/>' +
                         '</svg>'
             },
             map: map,
@@ -1147,9 +1127,9 @@ function addMarkers(parameter) {
         alertMarkers.push(alertMarker);
         // display gallery
         if (data[a][sheetLink] == "") {
-            display = "d-none";
+            displayGallery = "d-none";
         } else {
-            display = "";
+            displayGallery = "";
         }
         // content
         var content =
@@ -1193,7 +1173,7 @@ function addMarkers(parameter) {
                                     '</a>' +
                                 '</td>' +
                             '</tr>' +
-                            '<tr class="' + display + '">' +
+                            '<tr class="' + displayGallery + '">' +
                                 '<td>' + text[25][language] + '</td>' +
                                 '<td>' +
                                     '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[a][sheetLink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][sheetTower] + '&apos;)">' +
@@ -1202,12 +1182,22 @@ function addMarkers(parameter) {
                                     '</a>' +
                                 '</td>' +
                             '</tr>' +
+                            '<tr class="text-center ' + displayMarker + '">' +
+                                '<td colspan="2">' +
+                                    '<span class="mr-2" style="color: ' + color + '; opacity: 0.8;">' +
+                                        '<i class="fas fa-circle"></i>' +
+                                    '</span>' +
+                                    '<small>' + status + '</small>' +
+                                '</td>' +
+                            '</tr>' +
                         '</table>' +
                     '</div>' +
                 '</div>' +
                 '<div ' + hidden + '>' +
                     '<div class="collapsed badge badge-pill badge-dark w-100">' +
-                        '<img alt="alert icon" class="img_info" src="' + alertColor[position] + '">' +
+                    '<svg width="34" height="17" viewBox="0 0 34 17" xmlns="http://www.w3.org/2000/svg" id="alert">' +
+                        '<path fill="' + rgb + '"' + shape + '/>' +
+                    '</svg>' +
                         '<span class="ml-1 mr-1">' + data[a][sheetDescription] + '</span>' +
                     '</div>' +
                     '<a href="#div_alert" data-toggle="collapse" class="text-dark">' +
@@ -1245,13 +1235,13 @@ function addMarkers(parameter) {
 
 /* towers --------------------------------------------------- */
 var towers = [
-    ["TOWER", "M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0"],
-    ["I5EL",  "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 5.62,-23.80 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.72 -1.16,-19.72 -0.99,-18.03 0.99,-18.03 1.16,-19.72 0.00,-21.72 3.50,-23.80 1.16,-19.72 2.54,-18.03 1.00,-18.03 0.58,-2.70 Z M-1.15,-19.72 L1.15,-19.72 M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
-    ["I5SL",  "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"],
-    ["I5SP",  "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"],
-    ["I5AA",  "M-1.15,-19.72 L1.15,-19.72 M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
-    ["I5TR",  "M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
-    ["I5AT",  "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"]
+    ["NOT",  "M-4.52,-16.87 L-11.25,-16.87 0.00,-23.50 -11.25,-30.00 11.25,-30.00 0.00,-23.50 11.25,-16.87 -4.52,-16.87 0.00,0.00 4.52,-16.87"],
+    ["I5EL", "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 5.62,-23.80 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.72 -1.16,-19.72 -0.99,-18.03 0.99,-18.03 1.16,-19.72 0.00,-21.72 3.50,-23.80 1.16,-19.72 2.54,-18.03 1.00,-18.03 0.58,-2.70 Z M-1.15,-19.72 L1.15,-19.72 M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
+    ["I5SL", "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"],
+    ["I5SP", "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"],
+    ["I5AA", "M-1.15,-19.72 L1.15,-19.72 M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
+    ["I5TR", "M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03"],
+    ["I5AT", "M0,0 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00"],
 ];
 
 /* map type ------------------------------------------------- */
@@ -1276,7 +1266,7 @@ function mapType(parameter) {
     if (type == "hybrid") {
         color = "#FFFFFF";
     } else {
-        color = "#3C3C3C";
+        color = "#7F7F7F";
     }
     // change marker
     for (var a = 0;  a < data.length; a++) {
@@ -1294,9 +1284,9 @@ function mapType(parameter) {
         // tower type
         for (var c = 0; c < towers.length; c++) {
             // upper
-            var towerType = data[a][2].toUpperCase();
+            var upper = data[a][2].toUpperCase();
             // conditional
-            if (towers[c][0] == towerType.trim()) {
+            if (towers[c][0] == upper.trim()) {
                 position = c;
                 break;
             } else {

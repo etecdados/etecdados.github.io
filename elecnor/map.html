@@ -28,8 +28,6 @@
         <script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.0.0  -->
         <!-- google api -->
         <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};accessSetup()"></script>
-        <!-- client -->
-		<link type="text/css" rel="stylesheet" href="css/elecnor.css"> <!-- version 1.0.0 -->
     </head>
     <body>
         <!-- navbar -->
@@ -83,9 +81,9 @@
 		<div class="container-fluid text-center mb-3">
             <!-- header -->
 			<header class="row pt-1 pb-1">
-                <!-- logo elecnor -->
+                <!-- logo -->
                 <div class="col-sm-3 m-auto text-left d-none d-sm-block">
-                    <img src="images/elecnor.png" alt="logo elecnor">
+                    <img src="../root/images/elecnor.png" alt="logo">
                 </div>
                 <!-- project name -->
                 <div class="col m-auto">
@@ -96,7 +94,7 @@
                 <!-- logo project -->
                 <div class="col-sm-3 m-auto text-right d-none d-sm-block">
                     <img src="#" alt="logo project" id="img_project">
-                    <script type="text/javascript">$("#img_project").attr("src", "images/" + projects[position][1] + ".png");</script>
+                    <script type="text/javascript">$("#img_project").attr("src", "../root/images/" + projects[position][1] + ".png");</script>
                 </div>	
             </header>
             <!-- spinner -->
