@@ -59,9 +59,12 @@ function accessSetup() {
             discoveryDocs: discoveryDocs,
             scope: scopeReadonly,
         }).then(function() {
+            // listen
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getAccess);
+            gapi.auth2.getAuthInstance().isSignedIn.listen(getProject);
             // get
-            gapi.auth2.getAuthInstance().isSignedIn.get(getAccess());
-            gapi.auth2.getAuthInstance().isSignedIn.get(getProject());
+            getAccess(gapi.auth2.getAuthInstance().isSignedIn.get());
+            getProject(gapi.auth2.getAuthInstance().isSignedIn.get());
         });
     });
     // conditional
@@ -279,10 +282,10 @@ pushArray(technicalTotal, technical, technicalColumns, technicalValue);
 function checkText() {
     if (text[0] == null) {
         document.getElementById("div_login").className = "d-none";
-        document.cookie = "reload=0";
+        document.cookie = "reload=0;";
     } else {
         document.getElementById("div_spinner").className = "d-none";
-        document.cookie = "reload=1";
+        document.cookie = "reload=1;";
     }
 }
 
@@ -465,16 +468,16 @@ function checkData() {
     // conditional
     if (data[0] == null || getCookie("reload") == 0) {
         // reload cookie
-        document.cookie = "reload=1";
+        document.cookie = "reload=1;";
         // change class
         element.className = "d-none";
         // reload page
         setTimeout(function(){
             window.location.reload();
-        }, 1500);
+        }, 2000);
     } else {
         // reload cookie
-        document.cookie = "reload=0";
+        document.cookie = "reload=0;";
         // change class
         document.getElementById("div_spinner").className = "d-none";
         element.className = "d-block";
