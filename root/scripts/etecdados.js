@@ -1389,6 +1389,8 @@ function googleMaps() {
     map = new google.maps.Map(document.getElementById("div_map"), properties);
     // menu
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("div_menu"));
+    // filter
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById("div_filter"));
     // date
     map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById("div_date"));
     // legend
@@ -1459,6 +1461,69 @@ function googleMaps() {
     addMarkers(0);
     // set map type
     mapType("hybrid");
+}
+
+/* create filter -------------------------------------------- */
+function createFilter(parameter) {
+    // times
+    for (var a = 1; a <= parameter; a++) {
+        // get element
+        var element = document.getElementById("select" + a);
+        // inner html
+        element.innerHTML = "";
+        // total
+        var total;
+        // conditional
+        if (a == 1) {
+            total = data.length - 1;
+        } else {
+            total = data.length;
+        }
+        // tag options
+        for (var b = a - 1; b < total; b++) {
+            // create element
+            var tagOption = document.createElement("option");
+            // set attribute
+            tagOption.setAttribute("value", b);
+            // inner html
+            tagOption.innerHTML = data[b][1];
+            // append child
+            element.appendChild(tagOption);
+        }
+    }
+}
+
+/* change filter -------------------------------------------- */
+function changeFilter() {
+    // get element
+    var select1 = document.getElementById("select1");
+    var select2 = document.getElementById("select2");
+    // show itens
+    for (var a = 0; a < select1.length - 1; a++) {
+        select2.options[a].style.display = "block";
+    }
+    // hide itens
+    for (var b = 0; b < select1.value; b++) {
+        select2.options[b].style.display = "none";
+        select2.options[select1.value].setAttribute("selected", "selected");
+    }
+}
+
+/* apply filter --------------------------------------------- */
+function applyFilter() {
+    // get element
+    var select1 = document.getElementById("select1").value;
+    var select2 = document.getElementById("select2").value;
+    document.getElementById("div_filter").style.display = "block";
+
+    console.log(select1);
+    console.log(select2);
+
+}
+
+/* hide filter ---------------------------------------------- */
+function hideFilter() {
+    document.getElementById("div_filter").style.display = "none";
 }
 
 /* search (jQuery) ------------------------------------------ */

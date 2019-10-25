@@ -209,6 +209,11 @@ img[src*='data:image/svg+xml;utf-8'], #alert {
     text-indent: 0;
 }
 
+/* filter --------------------------------------------------- */
+.button_filter, .label_filter {
+    width: 89px;
+}
+
 /* files ---------------------------------------------------- */
 .div_search {
     max-width: 987px;

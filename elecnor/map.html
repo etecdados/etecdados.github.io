@@ -213,9 +213,34 @@
                             </li>
                         </ul>
                     </div>
-                     <!-- tables -->
+                    <!-- legend type -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="far fa-dot-circle"></i>
+                        <script>document.write(text[61][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <label class="mb-0">
+                                    <input type="radio" name="legend" class="mr-1 align-middle" onclick="" id="input_simple" checked>
+                                    <script>document.write(text[62][language])</script>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="mb-0">
+                                    <input type="radio" name="legend" class="mr-1 align-middle" onclick="" id="input_dynamic">
+                                    <script>document.write(text[63][language])</script>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                     <!-- modal -->
                      <div class="border-top border-secondary mt-3 mb-5">
                          <ul class="ul_sidebar">
+                            <li class="mt-2">
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_modalFilter" onclick="createFilter(2)">
+                                    <i class="fas fa-filter"></i>
+                                    <script>document.write(text[64][language])</script>
+                                </a>
+                            </li>
                              <li class="mt-2">
                                 <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
                                     <i class="fas fa-table"></i>
@@ -224,7 +249,7 @@
                              </li>
                              <li class="mt-2">
                                 <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_technical">
-                                    <i class="fas fa-table"></i>
+                                    <i class="fas fa-drafting-compass"></i>
                                     <script>document.write(text[60][language])</script>
                                 </a>
                              </li>
@@ -240,6 +265,19 @@
                         <i class="fas fa-list-ul"></i>
                         <script>document.write(text[19][language])</script>
                     </button>
+                </div>
+                <!-- filter -->
+                <div class="mt-2 rounded-pill bg-light p-2 text-secondary" id="div_filter">
+                    <a href="#" class="mr-1 text-primary">
+                        <i class="fas fa-filter"></i>
+                    </a>
+                    <span class="mr-1 text-primary">
+                        
+                    </span>
+                    <span>Inicio 174/1 Termino 255/1</span>
+                    <a href="#" class="ml-1 text-danger" onclick="hideFilter()">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
                 </div>
                 <!-- date -->
                 <div class="alert alert-light p-1 m-2" id="div_date">
@@ -265,7 +303,53 @@
                     <!-- list -->
                     <div id="div_list"   class="bg-white text-left collapse.show"></div>
                     <div id="div_cables" class="bg-white text-left"></div>
-                    
+                </div>
+            </div>
+            <!-- modal filter -->
+            <div class="modal fade" id="div_modalFilter">
+                <div class="modal-fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
+                        <div class="modal-content">
+                            <!-- modal header -->
+                            <div class="modal-header">
+                                <h5 class="modal-title text-primary">
+                                    <i class="fas fa-filter"></i>
+                                    <script>document.write(text[64][language])</script>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!-- modal body -->
+                            <div class="modal-body mt-1">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text label_filter">
+                                            <script>document.write(text[65][language])</script>
+                                        </div>
+                                    </div>
+                                    <select class="custom-select" onchange="changeFilter()" id="select1"></select>
+                                </div>
+                                <div class="input-group mt-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text label_filter">
+                                            <script>document.write(text[66][language])</script>
+                                        </div>
+                                    </div>
+                                    <select class="custom-select" id="select2"></select>
+                                </div>
+                            </div>
+                            <!-- modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="button_filter btn btn-primary"   data-dismiss="modal" onclick="applyFilter()">
+                                    <script>document.write(text[67][language])</script>
+                                </button>
+                                <button type="button" class="button_filter btn btn-secondary" data-dismiss="modal">
+                                    <script>document.write(text[17][language])</script>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- modal summary -->
@@ -333,7 +417,7 @@
                                 <!-- modal header -->
                                 <div class="modal-header">
                                     <h5 class="modal-title text-primary">
-                                        <i class="fas fa-table"></i>
+                                        <i class="fas fa-drafting-compass"></i>
                                         <script>document.write(text[60][language])</script>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
