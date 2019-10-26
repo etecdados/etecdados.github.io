@@ -232,15 +232,37 @@
                             </li>
                         </ul>
                     </div>
-                     <!-- modal -->
+                    <!-- filter -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="fas fa-filter"></i>
+                        <script>document.write(text[64][language])</script>
+                        <div>
+                            <label class="label_filter">
+                                <script>document.write(text[65][language])</script>
+                            </label>
+                            <select class="select_filter" id="select1" onchange="changeFilter()">
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label_filter">
+                                <script>document.write(text[66][language])</script>
+                            </label>
+                            <select class="select_filter" id="select2">
+                            </select>
+                        </div>
+                        <script type="text/javascript">createFilter(1, 0); createFilter(2, 1);</script>
+                        <div class="mt-1">
+                            <button type="button" class="btn btn-sm btn-secondary button_filter mr-2" onclick="applyFilter()">
+                                <script>document.write(text[67][language])</script>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger button_filter" onclick="clearFilter()">
+                                <script>document.write(text[17][language])</script>
+                            </button>
+                        </div>
+                    </div>
+                     <!-- summary and technical -->
                      <div class="border-top border-secondary mt-3 mb-5">
                          <ul class="ul_sidebar">
-                            <li class="mt-2">
-                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_modalFilter" onclick="createFilter(2)">
-                                    <i class="fas fa-filter"></i>
-                                    <script>document.write(text[64][language])</script>
-                                </a>
-                            </li>
                              <li class="mt-2">
                                 <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
                                     <i class="fas fa-table"></i>
@@ -266,29 +288,6 @@
                         <script>document.write(text[19][language])</script>
                     </button>
                 </div>
-                <!-- filter -->
-                <div class="mt-2 rounded-pill bg-light p-2 text-secondary" id="div_filter">
-                    <a href="#" class="mr-1 text-primary">
-                        <i class="fas fa-filter"></i>
-                    </a>
-                    <span class="mr-1 text-primary">
-                        
-                    </span>
-                    <span>Inicio 174/1 Termino 255/1</span>
-                    <a href="#" class="ml-1 text-danger" onclick="hideFilter()">
-                        <i class="fas fa-times-circle"></i>
-                    </a>
-                </div>
-                <!-- date -->
-                <div class="alert alert-light p-1 m-2" id="div_date">
-                    <span class="text-danger">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </span>
-                    <script>document.write(text[31][language])</script>
-                    <span class="font-weight-bold">
-                        <script>document.write(data[0][dataColumns - 1])</script>
-                    </span>
-                </div>
                 <!-- legend -->
                 <div class="m-2" id="div_legend">
                     <!-- button -->
@@ -302,54 +301,17 @@
                     </button>
                     <!-- list -->
                     <div id="div_list"   class="bg-white text-left collapse.show"></div>
-                    <div id="div_cables" class="bg-white text-left"></div>
+                    <div id="div_cables" class="bg-white text-left mb-1"></div>
                 </div>
-            </div>
-            <!-- modal filter -->
-            <div class="modal fade" id="div_modalFilter">
-                <div class="modal-fade" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
-                        <div class="modal-content">
-                            <!-- modal header -->
-                            <div class="modal-header">
-                                <h5 class="modal-title text-primary">
-                                    <i class="fas fa-filter"></i>
-                                    <script>document.write(text[64][language])</script>
-                                </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <!-- modal body -->
-                            <div class="modal-body mt-1">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text label_filter">
-                                            <script>document.write(text[65][language])</script>
-                                        </div>
-                                    </div>
-                                    <select class="custom-select" onchange="changeFilter()" id="select1"></select>
-                                </div>
-                                <div class="input-group mt-3">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text label_filter">
-                                            <script>document.write(text[66][language])</script>
-                                        </div>
-                                    </div>
-                                    <select class="custom-select" id="select2"></select>
-                                </div>
-                            </div>
-                            <!-- modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" class="button_filter btn btn-primary"   data-dismiss="modal" onclick="applyFilter()">
-                                    <script>document.write(text[67][language])</script>
-                                </button>
-                                <button type="button" class="button_filter btn btn-secondary" data-dismiss="modal">
-                                    <script>document.write(text[17][language])</script>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <!-- date -->
+                <div class="alert alert-light p-1 m-2" id="div_date">
+                    <span class="text-danger">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </span>
+                    <script>document.write(text[31][language])</script>
+                    <span class="font-weight-bold">
+                        <script>document.write(data[0][dataColumns - 1])</script>
+                    </span>
                 </div>
             </div>
             <!-- modal summary -->

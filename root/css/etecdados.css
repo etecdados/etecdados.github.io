@@ -210,8 +210,16 @@ img[src*='data:image/svg+xml;utf-8'], #alert {
 }
 
 /* filter --------------------------------------------------- */
-.button_filter, .label_filter {
-    width: 89px;
+.label_filter {
+    width: 60px;
+}
+
+.select_filter {
+    width: 130px;
+}
+
+.button_filter {
+    width: 100px;
 }
 
 /* files ---------------------------------------------------- */

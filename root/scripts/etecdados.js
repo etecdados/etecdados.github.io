@@ -451,7 +451,7 @@ function validation(parameter) {
 
 /* open sidebar --------------------------------------------- */
 function openSidebar() {
-    document.getElementById("div_sidebar").style.width = "233px";
+    document.getElementById("div_sidebar").style.width = "250px";
     // collapse navbar (jQuery)
     $(".collapse").collapse("hide");
 }
@@ -1389,12 +1389,11 @@ function googleMaps() {
     map = new google.maps.Map(document.getElementById("div_map"), properties);
     // menu
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("div_menu"));
-    // filter
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById("div_filter"));
-    // date
-    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById("div_date"));
     // legend
     map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById("div_legend"));
+    // date
+    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById("div_date"));
+    
     // info window
     var info = new google.maps.InfoWindow();
     // site
@@ -1464,32 +1463,29 @@ function googleMaps() {
 }
 
 /* create filter -------------------------------------------- */
-function createFilter(parameter) {
-    // times
-    for (var a = 1; a <= parameter; a++) {
-        // get element
-        var element = document.getElementById("select" + a);
+function createFilter(parameter1, parameter2) {
+    // get element
+    var element = document.getElementById("select" + parameter1);
+    // inner html
+    element.innerHTML = "";
+    // total
+    var total;
+    // conditional
+    if (parameter2 == 0) {
+        total = data.length - 1;
+    } else {
+        total = data.length;
+    }
+    // tag options
+    for (var b = parameter2; b < total; b++) {
+        // create element
+        var tagOption = document.createElement("option");
+        // set attribute
+        tagOption.setAttribute("value", b);
         // inner html
-        element.innerHTML = "";
-        // total
-        var total;
-        // conditional
-        if (a == 1) {
-            total = data.length - 1;
-        } else {
-            total = data.length;
-        }
-        // tag options
-        for (var b = a - 1; b < total; b++) {
-            // create element
-            var tagOption = document.createElement("option");
-            // set attribute
-            tagOption.setAttribute("value", b);
-            // inner html
-            tagOption.innerHTML = data[b][1];
-            // append child
-            element.appendChild(tagOption);
-        }
+        tagOption.innerHTML = data[b][1];
+        // append child
+        element.appendChild(tagOption);
     }
 }
 
@@ -1498,32 +1494,38 @@ function changeFilter() {
     // get element
     var select1 = document.getElementById("select1");
     var select2 = document.getElementById("select2");
-    // show itens
-    for (var a = 0; a < select1.length - 1; a++) {
-        select2.options[a].style.display = "block";
-    }
-    // hide itens
-    for (var b = 0; b < select1.value; b++) {
-        select2.options[b].style.display = "none";
-        select2.options[select1.value].setAttribute("selected", "selected");
+    // get text
+    var text = select2.options[select2.selectedIndex].text;
+    
+    // clear
+    select2.innerHTML = "";
+    // new filter
+    createFilter(2, parseInt(select1.value) + 1);
+    // check
+    for (var a = 0; a < select2.length; a++) {
+        // conditional
+        if (select2.options[a].innerHTML == text) {
+            // set attribute
+            select2.options[a].setAttribute("selected", "selected");
+            break;
+        }
     }
 }
 
 /* apply filter --------------------------------------------- */
 function applyFilter() {
     // get element
-    var select1 = document.getElementById("select1").value;
-    var select2 = document.getElementById("select2").value;
-    document.getElementById("div_filter").style.display = "block";
+    var select1 = document.getElementById("select1");
+    var select2 = document.getElementById("select2");
 
-    console.log(select1);
-    console.log(select2);
+    alert(select1.options[select1.selectedIndex].text + " and " + select2.options[select2.selectedIndex].text + " \n values = " + select1.value + " and " + select2.value);
 
 }
 
-/* hide filter ---------------------------------------------- */
-function hideFilter() {
-    document.getElementById("div_filter").style.display = "none";
+/* cleat filter --------------------------------------------- */
+function clearFilter() {
+    createFilter(1, 0);
+    createFilter(2, 1);
 }
 
 /* search (jQuery) ------------------------------------------ */
