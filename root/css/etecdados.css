@@ -214,8 +214,8 @@ img[src*='data:image/svg+xml;utf-8'], #alert {
     width: 60px;
 }
 
-.select_filter {
-    width: 130px;
+select[id*="select"] {
+    width: 140px;
 }
 
 .button_filter {

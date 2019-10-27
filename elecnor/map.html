@@ -237,21 +237,19 @@
                         <i class="fas fa-filter"></i>
                         <script>document.write(text[64][language])</script>
                         <div>
-                            <label class="label_filter">
+                            <label class="my-1 mr-2 label_filter">
                                 <script>document.write(text[65][language])</script>
                             </label>
-                            <select class="select_filter" id="select1" onchange="changeFilter()">
-                            </select>
+                            <select class="custom-select p-0 h-auto" onchange="changeFilter()" id="select1"></select>
                         </div>
                         <div>
-                            <label class="label_filter">
+                            <label class="my-1 mr-2 label_filter">
                                 <script>document.write(text[66][language])</script>
                             </label>
-                            <select class="select_filter" id="select2">
-                            </select>
+                            <select class="custom-select p-0 h-auto" id="select2"></select>
                         </div>
                         <script type="text/javascript">createFilter(1, 0); createFilter(2, 1);</script>
-                        <div class="mt-1">
+                        <div class="mt-2">
                             <button type="button" class="btn btn-sm btn-secondary button_filter mr-2" onclick="applyFilter()">
                                 <script>document.write(text[67][language])</script>
                             </button>
@@ -263,7 +261,7 @@
                      <!-- summary and technical -->
                      <div class="border-top border-secondary mt-3 mb-5">
                          <ul class="ul_sidebar">
-                             <li class="mt-2">
+                             <li>
                                 <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
                                     <i class="fas fa-table"></i>
                                     <script>document.write(text[30][language])</script>
