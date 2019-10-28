@@ -63,7 +63,7 @@
                     </li>
                     <!-- logout -->
                     <li class="nav-item ml-3">
-                        <a href="#" class="text-white-50 text-decoration-none" data-toggle="modal" data-target="#div_logout">
+                        <a href="javascript:void(0)" class="text-white-50 text-decoration-none" data-toggle="modal" data-target="#div_logout">
                             <i class="fas fa-sign-out-alt"></i>
                             <script>document.write(text[10][language])</script>
                         </a>
@@ -213,25 +213,6 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- legend type -->
-                    <div class="border-top border-secondary mt-3">
-                        <i class="far fa-dot-circle"></i>
-                        <script>document.write(text[61][language])</script>
-                        <ul class="ul_sidebar">
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="legend" class="mr-1 align-middle" onclick="" id="input_simple" checked>
-                                    <script>document.write(text[62][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="legend" class="mr-1 align-middle" onclick="" id="input_dynamic">
-                                    <script>document.write(text[63][language])</script>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
                     <!-- filter -->
                     <div class="border-top border-secondary mt-3">
                         <i class="fas fa-filter"></i>
@@ -240,13 +221,13 @@
                             <label class="my-1 mr-2 label_filter">
                                 <script>document.write(text[65][language])</script>
                             </label>
-                            <select class="custom-select p-0 h-auto" onchange="changeFilter()" id="select1"></select>
+                            <select class="custom-select custom-select-sm p-0 h-auto" onchange="changeFilter()" id="select1"></select>
                         </div>
                         <div>
                             <label class="my-1 mr-2 label_filter">
                                 <script>document.write(text[66][language])</script>
                             </label>
-                            <select class="custom-select p-0 h-auto" id="select2"></select>
+                            <select class="custom-select custom-select-sm p-0 h-auto" id="select2"></select>
                         </div>
                         <script type="text/javascript">createFilter(1, 0); createFilter(2, 1);</script>
                         <div class="mt-2">
@@ -262,13 +243,13 @@
                      <div class="border-top border-secondary mt-3 mb-5">
                          <ul class="ul_sidebar">
                              <li>
-                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
+                                <a href="javascript:void(0)" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
                                     <i class="fas fa-table"></i>
                                     <script>document.write(text[30][language])</script>
                                 </a>
                              </li>
                              <li class="mt-2">
-                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_technical">
+                                <a href="javascript:void(0)" class="text-decoration-none" data-toggle="modal" data-target="#div_technical">
                                     <i class="fas fa-drafting-compass"></i>
                                     <script>document.write(text[60][language])</script>
                                 </a>
@@ -285,6 +266,23 @@
                         <i class="fas fa-list-ul"></i>
                         <script>document.write(text[19][language])</script>
                     </button>
+                </div>
+                <!-- filter -->
+                <div class="d-none" id="div_filter">
+                    <table class="table table-sm table-bordered table-dark text-white-50 ml-2 mb-0">
+                        <thead>
+                            <tr>
+                                <th colspan="2">
+                                    <i class="fas fa-filter"></i>
+                                    <script>document.write(text[64][language].toUpperCase())</script>
+                                    <a href="javascript:void(0)" class="badge badge-danger float-right" onclick="clearFilter()">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-left text-nowrap" id="tbody_filter"></tbody>
+                    </table>
                 </div>
                 <!-- legend -->
                 <div class="m-2" id="div_legend">
@@ -328,7 +326,7 @@
                                 </button>
                             </div>
                             <!-- modal body -->
-                            <div class="modal-body pt-0" id="div_tableSummary">
+                            <div class="modal-body text-nowrap pt-0" id="div_tableSummary">
                                 <div class="mt-2 mb-2 text-center">
                                     <script>document.write(projects[position][2])</script>
                                 </div>
@@ -385,7 +383,7 @@
                                     </button>
                                 </div>
                                 <!-- modal body -->
-                                <div class="modal-body pt-0" id="div_tableTechnical">
+                                <div class="modal-body text-nowrap pt-0" id="div_tableTechnical">
                                     <div class="mt-2 mb-2 text-center">
                                         <script>document.write(projects[position][2])</script>
                                     </div>

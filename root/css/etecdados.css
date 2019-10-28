@@ -167,10 +167,6 @@ button[data-target="#div_list"], #div_list {
     width: 100%;
 }
 
-#div_tableSummary, #div_tableTechnical {
-    white-space: nowrap;
-}
-
 img[src*='data:image/svg+xml;utf-8'], #alert {
     animation: pulse 1s ease-out;
     animation-iteration-count: infinite;
@@ -210,6 +206,14 @@ img[src*='data:image/svg+xml;utf-8'], #alert {
 }
 
 /* filter --------------------------------------------------- */
+#div_filter {
+    max-height: 65%;
+    opacity: 0.9;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 21px;
+}
+
 .label_filter {
     width: 60px;
 }
@@ -229,5 +233,4 @@ select[id*="select"] {
 
 #div_tableSearch {
     overflow: auto;
-    white-space: nowrap;
 }
