@@ -1566,9 +1566,21 @@ function applyFilter() {
         // text node
         tagTr.cells[0].appendChild(document.createTextNode(tableData[c][0]));
         tagTr.cells[1].appendChild(document.createTextNode(tableData[c][1]));
+        // conditional
+        if (c == tableData.length - 1) {
+            // append child
+            var tagTr = document.createElement("tr");
+            var tagTd = document.createElement("td");
+            tagTd.setAttribute("colspan", "2");
+            tagTd.setAttribute("class", "text-center");
+            tagTd.innerHTML = '<button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-plus"></i><span> Details</span></button>';
+            tagTr.appendChild(tagTd);
+            
+        }
         // append child
         tbody.appendChild(tagTr);
     }
+    
     // set attribute
     div.setAttribute("class", "d-block");
     // close sidebar
