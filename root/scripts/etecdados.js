@@ -354,6 +354,20 @@ function triggerLogin(e) {
     }
 }
 
+/* policy --------------------------------------------------- */
+function loadPolicy (parameter) {
+    // get id
+    var getId = parameter.id;
+    // get element
+    var element = document.getElementById(getId);
+    // title
+    document.getElementById("h5_policy").innerHTML = element.innerHTML;
+    // replace
+    var html = getId.replace("button_", "");
+    // load html (jQuery)
+    $("#div_content").load(html + ".html");
+}
+
 /* logout --------------------------------------------------- */
 function logout() {
     // split
@@ -451,7 +465,7 @@ function validation(parameter) {
 
 /* open sidebar --------------------------------------------- */
 function openSidebar() {
-    document.getElementById("div_sidebar").style.width = "250px";
+    document.getElementById("div_sidebar").style.width = "233px";
     // collapse navbar (jQuery)
     $(".collapse").collapse("hide");
 }
@@ -703,6 +717,8 @@ function gallery(parameter1, parameter2) {
         'id:',
         'https://drive.google.com/drive/folders/',
         'https://drive.google.com/open?id=',
+        'https://drive.google.com/file/d/',
+        '/view?usp=sharing',
         '?usp=sharing'
     ];
     // include
@@ -1179,7 +1195,7 @@ function addMarkers(parameter) {
                             '<tr class="' + displayGallery + '">' +
                                 '<td>' + text[25][language] + '</td>' +
                                 '<td>' +
-                                    '<a href="javascript:void(0)" data-toggle="modal" data-target="#div_gallery" id="' + data[a][sheetLink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][sheetTower] + '&apos;)">' +
+                                    '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[a][sheetLink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][sheetTower] + '&apos;)">' +
                                     '<i class="far fa-images"></i> ' +
                                     '<span>' + text[24][language] + '</span>' +
                                     '</a>' +
@@ -1389,13 +1405,10 @@ function googleMaps() {
     map = new google.maps.Map(document.getElementById("div_map"), properties);
     // menu
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("div_menu"));
-    // filter
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById("div_filter"));
-    // legend
-    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById("div_legend"));
     // date
     map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById("div_date"));
-    
+    // legend
+    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById("div_legend"));
     // info window
     var info = new google.maps.InfoWindow();
     // site
@@ -1462,140 +1475,6 @@ function googleMaps() {
     addMarkers(0);
     // set map type
     mapType("hybrid");
-}
-
-/* create filter -------------------------------------------- */
-function createFilter(parameter1, parameter2) {
-    // get element
-    var element = document.getElementById("select" + parameter1);
-    // inner html
-    element.innerHTML = "";
-    // total
-    var total;
-    // conditional
-    if (parameter2 == 0) {
-        total = data.length - 1;
-    } else {
-        total = data.length;
-    }
-    // tag options
-    for (var b = parameter2; b < total; b++) {
-        // create element
-        var tagOption = document.createElement("option");
-        // set attribute
-        tagOption.setAttribute("value", b);
-        // inner html
-        tagOption.innerHTML = data[b][1];
-        // append child
-        element.appendChild(tagOption);
-    }
-}
-
-/* change filter -------------------------------------------- */
-function changeFilter() {
-    // get element
-    var select1 = document.getElementById("select1");
-    var select2 = document.getElementById("select2");
-    // get text
-    var text = select2.options[select2.selectedIndex].text;
-    
-    // clear
-    select2.innerHTML = "";
-    // new filter
-    createFilter(2, parseInt(select1.value) + 1);
-    // check
-    for (var a = 0; a < select2.length; a++) {
-        // conditional
-        if (select2.options[a].innerHTML == text) {
-            // set attribute
-            select2.options[a].setAttribute("selected", "selected");
-            break;
-        }
-    }
-}
-
-/* apply filter --------------------------------------------- */
-function applyFilter() {
-    // get element
-    var select1 = document.getElementById("select1");
-    var select2 = document.getElementById("select2");
-    var div     = document.getElementById("div_filter");
-    var tbody   = document.getElementById("tbody_filter");
-    // clear
-    tbody.innerHTML = "";
-    // variables
-    var distante = 0;
-    var total    = new Array();
-    var item1    = parseInt(select1.value);
-    var item2    = parseInt(select2.value);
-    // push
-    for (var a = item1; a <= item2; a++) {
-        total.push(data[a][2]);
-        // conditional
-        if (a < item2) {
-            distante += parseFloat(data[a][4]);
-        }
-    }
-    // convert km
-    var km = distante / 1000;
-    // table data
-    var tableData = [
-        [text[65][language].toUpperCase(), select1.options[select1.selectedIndex].text],
-        [text[66][language].toUpperCase(), select2.options[select2.selectedIndex].text],
-        [text[68][language].toUpperCase(), km.toFixed(2) + " km"],
-        ["TOTAL", item2 - item1 + 1],
-    ];
-    // filter values
-    var filterValues = Array.from(new Set(total));
-    // towers type
-    for (var b = 0; b < filterValues.length; b++) {
-        // occurrences
-        var occurrences = total.filter(function(count){
-            return count === filterValues[b];
-        }).length;
-        // add array
-        tableData[tableData.length] = [filterValues[b], occurrences];
-    }
-    // create table body
-    for (var c = 0; c < tableData.length; c++) {
-        // create element
-        var tagTr = document.createElement("tr");
-        // append child
-        tagTr.appendChild(document.createElement("td"));
-        tagTr.appendChild(document.createElement("td"));
-        // text node
-        tagTr.cells[0].appendChild(document.createTextNode(tableData[c][0]));
-        tagTr.cells[1].appendChild(document.createTextNode(tableData[c][1]));
-        // conditional
-        if (c == tableData.length - 1) {
-            // append child
-            var tagTr = document.createElement("tr");
-            var tagTd = document.createElement("td");
-            tagTd.setAttribute("colspan", "2");
-            tagTd.setAttribute("class", "text-center");
-            tagTd.innerHTML = '<button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-plus"></i><span> Details</span></button>';
-            tagTr.appendChild(tagTd);
-            
-        }
-        // append child
-        tbody.appendChild(tagTr);
-    }
-    
-    // set attribute
-    div.setAttribute("class", "d-block");
-    // close sidebar
-    closeSidebar();
-}
-
-/* cleat filter --------------------------------------------- */
-function clearFilter() {
-    // get element
-    var element = document.getElementById("div_filter");
-    // set attribute
-    element.setAttribute("class", "d-none");
-    // create filter
-    createFilter(1, 0);
-    createFilter(2, 1);
 }
 
 /* search (jQuery) ------------------------------------------ */

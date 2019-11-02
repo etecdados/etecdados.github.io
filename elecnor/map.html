@@ -63,7 +63,7 @@
                     </li>
                     <!-- logout -->
                     <li class="nav-item ml-3">
-                        <a href="javascript:void(0)" class="text-white-50 text-decoration-none" data-toggle="modal" data-target="#div_logout">
+                        <a href="#" class="text-white-50 text-decoration-none" data-toggle="modal" data-target="#div_logout">
                             <i class="fas fa-sign-out-alt"></i>
                             <script>document.write(text[10][language])</script>
                         </a>
@@ -213,44 +213,18 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- filter -->
-                    <div class="border-top border-secondary mt-3">
-                        <i class="fas fa-filter"></i>
-                        <script>document.write(text[64][language])</script>
-                        <div>
-                            <label class="my-1 mr-2 label_filter">
-                                <script>document.write(text[65][language])</script>
-                            </label>
-                            <select class="custom-select custom-select-sm p-0 h-auto" onchange="changeFilter()" id="select1"></select>
-                        </div>
-                        <div>
-                            <label class="my-1 mr-2 label_filter">
-                                <script>document.write(text[66][language])</script>
-                            </label>
-                            <select class="custom-select custom-select-sm p-0 h-auto" id="select2"></select>
-                        </div>
-                        <script type="text/javascript">createFilter(1, 0); createFilter(2, 1);</script>
-                        <div class="mt-2">
-                            <button type="button" class="btn btn-sm btn-secondary button_filter mr-2" onclick="applyFilter()">
-                                <script>document.write(text[67][language])</script>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-danger button_filter" onclick="clearFilter()">
-                                <script>document.write(text[17][language])</script>
-                            </button>
-                        </div>
-                    </div>
-                     <!-- summary and technical -->
+                     <!-- tables -->
                      <div class="border-top border-secondary mt-3 mb-5">
                          <ul class="ul_sidebar">
-                             <li>
-                                <a href="javascript:void(0)" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
+                             <li class="mt-2">
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
                                     <i class="fas fa-table"></i>
                                     <script>document.write(text[30][language])</script>
                                 </a>
                              </li>
                              <li class="mt-2">
-                                <a href="javascript:void(0)" class="text-decoration-none" data-toggle="modal" data-target="#div_technical">
-                                    <i class="fas fa-drafting-compass"></i>
+                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_technical">
+                                    <i class="fas fa-table"></i>
                                     <script>document.write(text[60][language])</script>
                                 </a>
                              </li>
@@ -267,22 +241,15 @@
                         <script>document.write(text[19][language])</script>
                     </button>
                 </div>
-                <!-- filter -->
-                <div class="d-none" id="div_filter">
-                    <table class="table table-sm table-bordered table-dark text-white-50 m-2">
-                        <thead>
-                            <tr>
-                                <th colspan="2">
-                                    <i class="fas fa-filter"></i>
-                                    <script>document.write(text[64][language].toUpperCase())</script>
-                                    <a href="javascript:void(0)" class="badge badge-danger float-right" onclick="clearFilter()">
-                                        <i class="fas fa-times"></i>
-                                    </a>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-left text-nowrap" id="tbody_filter"></tbody>
-                    </table>
+                <!-- date -->
+                <div class="alert alert-light p-1 m-2" id="div_date">
+                    <span class="text-danger">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </span>
+                    <script>document.write(text[31][language])</script>
+                    <span class="font-weight-bold">
+                        <script>document.write(data[0][dataColumns - 1])</script>
+                    </span>
                 </div>
                 <!-- legend -->
                 <div class="m-2" id="div_legend">
@@ -297,17 +264,8 @@
                     </button>
                     <!-- list -->
                     <div id="div_list"   class="bg-white text-left collapse.show"></div>
-                    <div id="div_cables" class="bg-white text-left mb-1"></div>
-                </div>
-                <!-- date -->
-                <div class="alert alert-light p-1 m-2" id="div_date">
-                    <span class="text-danger">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </span>
-                    <script>document.write(text[31][language])</script>
-                    <span class="font-weight-bold">
-                        <script>document.write(data[0][dataColumns - 1])</script>
-                    </span>
+                    <div id="div_cables" class="bg-white text-left"></div>
+                    
                 </div>
             </div>
             <!-- modal summary -->
@@ -326,7 +284,7 @@
                                 </button>
                             </div>
                             <!-- modal body -->
-                            <div class="modal-body text-nowrap pt-0" id="div_tableSummary">
+                            <div class="modal-body pt-0" id="div_tableSummary">
                                 <div class="mt-2 mb-2 text-center">
                                     <script>document.write(projects[position][2])</script>
                                 </div>
@@ -375,7 +333,7 @@
                                 <!-- modal header -->
                                 <div class="modal-header">
                                     <h5 class="modal-title text-primary">
-                                        <i class="fas fa-drafting-compass"></i>
+                                        <i class="fas fa-table"></i>
                                         <script>document.write(text[60][language])</script>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -383,7 +341,7 @@
                                     </button>
                                 </div>
                                 <!-- modal body -->
-                                <div class="modal-body text-nowrap pt-0" id="div_tableTechnical">
+                                <div class="modal-body pt-0" id="div_tableTechnical">
                                     <div class="mt-2 mb-2 text-center">
                                         <script>document.write(projects[position][2])</script>
                                     </div>

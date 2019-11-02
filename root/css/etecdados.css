@@ -18,7 +18,7 @@
     align-items: center;
 }
 
-#div_login footer {
+#div_login footer, #span_terms {
     font-size: 13px;
 }
 
@@ -89,6 +89,11 @@
 
 #button_project7 {
     background-image: url(../../root/images/msg.png);
+}
+
+/* policy --------------------------------------------------- */
+.button_policy {
+    border: none;
 }
 
 /* navbar --------------------------------------------------- */
@@ -167,6 +172,10 @@ button[data-target="#div_list"], #div_list {
     width: 100%;
 }
 
+#div_tableSummary, #div_tableTechnical {
+    white-space: nowrap;
+}
+
 img[src*='data:image/svg+xml;utf-8'], #alert {
     animation: pulse 1s ease-out;
     animation-iteration-count: infinite;
@@ -205,27 +214,6 @@ img[src*='data:image/svg+xml;utf-8'], #alert {
     text-indent: 0;
 }
 
-/* filter --------------------------------------------------- */
-#div_filter {
-    max-height: 65%;
-    opacity: 0.9;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding-right: 21px;
-}
-
-.label_filter {
-    width: 60px;
-}
-
-select[id*="select"] {
-    width: 140px;
-}
-
-.button_filter {
-    width: 100px;
-}
-
 /* files ---------------------------------------------------- */
 .div_search {
     max-width: 987px;
@@ -233,4 +221,5 @@ select[id*="select"] {
 
 #div_tableSearch {
     overflow: auto;
+    white-space: nowrap;
 }

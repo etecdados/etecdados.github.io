@@ -63,26 +63,41 @@
                     <label for="input_password" class="mt-2">
                         <script>document.write(text[1][language])</script>
                     </label>
-                    <input type="password" class="form-control" id="input_password" placeholder="******" required onkeypress="triggerLogin(event)">
+                    <input type="password" class="form-control" id="input_password" placeholder="*******" required onkeypress="triggerLogin(event)">
                     <!-- validation -->
                     <button type="button" class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#login" id="button_login" onclick="login()">
                         <script>document.write(text[2][language])</script>
                     </button>
                 </div>
+                <!-- policy -->
+                <div>
+                    <span class="text-muted" id="span_terms">
+                        <script>document.write(text[69][language])</script>
+                    </span>
+                    <button type="button" class="badge badge-pill badge-info button_policy" onclick="loadPolicy(this)" data-toggle="modal" data-target="#div_policy" id="button_terms">
+                        <script>document.write(text[61][language])</script>
+                    </button>
+                    <button type="button" class="badge badge-pill badge-info button_policy" onclick="loadPolicy(this)" data-toggle="modal" data-target="#div_policy" id="button_privacy">
+                        <script>document.write(text[62][language])</script>
+                    </button>
+                    <button type="button" class="badge badge-pill badge-info button_policy" onclick="loadPolicy(this)" data-toggle="modal" data-target="#div_policy" id="button_cookies">
+                        <script>document.write(text[63][language])</script>
+                    </button>
+                </div>
                 <!-- bible -->
-                <div class="mt-3">
+                <div class="mt-2">
                     <a href="" target="_blank" class="text-primary" id="a_bible">
                         <script>document.write(text[3][language])</script>
                     </a>
                 </div>
                 <!-- footer -->
-                <footer class="text-muted mt-3">
+                <footer class="text-muted mt-2">
                     <script>document.write(text[4][language])</script>
                     <br>
                     <script>document.write(text[5][language])</script>
                 </footer>
             </div>
-            <!-- modal -->
+            <!-- modal login -->
             <div class="modal fade" id="login">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
@@ -110,6 +125,23 @@
                         <!-- modal footer -->
                         <div class="modal-footer">
                             <button type="button" class="button_logout btn btn-primary" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal policy -->
+            <div class="modal fade" id="div_policy">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="h5_policy"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="div_content"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
                         </div>
                     </div>
                 </div>
