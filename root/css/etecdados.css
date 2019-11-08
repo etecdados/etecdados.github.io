@@ -223,3 +223,7 @@ img[src*='data:image/svg+xml;utf-8'], #alert {
     overflow: auto;
     white-space: nowrap;
 }
+
+#div_file iframe {
+    border: none;
+}

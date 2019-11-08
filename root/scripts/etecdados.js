@@ -700,6 +700,24 @@ function legend(parameter1, parameter2) {
     }
 }
 
+/* remove link ---------------------------------------------- */
+var removeLink = [
+    'id:',
+    'https://drive.google.com/drive/folders/',
+    'https://drive.google.com/open?id=',
+    'https://drive.google.com/file/d/',
+    '/view?usp=sharing',
+    '?usp=sharing',
+    '/view'
+];
+
+/* include link --------------------------------------------- */
+var includeLink = [
+    'https://drive.google.com/uc?export=view&id=',
+    'https://drive.google.com/file/d/',
+    '/preview'
+];
+
 /* gallery -------------------------------------------------- */
 function gallery(parameter1, parameter2) {
     // get element
@@ -713,23 +731,8 @@ function gallery(parameter1, parameter2) {
     // number tower
     span.innerHTML = parameter2;
     // remove
-    var remove = [
-        'id:',
-        'https://drive.google.com/drive/folders/',
-        'https://drive.google.com/open?id=',
-        'https://drive.google.com/file/d/',
-        '/view?usp=sharing',
-        '?usp=sharing'
-    ];
-    // include
-    var include = [
-        'https://drive.google.com/uc?export=view&id=',
-        'https://drive.google.com/file/d/',
-        '/preview'
-    ];
-    // replace
-    for (var a = 0; a < remove.length; a++) {
-        element = element.replace(remove[a], "");
+    for (var a = 0; a < removeLink.length; a++) {
+        element = element.replace(removeLink[a], "");
     }
     // url
     var url = "https://www.googleapis.com/drive/v3/files?q='" + element + "'+in+parents&key=" + apiKeyDrive;
@@ -750,9 +753,9 @@ function gallery(parameter1, parameter2) {
             // search and push
             for (var b = 0; b < values.length; b++) {
                 // conditional
-                if (values[b].search(remove[0]) >= 0) {
+                if (values[b].search(removeLink[0]) >= 0) {
                     // push
-                    idFile.push(values[b].replace(remove[0], ""));
+                    idFile.push(values[b].replace(removeLink[0], ""));
                 } else if (values[b].search("mimeType:") >= 0) {
                     // conditional
                     if (values[b].search("image") >= 0) {
@@ -793,12 +796,12 @@ function gallery(parameter1, parameter2) {
                 // conditional
                 if (mimeType[c] == true) {
                     // set attribute
-                    img.setAttribute("src", include[0] + idFile[c]);
+                    img.setAttribute("src", includeLink[0] + idFile[c]);
                     // append child
                     div.appendChild(img);
                 } else {
                     // set attribute
-                    iframe.setAttribute("src", include[1] + idFile[c] + include[2]);
+                    iframe.setAttribute("src", includeLink[1] + idFile[c] + includeLink[2]);
                     // append child
                     div.appendChild(iframe);
                 }
@@ -1477,7 +1480,7 @@ function googleMaps() {
     mapType("hybrid");
 }
 
-/* search (jQuery) ------------------------------------------ */
+/* search file (jQuery) -------------------------------------- */
 $(document).ready(function(){
     $("#input_search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
@@ -1486,6 +1489,20 @@ $(document).ready(function(){
         });
     });
 });
+
+/* link file ------------------------------------------------ */
+function linkFile(parameter) {
+    // get element
+    var element = document.getElementById("iframe_file");
+    // link
+    var link = filesText[parameter][4];
+    // remove
+    for (var a = 0; a < removeLink.length; a++) {
+        link = link.replace(removeLink[a], "");
+    }
+    // set attribute
+    element.setAttribute("src", includeLink[1] + link + includeLink[2]);
+}
 
 /* list files ----------------------------------------------- */
 function listFiles() {
@@ -1496,9 +1513,9 @@ function listFiles() {
         // check empty
         if (filesText[a][1] != "") {
             // create element
-            var tagTr = document.createElement("tr");
-            var tagTd = document.createElement("td");
-            var tagA  = document.createElement("a");
+            var tagTr     = document.createElement("tr");
+            var tagTd     = document.createElement("td");
+            var tagButton = document.createElement("button");
             // append child
             element.appendChild(tagTr);
             // td
@@ -1523,12 +1540,23 @@ function listFiles() {
                         clone.innerHTML = filesText[a][3];
                         break;
                     default:
-                        clone.appendChild(tagA);
-                        tagA.setAttribute("target", "_blank");
-                        tagA.setAttribute("href", filesText[a][4]);
-                        tagA.innerHTML = '<i class="fas fa-external-link-alt"></i>';
+                        clone.appendChild(tagButton);
+                        tagButton.setAttribute("type", "button");
+                        tagButton.setAttribute("class", "btn btn-link p-0 border-0");
+                        tagButton.setAttribute("data-toggle", "modal");
+                        tagButton.setAttribute("data-target", "#div_file");
+                        tagButton.setAttribute("onclick", "linkFile(" + a + ")");
+                        tagButton.innerHTML = '<i class="fas fa-external-link-alt"></i>';
                 }
             }
         }
     }
+}
+
+/* clear iframe --------------------------------------------- */
+function clearIframe() {
+    // get element
+    var element = document.getElementById("iframe_file");
+    // set attribute
+    element.setAttribute("src", "");
 }
