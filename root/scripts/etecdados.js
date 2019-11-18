@@ -322,7 +322,7 @@ function login() {
     var search;    
     for (var a = 0; a < loginTotal; a++) {
         if (login[a].indexOf(email) > 0) {
-            search    = a;
+            search = a;
             break;
         }
     }
@@ -349,7 +349,6 @@ function login() {
 function triggerLogin(e) {
     // conditional
     if (e.keyCode == 13) {
-        // click
         document.getElementById("button_login").click();
     }
 }
@@ -375,12 +374,12 @@ function logout() {
     // delete cookies
     for (var a = 0; a < cookies.length; a++) {
         var value    = cookies[a];
-        var index = value.indexOf("=");
+        var index    = value.indexOf("=");
         var name     = index > -1 ? value.substr(0, index) : value;
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
     // redirect
-    location.href = "../";
+    location.href = "../login";
 }
 
 /* set map -------------------------------------------------- */
@@ -409,7 +408,6 @@ function validation(parameter) {
     var split = sessionStorage.getItem("userProjects").split(",");
     // conditional
     if (split[element.value] == "TRUE") {
-        // check map
         var index;
         var total = new Array();
         // push into array
@@ -654,7 +652,6 @@ function legend(parameter1, parameter2) {
         element.appendChild(tagDiv);
         element.appendChild(tagUl);
     } else {
-        // append child
         cables.appendChild(tagDiv);
         cables.appendChild(tagP);
         cables.appendChild(tagUl);
@@ -795,14 +792,10 @@ function gallery(parameter1, parameter2) {
                 content.appendChild(div);
                 // conditional
                 if (mimeType[c] == true) {
-                    // set attribute
                     img.setAttribute("src", includeLink[0] + idFile[c]);
-                    // append child
                     div.appendChild(img);
                 } else {
-                    // set attribute
                     iframe.setAttribute("src", includeLink[1] + idFile[c] + includeLink[2]);
-                    // append child
                     div.appendChild(iframe);
                 }
             }
@@ -1302,6 +1295,7 @@ var towers = [
     ["DMS1",   draw12],
     ["RMS1",   draw13],
     ["FMS1",   draw14],
+    ["T90",    draw04],
     ["SFEL",   draw09],
     ["SFSL",   draw10],
     ["SFAA",   draw10],
@@ -1418,7 +1412,7 @@ function googleMaps() {
     for (var a = 0; a < site.length; a++) {
         // marker
         var marker = new google.maps.Marker({
-            icon: "../root/xml/marker.svg",
+            icon: "../root/vectors/marker.svg",
             map: map,
             position: new google.maps.LatLng(parseFloat(site[a][3]), parseFloat(site[a][4])),
         });
@@ -1541,11 +1535,13 @@ function listFiles() {
                         break;
                     default:
                         clone.appendChild(tagButton);
+                        // set attribute
                         tagButton.setAttribute("type", "button");
                         tagButton.setAttribute("class", "btn btn-link p-0 border-0");
                         tagButton.setAttribute("data-toggle", "modal");
                         tagButton.setAttribute("data-target", "#div_file");
                         tagButton.setAttribute("onclick", "linkFile(" + a + ")");
+                        // inner html
                         tagButton.innerHTML = '<i class="fas fa-external-link-alt"></i>';
                 }
             }

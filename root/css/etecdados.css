@@ -9,6 +9,11 @@
 
 @charset "utf-8";
 /* container ------------------------------------------------ */
+#div_home {
+    max-width: 670px;
+    margin: auto
+}
+
 #div_login, #div_info {
     max-width: 377px;
     margin: auto;
@@ -18,12 +23,17 @@
     align-items: center;
 }
 
-#div_login footer, #span_terms {
+#div_login footer {
     font-size: 13px;
 }
 
 #div_projects {
     max-width: 987px;
+}
+
+/* policy --------------------------------------------------- */
+.button_policy {
+    width: 185px;
 }
 
 /* language ------------------------------------------------- */
@@ -38,15 +48,15 @@
 }
 
 #button_portuguese {
-    background-image: url(../xml/flag-brazil.svg);
+    background-image: url(../vectors/flag-brazil.svg);
 }
 
 #button_spanish {
-    background-image: url(../xml/flag-spain.svg);
+    background-image: url(../vectors/flag-spain.svg);
 }
 
 #button_english {
-    background-image: url(../xml/flag-uk.svg);
+    background-image: url(../vectors/flag-uk.svg);
 }
 
 /* projects ------------------------------------------------- */
@@ -89,11 +99,6 @@
 
 #button_project7 {
     background-image: url(../../root/images/msg.png);
-}
-
-/* policy --------------------------------------------------- */
-.button_policy {
-    border: none;
 }
 
 /* navbar --------------------------------------------------- */

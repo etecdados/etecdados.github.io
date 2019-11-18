@@ -35,7 +35,7 @@
         <div class="container text-center mb-3">
             <!-- logo -->
             <div class="mt-4">
-                <object type="image/svg+xml" data="../root/xml/etecdados.svg"></object>
+                <object type="image/svg+xml" data="../root/vectors/etecdados.svg"></object>
             </div>
             <!-- spinner -->
             <div id="div_spinner" class="mt-4">
@@ -75,22 +75,6 @@
                         <script>document.write(text[3][language])</script>
                     </a>
                 </div>
-                <!-- policy -->
-                <div class="border rounded pt-1 pb-2">
-                    <span class="text-muted" id="span_terms">
-                        <script>document.write(text[69][language])</script>
-                    </span>
-                    <br>
-                    <button type="button" class="badge badge-pill badge-info button_policy" onclick="loadPolicy(this)" data-toggle="modal" data-target="#div_policy" id="button_terms">
-                        <script>document.write(text[61][language])</script>
-                    </button>
-                    <button type="button" class="badge badge-pill badge-info button_policy" onclick="loadPolicy(this)" data-toggle="modal" data-target="#div_policy" id="button_privacy">
-                        <script>document.write(text[62][language])</script>
-                    </button>
-                    <button type="button" class="badge badge-pill badge-info button_policy" onclick="loadPolicy(this)" data-toggle="modal" data-target="#div_policy" id="button_cookies">
-                        <script>document.write(text[63][language])</script>
-                    </button>
-                </div>
                 <!-- footer -->
                 <footer class="text-muted mt-2">
                     <script>document.write(text[4][language])</script>
@@ -124,23 +108,6 @@
                             </span>
                         </div>
                         <!-- modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="button_common btn btn-primary" data-dismiss="modal">OK</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- modal policy -->
-            <div class="modal fade" id="div_policy">
-                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="h5_policy"></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" id="div_content"></div>
                         <div class="modal-footer">
                             <button type="button" class="button_common btn btn-primary" data-dismiss="modal">OK</button>
                         </div>
