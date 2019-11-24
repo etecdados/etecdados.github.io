@@ -30,7 +30,7 @@
 		<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};accessSetup()"></script>
 	</head>
 	<!-- body -->
-	<body>
+	<body onload="loadProjects()">
 		<!-- navbar -->
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white-50">
             <!-- logo and username -->
@@ -81,14 +81,7 @@
 			<div class="mt-4">
 				<i class="fas fa-globe"></i>
 				<script>document.write(text[9][language])</script>
-				<div class="mt-4">
-					<button type="button" class="button_projects m-2" value="2" id="button_project2" data-toggle="modal" data-target="#div_validation" onclick="validation(this)"></button>
-					<button type="button" class="button_projects m-2" value="3" id="button_project3" data-toggle="modal" data-target="#div_validation" onclick="validation(this)"></button>
-					<button type="button" class="button_projects m-2" value="4" id="button_project4" data-toggle="modal" data-target="#div_validation" onclick="validation(this)"></button>
-					<button type="button" class="button_projects m-2" value="5" id="button_project5" data-toggle="modal" data-target="#div_validation" onclick="validation(this)"></button>
-					<button type="button" class="button_projects m-2" value="6" id="button_project6" data-toggle="modal" data-target="#div_validation" onclick="validation(this)"></button>
-					<button type="button" class="button_projects m-2" value="7" id="button_project7" data-toggle="modal" data-target="#div_validation" onclick="validation(this)"></button>
-				</div>
+				<div class="mt-4" id="div_logo"></div>
 			</div>
 			<!-- modal logout -->
 			<div class="modal fade" id="div_logout">

@@ -24,12 +24,12 @@
 		<!-- script -->
 		<script type="text/javascript" src="../root/scripts/jquery.js"   ></script> <!-- version 3.4.1  -->
 		<script type="text/javascript" src="../root/scripts/popper.js"   ></script> <!-- version 1.14.7 -->
-		<script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
+        <script type="text/javascript" src="../root/scripts/bootstrap.js"></script> <!-- version 4.3.1  -->
         <script type="text/javascript" src="../root/scripts/etecdados.js"></script> <!-- version 1.0.0  -->
         <!-- google api -->
         <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};accessSetup()"></script>
     </head>
-    <body>
+    <body onload="checkData()">
         <!-- navbar -->
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark text-white-50">
             <!-- logo and username -->
@@ -88,13 +88,13 @@
                 <!-- project name -->
                 <div class="col m-auto">
                     <small>
-                        <script>document.write(projects[position][2])</script>
+                        <script>document.write(projects[position][0])</script>
                     </small>
                 </div>
                 <!-- logo project -->
                 <div class="col-sm-3 m-auto text-right d-none d-sm-block">
                     <img src="#" alt="logo project" id="img_project">
-                    <script type="text/javascript">$("#img_project").attr("src", "../root/images/" + projects[position][1] + ".png");</script>
+					<script type="text/javascript">$("#img_project").attr("src", "../root/images/" + (projects[position][2]).toLowerCase() + ".png");</script>
                 </div>	
             </header>
             <!-- spinner -->
@@ -286,7 +286,7 @@
                             <!-- modal body -->
                             <div class="modal-body pt-0" id="div_tableSummary">
                                 <div class="mt-2 mb-2 text-center">
-                                    <script>document.write(projects[position][2])</script>
+                                    <script>document.write(projects[position][0])</script>
                                 </div>
                                 <table class="table table-sm">
                                     <thead class="thead-light">
@@ -343,7 +343,7 @@
                                 <!-- modal body -->
                                 <div class="modal-body pt-0" id="div_tableTechnical">
                                     <div class="mt-2 mb-2 text-center">
-                                        <script>document.write(projects[position][2])</script>
+                                        <script>document.write(projects[position][0])</script>
                                     </div>
                                     <table class="table table-sm">
                                         <thead class="thead-light">
@@ -368,10 +368,7 @@
                     </div>
                 </div>
             <!-- map -->
-            <div id="div_map">
-                <!-- check data -->
-                <script type="text/javascript">checkData()</script>
-            </div>
+            <div id="div_map"></div>
             <!-- modal gallery -->
             <div class="modal fade" id="div_gallery">
                 <div class="modal-dialog modal-lg" role="document">

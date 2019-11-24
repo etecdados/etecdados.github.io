@@ -7,6 +7,18 @@
  * last update on 2019/09/26
  */
 
+ /* policy --------------------------------------------------- */
+function loadPolicy (parameter) {
+    // get element
+    var element = document.getElementById(parameter.id);
+    // title
+    document.getElementById("h5_policy").innerHTML = element.innerHTML;
+    // replace
+    var html = parameter.id.replace("button_", "");
+    // load html (jQuery)
+    $("#div_content").load(html + ".html");
+}
+
 /* google set ----------------------------------------------- */
 var apiKeySheets  = "AIzaSyCUHNFWOyP2Y25UKw1swqVQCS2MTaFIpok";
 var apiKeyMaps    = "AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ";
@@ -32,6 +44,106 @@ function getCookie(parameter) {
     if (split.length == 2) {
         return split.pop().split(";").shift()
     };
+}
+
+/* remove link ---------------------------------------------- */
+var removeLink = [
+    'id:',
+    'https://drive.google.com/drive/folders/',
+    'https://drive.google.com/open?id=',
+    'https://drive.google.com/file/d/',
+    '/view?usp=sharing',
+    '?usp=sharing',
+    '/view'
+];
+
+/* include link --------------------------------------------- */
+var includeLink = [
+    'https://drive.google.com/uc?export=view&id=',
+    'https://drive.google.com/file/d/',
+    '/preview'
+];
+
+/* get access ----------------------------------------------- */
+function getAccess() {
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: "1dZe1ctuPzVp887vb7ttc8zbAdDQew_w761hqemr7O04",
+        range: "access!A2:B2",
+    }).then(function(response) {
+        // result
+        var ranges = response.result;
+        // conditional
+        if (ranges.values[0][1] == "TRUE") {
+            logout();
+            // redirect
+            location.href = "../info";
+        }
+    });
+}
+
+/* get values ----------------------------------------------- */
+function getValues(parameter1, parameter2, parameter3, parameter4) {
+    // link
+    var idSheet = parameter1;
+    // remove link
+    for (var a = 0; a < removeLink.length; a++) {
+        idSheet = idSheet.replace(removeLink[a], "");
+    }
+    // values
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: idSheet,
+        range: parameter2,
+    }).then(function(response) {
+        // result
+        var ranges = response.result;
+        // keys
+        var keys = Object.keys(ranges.values).length;
+        // set item
+        sessionStorage.setItem(parameter3, keys);
+        sessionStorage.setItem(parameter4, ranges.values);
+    });
+}
+
+/* get database --------------------------------------------- */
+function getDatabase() {
+    // sheets
+    var sheets = [
+        ["users!A3:Z",    "userLength",     "userValues"],
+        ["projects!A3:Z", "projectsLength", "projectsValues"],
+        ["language!A2:Z", "languageLength", "languageValues"]
+    ];
+    // get values
+    for (var a = 0; a < sheets.length; a++) {
+        getValues(databaseKey, sheets[a][0], sheets[a][1], sheets[a][2]);
+    }
+    // bilble
+    switch(language) {
+        case "2":
+            document.getElementById("a_bible").href = "https://www.bible.com/es/bible/128/JHN.3.16.NVI";
+            break;
+        case "3":
+            document.getElementById("a_bible").href = "https://www.bible.com/bible/111/JHN.3.16.NIV";
+            break;
+        default:
+            document.getElementById("a_bible").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
+    }
+}
+
+/* get project ---------------------------------------------- */
+function getProject() {
+    // sheets
+    var sheets = [
+        ["data!A4:Z",      "dataLength",      "dataValues"],
+        ["activity!A4:Z",  "activityLength",  "activityValues"],
+        ["site!A4:Z",      "siteLength",      "siteValues"],
+        ["alert!A3:Z",     "alertLength",     "alertValues"],
+        ["files!A4:Z",     "filesLength",     "filesValues"],
+        ["technical!A3:Z", "technicalLength", "technicalValues"]
+    ];
+    // get values
+    for (var a = 0; a < sheets.length; a++) {
+        getValues(link, sheets[a][0], sheets[a][1], sheets[a][2]);
+    }
 }
 
 /* initial setup -------------------------------------------- */
@@ -70,81 +182,6 @@ function accessSetup() {
     // conditional
     if (username == null || text[0] == "") {
         location.href = "../";
-    }
-}
-
-/* get access ----------------------------------------------- */
-function getAccess() {
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: "1dZe1ctuPzVp887vb7ttc8zbAdDQew_w761hqemr7O04",
-        range: "access!A2:B2",
-    }).then(function(response) {
-        // result
-        var ranges = response.result;
-        // conditional
-        if (ranges.values[0][1] == "TRUE") {
-            logout();
-            // redirect
-            location.href = "../info";
-        }
-    });
-}
-
-/* get values ----------------------------------------------- */
-function getValues(parameter1, parameter2, parameter3, parameter4) {
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: parameter1,
-        range: parameter2,
-    }).then(function(response) {
-        // result
-        var ranges = response.result;
-        // keys
-        var keys = Object.keys(ranges.values).length;
-        // set item
-        sessionStorage.setItem(parameter3, keys);
-        sessionStorage.setItem(parameter4, ranges.values);
-    });
-}
-
-/* get database --------------------------------------------- */
-function getDatabase() {
-    // sheets
-    var sheets = [
-        ["users!A2:Z",    "userLength",     "userValues"],
-        ["projects!A2:Z", "projectsLength", "projectsValues"],
-        ["language!A2:Z", "languageLength", "languageValues"]
-    ];
-    // get values
-    for (var a = 0; a < sheets.length; a++) {
-        getValues(databaseKey, sheets[a][0], sheets[a][1], sheets[a][2]);
-    }
-    // bilble
-    switch(language) {
-        case "2":
-            document.getElementById("a_bible").href = "https://www.bible.com/es/bible/128/JHN.3.16.NVI";
-            break;
-        case "3":
-            document.getElementById("a_bible").href = "https://www.bible.com/bible/111/JHN.3.16.NIV";
-            break;
-        default:
-            document.getElementById("a_bible").href = "https://www.bible.com/pt/bible/129/JHN.3.16.NVI";
-    }
-}
-
-/* get project ---------------------------------------------- */
-function getProject() {
-    // sheets
-    var sheets = [
-        ["data!A4:Z",      "dataLength",      "dataValues"],
-        ["activity!A4:Z",  "activityLength",  "activityValues"],
-        ["site!A4:Z",      "siteLength",      "siteValues"],
-        ["alert!A3:Z",     "alertLength",     "alertValues"],
-        ["files!A4:Z",     "filesLength",     "filesValues"],
-        ["technical!A3:Z", "technicalLength", "technicalValues"]
-    ];
-    // get values
-    for (var a = 0; a < sheets.length; a++) {
-        getValues(link, sheets[a][0], sheets[a][1], sheets[a][2]);
     }
 }
 
@@ -214,7 +251,7 @@ var projects = new Array();
 var projectsTotal = sessionStorage.getItem("projectsLength");
 var projectsValue = sessionStorage.getItem("projectsValues");
 // total columns
-var projectsColumns = 5;
+var projectsColumns = 4;
 // push into array
 pushArray(projectsTotal, projects, projectsColumns, projectsValue);
 
@@ -224,7 +261,7 @@ var data = new Array();
 var dataTotal = sessionStorage.getItem("dataLength");
 var dataValue = sessionStorage.getItem("dataValues");
 // total columns
-var dataColumns = 20;
+var dataColumns = 21;
 // push into array
 pushArray(dataTotal, data, dataColumns, dataValue);
 
@@ -306,7 +343,7 @@ function login() {
     var loginTotal = sessionStorage.getItem("userLength");
     var loginValue = sessionStorage.getItem("userValues");
     // total columns
-    var loginColumns = 9;
+    var loginColumns = 12;
     // push into array
     pushArray(loginTotal, login, loginColumns, loginValue);
     // get element
@@ -321,6 +358,7 @@ function login() {
     // search
     var search;    
     for (var a = 0; a < loginTotal; a++) {
+        // conditional
         if (login[a].indexOf(email) > 0) {
             search = a;
             break;
@@ -330,7 +368,7 @@ function login() {
     if (search == null) {
         // user not found
         modalUser.className = "d-block";
-    } else if (login[search][loginColumns - 1] != password) {
+    } else if (login[search][2] != password) {
         // incorrect password
         modalPassword.className = "d-block";
     } else {
@@ -353,33 +391,50 @@ function triggerLogin(e) {
     }
 }
 
-/* policy --------------------------------------------------- */
-function loadPolicy (parameter) {
-    // get id
-    var getId = parameter.id;
-    // get element
-    var element = document.getElementById(getId);
-    // title
-    document.getElementById("h5_policy").innerHTML = element.innerHTML;
-    // replace
-    var html = getId.replace("button_", "");
-    // load html (jQuery)
-    $("#div_content").load(html + ".html");
-}
-
 /* logout --------------------------------------------------- */
 function logout() {
     // split
     var cookies = document.cookie.split(";");
     // delete cookies
     for (var a = 0; a < cookies.length; a++) {
-        var value    = cookies[a];
-        var index    = value.indexOf("=");
-        var name     = index > -1 ? value.substr(0, index) : value;
+        var value = cookies[a];
+        var index = value.indexOf("=");
+        var name  = index > -1 ? value.substr(0, index) : value;
+        // delete
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
     // redirect
     location.href = "../login";
+}
+
+/* load projects -------------------------------------------- */
+function loadProjects() {
+    // get element
+    var element = document.getElementById("div_logo");
+    // total
+    var total = new Array();
+    // push
+    for (var a = 0; a < projects.length; a++) {
+        total.push(projects[a][2]);
+    }        
+    // filter
+    var filter = Array.from(new Set(total));
+    // create buttons
+    for (var a = 0; a < filter.length; a++) {
+        // create element
+        var tagButton = document.createElement("button");
+        // set attribute
+        tagButton.setAttribute("type", "button");
+        tagButton.setAttribute("class", "button_projects m-2");
+        tagButton.setAttribute("value", a + 1);
+        tagButton.setAttribute("id", "button_project" + (a + 1));
+        tagButton.setAttribute("data-toggle", "modal");
+        tagButton.setAttribute("data-target", "#div_validation");
+        tagButton.setAttribute("style", "background-image: url(../root/images/" + filter[a].toLowerCase() + ".png);");
+        tagButton.setAttribute("onclick", "validation(this)");
+        // append child
+        element.appendChild(tagButton);
+    }
 }
 
 /* set map -------------------------------------------------- */
@@ -390,7 +445,7 @@ function setMap(parameter) {
     var index = element.replace("map", "");
     // position and link cookie
     document.cookie = "position=" + index + "; path=/";
-    document.cookie = "link=" + projects[index][4] + "; path=/";
+    document.cookie = "link=" + projects[index][3] + "; path=/";
 }
 
 /* validation ----------------------------------------------- */
@@ -407,12 +462,12 @@ function validation(parameter) {
     // split
     var split = sessionStorage.getItem("userProjects").split(",");
     // conditional
-    if (split[element.value] == "TRUE") {
+    if (split[parseInt(element.value) + 2] == "TRUE") {
         var index;
         var total = new Array();
         // push into array
         for (var a = 0; a < projects.length; a++) {
-            total.push(projects[a][0]);
+            total.push(projects[a][1]);
             // index
             if (total[a] == element.value && index == null) {
                 index = a;
@@ -441,7 +496,7 @@ function validation(parameter) {
                 hyperlink.setAttribute("href", "map");
                 hyperlink.setAttribute("id", "map" + b);
                 hyperlink.setAttribute("onclick", "setMap(this)");
-                hyperlink.innerHTML = projects[b][2];
+                hyperlink.innerHTML = projects[b][0];
                 content.appendChild(hyperlink);    
             }
         } else {
@@ -449,7 +504,7 @@ function validation(parameter) {
             element.setAttribute("data-target", "");
             // position and link cookie
             document.cookie = "position=" + index + "; path=/";
-            document.cookie = "link=" + projects[index][4] + "; path=/";
+            document.cookie = "link=" + projects[index][3] + "; path=/";
             // redirect
             location.href = "map";
         }
@@ -475,6 +530,13 @@ function closeSidebar() {
 
 /* check data ----------------------------------------------- */
 function checkData() {
+    // create element
+    var tagScript = document.createElement("script");
+    // set attribute
+    tagScript.setAttribute("type", "text/javascript");
+    tagScript.setAttribute("src", "../root/scripts/towers.js");
+    // append child
+    document.head.appendChild(tagScript);
     // get element
     var element = document.getElementById("div_map");
     // conditional
@@ -586,7 +648,7 @@ function legend(parameter1, parameter2) {
         var total = new Array();
         // push
         for (var a = 0; a < data.length; a++) {
-            total.push(data[a][5]);
+            total.push(data[a][6]);
         }
         // filter (section)
         filter = Array.from(new Set(total));
@@ -697,24 +759,6 @@ function legend(parameter1, parameter2) {
     }
 }
 
-/* remove link ---------------------------------------------- */
-var removeLink = [
-    'id:',
-    'https://drive.google.com/drive/folders/',
-    'https://drive.google.com/open?id=',
-    'https://drive.google.com/file/d/',
-    '/view?usp=sharing',
-    '?usp=sharing',
-    '/view'
-];
-
-/* include link --------------------------------------------- */
-var includeLink = [
-    'https://drive.google.com/uc?export=view&id=',
-    'https://drive.google.com/file/d/',
-    '/preview'
-];
-
 /* gallery -------------------------------------------------- */
 function gallery(parameter1, parameter2) {
     // get element
@@ -806,20 +850,20 @@ function gallery(parameter1, parameter2) {
 /* map ------------------------------------------------------ */
 var map;
 // sheet columns
-var sheetTower       = 1;
-var sheetType        = 1 + sheetTower;
-var sheetHeight      = 1 + sheetType;
-var sheetSpan        = 1 + sheetHeight;
-var sheetSection     = 1 + sheetSpan;
-var sheetLatitude    = 1 + sheetSection;
-var sheetLongitude   = 1 + sheetLatitude;
-var sheetActivity    = 0 + sheetLongitude;
-var sheetDescription = 9 + sheetActivity;
-var sheetLink        = 2 + sheetDescription;
+var colTower       = 1;
+var colType        = 1 + colTower;
+var colHeight      = 1 + colType;
+var colSpan        = 1 + colHeight;
+var colWeight      = 1 + colSpan;
+var colSection     = 1 + colWeight;
+var colLatitude    = 1 + colSection;
+var colLongitude   = 1 + colLatitude;
+var colActivity    = 0 + colLongitude;
+var colDescription = 9 + colActivity;
+var colLink        = 2 + colDescription;
 // sheet activity
 var activityColor = 7;
 var activityRows  = 8;
-
 /* polyline ------------------------------------------------- */
 var polylines = new Array();
 // add polyline
@@ -858,8 +902,8 @@ function addPolyline(parameter) {
 		} else {
             // get coordinates
 			coordinates = [
-				{lat: parseFloat(data[a + 0][sheetLatitude]), lng: parseFloat(data[a + 0][sheetLongitude])},
-				{lat: parseFloat(data[a + 1][sheetLatitude]), lng: parseFloat(data[a + 1][sheetLongitude])}
+				{lat: parseFloat(data[a + 0][colLatitude]), lng: parseFloat(data[a + 0][colLongitude])},
+				{lat: parseFloat(data[a + 1][colLatitude]), lng: parseFloat(data[a + 1][colLongitude])}
             ];
             // conditional
             if (element == 0) {
@@ -878,7 +922,7 @@ function addPolyline(parameter) {
                             if (activity[auxiliary][1] == "") {
                                 position = 8;
                                 break;
-                            } else if (activity[auxiliary][1] == data[a][sheetActivity + parseInt(element)]) {
+                            } else if (activity[auxiliary][1] == data[a][colActivity + parseInt(element)]) {
                                 position = parseInt(activity[auxiliary][activityColor]);
                                 break;
                             }
@@ -969,6 +1013,7 @@ function addMarkers(parameter) {
     // set map
     for (var a = 0;  a < data.length; a++) {
         // variables
+        var circle = 'opacity="0.8" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z"';
         var color;
         var displayGallery;
         var displayMarker;
@@ -976,11 +1021,10 @@ function addMarkers(parameter) {
         var opacity = 0.8;
         var position;
         var rgb;
-        var shape = 'opacity="0.8" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z"';
         var status;
         var weight = 0.0;
         // coordinates
-        var coordinates = new google.maps.LatLng(data[a][sheetLatitude], data[a][sheetLongitude]);
+        var coordinates = new google.maps.LatLng(data[a][colLatitude], data[a][colLongitude]);
         // conditional
         if (a == 0) {
             // clear markers on map
@@ -998,14 +1042,14 @@ function addMarkers(parameter) {
             var total = new Array();
             // push
             for (var c = 0; c < data.length; c++) {
-                total.push(data[c][sheetSection]);
+                total.push(data[c][colSection]);
             }        
             // filter
             var filter = Array.from(new Set(total));
             // position
             for (var d = 0; d < filter.length; d++) {
                 // conditional
-                if (filter[d] == data[a][sheetSection]) {
+                if (filter[d] == data[a][colSection]) {
                     position = d;
                     status = filter[d];
                     break;
@@ -1027,7 +1071,7 @@ function addMarkers(parameter) {
                             position = 8;
                             displayMarker = "d-none";
 							break;
-					    } else if (status == data[a][sheetActivity + parseInt(element)]) {
+					    } else if (status == data[a][colActivity + parseInt(element)]) {
                             position = parseInt(activity[auxiliary][activityColor]);
                             displayMarker = "";
 						    break;
@@ -1090,11 +1134,11 @@ function addMarkers(parameter) {
         // alert
         for (var g = 0; g < alertText.length; g++) {
             // conditional
-            if (alertText[g][1] == "" || data[a][sheetDescription] == "") {
+            if (alertText[g][1] == "" || data[a][colDescription] == "") {
                 position = 4;
                 hidden = "hidden";
                 break;
-            } else if (alertText[g][1] == data[a][sheetDescription]) {
+            } else if (alertText[g][1] == data[a][colDescription]) {
                 opacity = 1.0;
                 position = parseInt(alertText[g][0]);
                 hidden = "";
@@ -1131,7 +1175,7 @@ function addMarkers(parameter) {
                 anchor: new google.maps.Point(17, 6.5),
                 url: 'data:image/svg+xml;utf-8,' +
                         '<svg width="34" height="17" viewBox="0 0 34 17" xmlns="http://www.w3.org/2000/svg">' +
-                            '<path fill="' + rgb + '" ' + shape + '/>' +
+                            '<path fill="' + rgb + '" ' + circle + '/>' +
                         '</svg>'
             },
             map: map,
@@ -1141,7 +1185,7 @@ function addMarkers(parameter) {
         // push (alert)
         alertMarkers.push(alertMarker);
         // display gallery
-        if (data[a][sheetLink] == "") {
+        if (data[a][colLink] == "") {
             displayGallery = "d-none";
         } else {
             displayGallery = "";
@@ -1149,7 +1193,7 @@ function addMarkers(parameter) {
         // content
         var content =
             '<div class="accordion" id="div_content">' +
-                '<span class="text-primary">' + data[a][sheetTower] + '</span>' +
+                '<span class="text-primary">' + data[a][colTower] + '</span>' +
                 '<div>' +
                     '<a href="#div_table" data-toggle="collapse">' +
                         '<i class="fas fa-caret-down"></i>' +
@@ -1158,32 +1202,36 @@ function addMarkers(parameter) {
                         '<table class="table table-sm text-left">' +
                             '<tr>' +
                                 '<td>' + text[41][language] + '</td>' +
-                                '<td>' + data[a][sheetType] + '</td>' +
+                                '<td>' + data[a][colType] + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[42][language]   + '</td>' +
-                                '<td>' + data[a][sheetHeight] + '</td>' +
+                                '<td>' + data[a][colHeight] + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[43][language] + '</td>' +
-                                '<td>' + data[a][sheetSpan] + '</td>' +
+                                '<td>' + data[a][colSpan] + '</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                                '<td>' + text[61][language] + '</td>' +
+                                '<td>' + data[a][colWeight] + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[23][language]    + '</td>' +
-                                '<td>' + data[a][sheetSection] + '</td>' +
+                                '<td>' + data[a][colSection] + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[44][language] + '</td>' +
-                                '<td>' + parseFloat(data[a][sheetLatitude]).toFixed(6) + '</td>' +
+                                '<td>' + parseFloat(data[a][colLatitude]).toFixed(6) + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[45][language] + '</td>' +
-                                '<td>' + parseFloat(data[a][sheetLongitude]).toFixed(6) + '</td>' +
+                                '<td>' + parseFloat(data[a][colLongitude]).toFixed(6) + '</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[33][language] + '</td>' +
                                 '<td>' +
-                                    '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + parseFloat(data[a][sheetLatitude]) + ',' + parseFloat(data[a][sheetLongitude]) + '">' +
+                                    '<a target="_blank" class="text-primary" href="https://www.google.com/maps/dir//' + parseFloat(data[a][colLatitude]) + ',' + parseFloat(data[a][colLongitude]) + '">' +
                                         '<span>Google Maps</span>' +
                                     '</a>' +
                                 '</td>' +
@@ -1191,7 +1239,7 @@ function addMarkers(parameter) {
                             '<tr class="' + displayGallery + '">' +
                                 '<td>' + text[25][language] + '</td>' +
                                 '<td>' +
-                                    '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[a][sheetLink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][sheetTower] + '&apos;)">' +
+                                    '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[a][colLink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][colTower] + '&apos;)">' +
                                     '<i class="far fa-images"></i> ' +
                                     '<span>' + text[24][language] + '</span>' +
                                     '</a>' +
@@ -1211,15 +1259,15 @@ function addMarkers(parameter) {
                 '<div ' + hidden + '>' +
                     '<div class="collapsed badge badge-pill badge-dark w-100">' +
                     '<svg width="34" height="17" viewBox="0 0 34 17" xmlns="http://www.w3.org/2000/svg" id="alert">' +
-                        '<path fill="' + rgb + '"' + shape + '/>' +
+                        '<path fill="' + rgb + '"' + circle + '/>' +
                     '</svg>' +
-                        '<span class="ml-1 mr-1">' + data[a][sheetDescription] + '</span>' +
+                        '<span class="ml-1 mr-1">' + data[a][colDescription] + '</span>' +
                     '</div>' +
                     '<a href="#div_alert" data-toggle="collapse" class="text-dark">' +
                         '<i class="fas fa-caret-down"></i>' +
                     '</a>' +
                     '<div id="div_alert" class="collapse border-top" data-parent="#div_content">' +
-                        '<div class="p-2">' + data[a][sheetDescription + 1] + '</div>' +
+                        '<div class="p-2">' + data[a][colDescription + 1] + '</div>' +
                     '</div>' +
                 '</div>' +
             '</div>'
@@ -1248,76 +1296,6 @@ function addMarkers(parameter) {
     }
 }
 
-/* draw ----------------------------------------------------- */
-var draw00 = "M-8.04,0.00 L0.00,-30.00 8.04,0.00 -4.64,-12.68 2.68,-20.00 -1.55,-24.23 0.89,-26.67 0.00,-27.56 -0.89,-26.67 1.55,-24.23 -2.68,-20.00 4.64,-12.68 Z";
-var draw01 = "M0.00,0.00 L-0.58,-2.70 -1.00,-18.03 -2.54,-18.03 -1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 5.62,-23.80 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.72 -1.16,-19.72 -0.99,-18.03 0.99,-18.03 1.16,-19.72 0.00,-21.72 3.50,-23.80 1.16,-19.72 2.54,-18.03 1.00,-18.03 0.58,-2.70 Z M-11.25,0.00 L-2.54,-18.03 M11.25,0.00 L2.54,-18.03";
-var draw02 = "M-6.45,0.00 L-1.16,-19.72 -3.50,-23.80 -5.62,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 5.62,-23.80 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.72 -1.16,-19.72 2.15,-16.03 -3.72,-10.16 6.45,0.00 1.16,-19.72 3.50,-23.80 0.00,-21.72 1.16,-19.72 -2.15,-16.03 3.72,-10.16 Z";
-var draw03 = "M-6.45,0.00 L-1.16,-19.72 -3.50,-23.80 -6.70,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 6.70,-23.80 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.72 -1.16,-19.72 2.15,-16.03 -3.72,-10.16 6.45,0.00 1.16,-19.72 3.50,-23.80 0.00,-21.72 1.16,-19.72 -2.15,-16.03 3.72,-10.16 Z";
-var draw04 = "M-5.99,0.00 L-1.72,-15.94 -3.69,-21.56 -5.00,-25.31 -7.69,-25.31 -5.44,-26.56 -6.64,-30.00 -3.28,-26.32 3.28,-26.32 6.64,-30.00 5.44,-26.56 7.69,-25.31 5.00,-25.31 3.69,-21.56 3.28,-25.31 -3.28,-25.31 -3.69,-21.56 1.72,-15.94 -3.46,-9.25 5.99,0.00 1.72,-15.94 3.69,-21.56 -1.72,-15.94 3.46,-9.25 Z";
-var draw05 = "M-6.45,0.00 L-1.16,-19.72 -3.50,-23.80 -6.70,-23.80 -4.71,-25.88 -4.47,-29.58 0.00,-30.00 4.47,-29.58 4.71,-25.88 3.50,-23.80 3.33,-28.53 0.00,-30.00 -3.33,-28.53 -3.50,-23.80 0.00,-21.72 -1.16,-19.72 2.15,-16.03 -3.72,-10.16 6.45,0.00 1.16,-19.72 3.50,-23.80 0.00,-21.72 1.16,-19.72 -2.15,-16.03 3.72,-10.16 Z M1.15,-19.72 L6.98,-17.91 1.64,-17.91";
-var draw06 = "M-10.36,0.00 L0.64,-19.02 3.74,-19.02 0.64,-19.94 0.64,-23.63 3.74,-23.63 0.64,-24.56 0.64,-28.25 3.74,-28.25 0.64,-29.17 3.74,-30.00 -3.74,-30.00 -0.64,-29.17 -3.74,-28.25 -0.64,-28.25 -0.64,-24.56 -3.74,-23.63 -0.64,-23.63 -0.64,-19.94 -3.74,-19.02 -0.64,-19.02 -0.64,-7.48 -0.48,-2.71 0.00,0.00 0.48,-2.71 0.64,-7.48 0.64,-19.02 -0.64,-19.02 10.36,0.00";
-var draw07 = "M-3.74,0.00 L2.69,-6.43 -1.94,-11.06 1.39,-14.39 -1.00,-16.78 0.64,-19.02 3.74,-19.02 0.64,-19.94 0.64,-23.63 3.74,-23.63 0.64,-24.56 0.64,-28.25 3.74,-28.25 0.64,-29.17 3.74,-30.00 -3.74,-30.00 -0.64,-29.17 -3.74,-28.25 -0.64,-28.25 -0.64,-24.56 -3.74,-23.63 -0.64,-23.63 -0.64,-19.94 -3.74,-19.02 -0.64,-19.02 1.00,-16.78 -1.39,-14.39 1.94,-11.06 -2.69,-6.43 3.74,0.00 0.64,-19.02 -0.64,-19.02 Z";
-var draw08 = "M-3.74,0.00 L2.69,-6.43 -1.94,-11.06 1.39,-14.39 -1.00,-16.78 0.64,-19.02 3.74,-19.02 0.64,-20.38 0.64,-23.18 3.74,-23.18 0.64,-24.52 0.64,-26.87 3.74,-26.87 0.64,-28.26 3.74,-30.00 0.00,-29.17 -3.74,-30.00 -0.64,-28.26 -3.74,-26.87 -0.64,-26.87 -0.64,-24.52 -3.74,-23.18 -0.64,-23.18 -0.64,-20.38 -3.74,-19.02 -0.64,-19.02 1.00,-16.78 -1.39,-14.39 1.94,-11.06 -2.69,-6.43 3.74,0.00 0.64,-19.02 -0.64,-19.02 Z";
-var draw09 = "M-10.36,0.00 L0.64,-19.02, 0.64,-22.16 3.74,-22.16 0.64,-23.63 0.64,-28.25 3.74,-28.25 0.64,-29.17 3.74,-30.00 -3.74,-30.00 -0.64,-29.17 -0.64,-23.63 -3.74,-22.16 -0.64,-22.16 -0.64,-19.02 -0.64,-2.71 0.00,0.00 0.64,-2.71 0.64,-19.02 -0.64,-19.02 10.36,0.00";
-var draw10 = "M4.03,0.00 L-2.97,-7.00 2.18,-12.15 -1.61,-15.94 1.18,-18.74 -0.87,-20.79 0.64,-22.16 3.74,-22.16 0.64,-23.63 0.64,-28.25 3.74,-28.25 0.64,-29.17 3.74,-30.00 -3.74,-30.00 -0.64,-29.17 -0.64,-23.63 -3.74,-22.16 -0.64,-22.16 0.87,-20.79 -1.18,-18.74 1.61,-15.94 -2.18,-12.15 2.97,-7.00 -4.03,0.00 -0.64,-22.16 0.64,-22.16 Z";
-var draw11 = "M-0.33,0.00 L-1.07,-1.64 -2.50,-7.13 -4.89,-18.22 -5.86,-23.81 -5.86,-25.61 -10.39,-25.61 -6.50,-27.12 -7.65,-30.00 -4.51,-26.74 4.51,-26.74 7.65,-30.00 6.50,-27.12 10.39,-25.61 5.86,-25.61 5.86,-23.81 4.89,-18.22 2.50,-7.13 1.07,-1.64 0.33,0.00 0.33,-1.80 1.30,-7.39 3.69,-18.48 5.12,-23.97 5.86,-25.61 -5.86,-25.61 -5.12,-23.97 -3.69,-18.48 -1.30,-7.39 -0.33,-1.80 Z M-11.25,0.00 L-3.54,-25.61 M11.25,0.00 L3.54,-25.61";
-var draw12 = "M-3.94,0.00 L-1.60,-16.01 -4.34,-26.87 -7.50,-26.87 -4.82,-28.12 -5.55,-30.00 -3.84,-27.98 3.84,-27.98 5.55,-30.00 4.82,-28.12 7.50,-26.87 4.34,-26.87 3.46,-23.40 3.08,-26.87 -3.08,-26.87 -3.46,-23.40 0.00,-17.15 3.46,-23.40 1.60,-16.01 3.94,0.00 -2.93,-6.87 2.18,-11.98 -1.60,-16.01 0.00,-17.15 1.60,-16.01 -2.18,-11.98 2.93,-6.87 Z";
-var draw13 = "M-3.94,0.00 L-1.60,-16.01 -4.34,-26.87 -4.82,-28.12 -5.55,-30.00 -3.84,-27.98 3.84,-27.98 5.55,-30.00 4.82,-28.12 4.34,-26.87 3.46,-23.40 3.08,-26.87 -3.08,-26.87 -3.46,-23.40 0.00,-17.15 3.46,-23.40 1.60,-16.01 3.94,0.00 -2.93,-6.87 2.18,-11.98 -1.60,-16.01 0.00,-17.15 1.60,-16.01 -2.18,-11.98 2.93,-6.87 Z M-2.25,-18.63 L-5.89,-17.15 -1.88,-17.15 M2.25,-18.63 L5.89,-17.15 1.88,-17.15";
-var draw14 = "M-5.17,0.00 L-2.24,-14.14 -4.32,-24.14 -7.59,-24.14 -4.67,-25.51 -5.81,-30.00 -3.30,-25.51 3.30,-25.51 5.81,-30.00 4.67,-25.51 7.59,-24.14 4.32,-24.14 3.45,-20.00 2.58,-24.14 -2.58,-24.14 -3.45,-20.00 0.00,-15.52 3.45,-20.00 2.24,-14.14 5.17,0.00 -3.40,-8.57 2.24,-14.14 0.00,-15.52 -2.24,-14.14 3.40,-8.57 Z";
-var draw15 = "M0.00,0.00 L-0.60,-2.74 -0.60,-7.43 -0.79,-16.01 -1.17,-20.03 -2.74,-20.03 -1.87,-21.50 -3.56,-25.15 -5.72,-25.15 -4.59,-27.34 -4.27,-29.80 0.00,-30.00 4.27,-29.80 4.59,-27.34 5.72,-25.15 3.56,-25.15 3.16,-28.83 0.00,-30.00 -3.16,-28.83 -3.56,-25.15 0.00,-22.05 -1.87,-21.50 -1.17,-20.03 2.74,-20.03 1.87,-21.50 0.00,-22.05 3.56,-25.15 1.17,-20.03 0.79,-16.01 0.60,-7.43 0.60,-2.74 Z M-11.25,0.00 L-2.74,-20.03 M11.25,0.00 L2.74,-20.03";
-var draw16 = "M-6.54,0.00 L-1.17,-20.03 -3.56,-25.15 -5.72,-25.15 -4.59,-27.34 -4.27,-29.80 0.00,-30.00 4.27,-29.80 4.59,-27.34 5.72,-25.15 3.56,-25.15 3.16,-28.83 0.00,-30.00 -3.16,-28.83 -3.56,-25.15 0.00,-22.05 3.56,-25.15 1.17,-20.03 6.54,0.00 -3.77,-10.31 2.18,-16.27 -1.17,-20.03 0.00,-22.05 1.17,-20.03 -2.18,-16.27 3.77,-10.31 Z";
-var draw17 = "M-3.74,0.00 L2.69,-6.43 -1.94,-11.06 1.39,-14.39 -1.00,-16.78 0.64,-19.02 3.74,-19.02 0.64,-19.94 0.64,-23.63 4.33,-23.63 7.46,-24.56 0.64,-24.56 0.64,-28.25 3.74,-28.25 0.64,-29.17 3.74,-30.00 -3.74,-30.00 -0.64,-29.17 -3.74,-28.25 -0.64,-28.25 -0.64,-24.56 -7.46,-24.56 -4.33,-23.63 -0.64,-23.63 -0.64,-19.94 -3.74,-19.02 -0.64,-19.02 1.00,-16.78 -1.39,-14.39 1.94,-11.06 -2.69,-6.43 3.74,0.00 0.64,-19.02 -0.64,-19.02 Z";
-var draw18 = "M-5.49,0.00 L-1.36,-15.43 -6.34,-22.13 -7.69,-24.84 -7.33,-26.32 -2.62,-30.00 2.62,-30.00 7.33,-26.32 7.33,-26.32 7.69,-24.84 6.34,-22.13 1.36,-15.43 5.49,0.00 -3.17,-8.66 1.83,-13.66 -1.36,-15.43 0.00,-18.05 6.34,-22.13 6.43,-25.29 2.21,-29.11 0.00,-30.00 -2.21,-29.11 -6.43,-25.29 -6.34,-22.13 0.00,-18.05 1.36,-15.43 -1.83,-13.66 3.17,-8.66 Z";
-var draw99 = "M-25.24,0.00 L-11.25,-30.00 -11.31,-26.39 -10.83,-20.69 -9.51,-9.34 -8.65,-3.34 -7.74,0.00 -7.71,-3.79 -8.18,-9.49 -9.51,-20.85 -10.36,-26.50 -11.25,-30.00 -5.70,-27.43 -5.70,-23.43 -5.70,-27.43 0.00,-26.80 0.00,-23.43 0.00,-26.80 5.70,-27.43 5.70,-23.43 5.70,-27.43 11.25,-30.00 11.31,-26.39 10.83,-20.69 9.51,-9.34 8.65,-3.34 7.74,0.00 7.71,-3.79 8.18,-9.49 9.51,-20.85 10.36,-26.50 11.25,-30.00 25.24,0.00";
-
-/* towers --------------------------------------------------- */
-var towers = [
-    ["TOWER",  draw00],
-    ["I5EL",   draw01],
-    ["I5SL",   draw02],
-    ["I5SP",   draw03],
-    ["I5AA",   draw04],
-    ["I5AT",   draw04],
-    ["I5TR",   draw05],
-    ["I2DEL",  draw06],
-    ["I2DTE",  draw04],
-    ["I2DSL",  draw07],
-    ["I2DAA",  draw08],
-    ["I2DAT",  draw08],
-    ["I2DATE", draw08],
-    ["I2EL",   draw09],
-    ["I2SL",   draw10],
-    ["I2SP",   draw10],
-    ["I2AA",   draw10],
-    ["I2AT",   draw10],
-    ["VXS1",   draw11],
-    ["A2MS1",  draw12],
-    ["DMS1",   draw12],
-    ["RMS1",   draw13],
-    ["FMS1",   draw14],
-    ["T90",    draw04],
-    ["SFEL",   draw09],
-    ["SFSL",   draw10],
-    ["SFAA",   draw10],
-    ["SFAT1",  draw10],
-    ["SFAT2",  draw10],
-    ["PIEL",   draw15],
-    ["PISL",   draw16],
-    ["PIAA",   draw04],
-    ["PIAT",   draw04],
-    ["PDEL",   draw06],
-    ["PDSL",   draw07],
-    ["PDSLM",  draw07],
-    ["PDSP",   draw07],
-    ["PDSPM",  draw07],
-    ["PDAA",   draw08],
-    ["PDAAM",  draw08],
-    ["PDAT",   draw08],
-    ["PDTR",   draw17],
-    ["AMS2",   draw18],
-    ["ROPE",   draw99]
-];
-
 /* map type ------------------------------------------------- */
 var towerMarkers = new Array();
 // map type
@@ -1345,7 +1323,7 @@ function mapType(parameter) {
     // change marker
     for (var a = 0;  a < data.length; a++) {
         // coordinates
-        var coordinates = new google.maps.LatLng(data[a][sheetLatitude], data[a][sheetLongitude]);
+        var coordinates = new google.maps.LatLng(data[a][colLatitude], data[a][colLongitude]);
         // conditional
         if (a == 0) {
             // clear markers on map
@@ -1391,7 +1369,7 @@ function googleMaps() {
     var central = Math.round(data.length / 2);
     // properties
     var properties = {
-        center: new google.maps.LatLng(data[central][sheetLatitude], data[central][sheetLongitude]),
+        center: new google.maps.LatLng(data[central][colLatitude], data[central][colLongitude]),
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
