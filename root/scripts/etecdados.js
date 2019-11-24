@@ -52,6 +52,8 @@ var removeLink = [
     'https://drive.google.com/drive/folders/',
     'https://drive.google.com/open?id=',
     'https://drive.google.com/file/d/',
+    'https://docs.google.com/spreadsheets/d/',
+    '/edit?usp=sharing',
     '/view?usp=sharing',
     '?usp=sharing',
     '/view'
@@ -484,7 +486,7 @@ function validation(parameter) {
             list.css("display", "block");
             dialog.setAttribute("class", "modal-dialog");
             // projects list
-            for (var b = 0; b < projects.length - 1; b++) {
+            for (var b = 0; b < projects.length; b++) {
                 // hyperlink
                 var hyperlink = document.createElement("a");
                 // set attributes
