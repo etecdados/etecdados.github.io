@@ -629,7 +629,7 @@ var colors = [
     /*4*/ "#DA70D6", // orchid
     /*5*/ "#87CEFA", // light sky blue
     /*6*/ "#FF7F50", // coral
-    /*7*/ "#131313", // black
+    /*7*/ "#A0522D", // sienna
     /*8*/ "#808080", // gray  
 ];
 
@@ -1317,7 +1317,7 @@ function mapType(parameter) {
     // set map
     map.setMapTypeId(type);
     // conditional
-    if (type == "hybrid") {
+    if (type == "hybrid" || type == "dark") {
         color = "#FFFFFF";
     } else {
         color = "#7F7F7F";
@@ -1375,6 +1375,7 @@ function googleMaps() {
         fullscreenControl: true,
         fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
         mapTypeControl: false,
+        mapTypeControlOptions: {mapTypeIds: ['roadmap', 'hybrid', 'terrain', 'dark']},
         streetViewControl: false,
         zoom: 13
     };
@@ -1388,6 +1389,42 @@ function googleMaps() {
     map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById("div_legend"));
     // info window
     var info = new google.maps.InfoWindow();
+    // dark theme
+    var dark = new google.maps.StyledMapType([
+        {"elementType": "geometry", "stylers": [{"color": "#212121"}]},
+        {"elementType": "labels.icon", "stylers": [{"visibility": "off"}]},
+        {"elementType": "labels.text.fill", "stylers": [{"color": "#757575"}]},
+        {"elementType": "labels.text.stroke", "stylers": [{"color": "#212121"}]},
+        {"featureType": "administrative", "elementType": "geometry", "stylers": [{"color": "#757575"},{"visibility" : "off"}]},
+        {"featureType": "administrative.country", "elementType": "labels.text.fill", "stylers": [{"color": "#9E9E9E"}]},
+        {"featureType": "administrative.land_parcel", "stylers": [{"visibility": "off"}]},
+        {"featureType": "administrative.locality", "elementType": "labels.text.fill", "stylers": [{"color": "#BDBDBD"}]},
+        {"featureType": "administrative.neighborhood", "stylers": [{"visibility": "off"}]},
+        {"featureType": "poi", "stylers": [{"visibility": "off"}]},
+        {"featureType": "poi", "elementType": "labels.text", "stylers": [{"visibility": "off"}]},
+        {"featureType": "poi", "elementType": "labels.text.fill", "stylers": [{"color": "#757575"}]},
+        {"featureType": "poi.park", "elementType": "geometry", "stylers": [{"color": "#181818"}]},
+        {"featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [{"color": "#616161"}]},
+        {"featureType": "poi.park", "elementType": "labels.text.stroke", "stylers": [{"color": "#1B1B1B"}]},
+        {"featureType": "road", "elementType": "geometry.fill", "stylers": [{"color": "#2C2C2C"}]},
+        {"featureType": "road", "elementType": "labels", "stylers": [{"visibility": "off"}]},
+        {"featureType": "road", "elementType": "labels.icon", "stylers": [{"visibility": "off"}]},
+        {"featureType": "road", "elementType": "labels.text.fill", "stylers": [{"color": "#8A8A8A"}]},
+        {"featureType": "road.arterial", "stylers": [{"visibility": "off"}]},
+        {"featureType": "road.arterial", "elementType": "geometry", "stylers": [{"color": "#373737"}]},
+        {"featureType": "road.highway", "elementType": "geometry", "stylers": [{"color": "#3C3C3C"}]},
+        {"featureType": "road.highway", "elementType": "labels", "stylers": [{"visibility": "off"}]},
+        {"featureType": "road.highway.controlled_access", "elementType": "geometry", "stylers": [{"color": "#4E4E4E"}]},
+        {"featureType": "road.local", "stylers": [{"visibility": "off"}]},
+        {"featureType": "road.local", "elementType": "labels.text.fill", "stylers": [{"color": "#616161"}]},
+        {"featureType": "transit", "stylers": [{"visibility": "off"}]},
+        {"featureType": "transit", "elementType": "labels.text.fill", "stylers": [{"color": "#757575"}]},
+        {"featureType": "water", "elementType": "geometry", "stylers": [{"color": "#000000"}]},
+        {"featureType": "water", "elementType": "labels.text", "stylers": [{"visibility": "off"}]},
+        {"featureType": "water", "elementType": "labels.text.fill", "stylers": [{"color": "#3D3D3D"}]}
+    ]);
+    // set dark
+    map.mapTypes.set('dark', dark);
     // site
     for (var a = 0; a < site.length; a++) {
         // marker
