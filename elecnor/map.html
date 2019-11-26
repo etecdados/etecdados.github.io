@@ -219,6 +219,25 @@
                             </li>
                         </ul>
                     </div>
+                    <!-- filter -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="far fa-dot-circle"></i>
+                        <script>document.write(text[62][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <label class="mb-0">
+                                    <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="0" id="input_disabled" checked>
+                                    <script>document.write(text[63][language])</script>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="mb-0">
+                                    <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="1" id="input_enabled">
+                                    <script>document.write(text[64][language])</script>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
                      <!-- tables -->
                      <div class="border-top border-secondary mt-3 mb-5">
                          <ul class="ul_sidebar">
@@ -271,7 +290,52 @@
                     <!-- list -->
                     <div id="div_list"   class="bg-white text-left collapse.show"></div>
                     <div id="div_cables" class="bg-white text-left"></div>
-                    
+                    <div id="div_filter" class="bg-white text-left">
+                        <div class="bg-danger text-white text-center p-1 mt-1">
+                            <span>
+                                <script>document.write(text[62][language].toUpperCase())</script>
+                            </span>
+                        </div>
+                        <!-- table filter -->
+                        <table class="table table-sm m-0" id="table_filter">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <script>document.write(text[66][language].toUpperCase())</script>
+                                    </th>
+                                    <th id="th_filter"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <script>document.write(text[67][language])</script>
+                                    </td>
+                                    <td id="td_filter1"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <script>document.write(text[68][language])</script>
+                                    </td>
+                                    <td id="td_filter2"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <script>document.write(text[69][language])</script>
+                                    </td>
+                                    <td id="td_filter3"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <script>document.write(text[70][language])</script>
+                                    </td>
+                                    <td id="td_filter4"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- table type -->
+                        <table class="table table-sm" id="table_type"></table>
+                    </div>
                 </div>
             </div>
             <!-- modal summary -->

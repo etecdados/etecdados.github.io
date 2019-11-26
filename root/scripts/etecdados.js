@@ -1129,7 +1129,8 @@ function addMarkers(parameter) {
                 strokeWeight: weight
             },
             map: map,
-            position: coordinates
+            position: coordinates,
+            reference: status
         });
         // push
         iconMarkers.push(marker);
@@ -1358,7 +1359,8 @@ function mapType(parameter) {
                 strokeWeight: 0.7,
             },
             map: map,
-            position: coordinates
+            position: coordinates,
+            reference: a
         });
         // set markers
         towerMarkers.push(marker);
@@ -1373,11 +1375,13 @@ function googleMaps() {
     var properties = {
         center: new google.maps.LatLng(data[central][colLatitude], data[central][colLongitude]),
         fullscreenControl: true,
-        fullscreenControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM},
+        fullscreenControlOptions: {position: google.maps.ControlPosition.LEFT_CENTER},
         mapTypeControl: false,
         mapTypeControlOptions: {mapTypeIds: ['roadmap', 'hybrid', 'terrain', 'dark']},
         streetViewControl: false,
-        zoom: 13
+        zoom: 13,
+        zoomControl: true,
+        zoomControlOptions: {position: google.maps.ControlPosition.LEFT_CENTER}
     };
     // new map
     map = new google.maps.Map(document.getElementById("div_map"), properties);
@@ -1489,9 +1493,99 @@ function googleMaps() {
     addMarkers(0);
     // set map type
     mapType("hybrid");
+    // filter markers
+    google.maps.event.addListener(map, 'idle', function() {
+        filterMarkers(towerMarkers);
+    });
 }
 
-/* search file (jQuery) -------------------------------------- */
+/* filter markers ------------------------------------------- */
+function filterMarkers(parameter) {
+    // get element
+    var element = document.getElementById("table_type");
+    // clear
+    element.innerHTML = "";
+    // bounds
+    var bounds = map.getBounds();
+    // array
+    var result = new Array();
+    var type   = new Array();
+    // get position
+    for (var a = 0; a < parameter.length; a++) {
+        // conditional
+        if (bounds.contains(parameter[a].getPosition()) === true) {
+            // push
+            result.push(parameter[a].reference);
+            type.push(data[parameter[a].reference][2]);
+        }
+    }
+    // variables
+    var total    = result.length;
+    var first    = result[0] ? result[0] : 0;
+    var last     = result[total - 1] ? result[total - 1] : 0;
+    var distance = 0;
+    var weight   = 0;
+    var filter   = Array.from(new Set(type));
+    // conditional
+    if (total == 0) {
+        // hide (jQuery)
+        $('#table_filter > tbody').hide();
+    } else {
+        // show (jQuery)
+        $('#table_filter > tbody').show();
+    }
+    // sum
+    for (var b = 0; b < total; b++) {
+        weight = weight + parseFloat(data[first + b][5]);
+        // conditional
+        if (b < total - 1) {
+            distance = distance + parseFloat(data[first + b][4]);
+        }
+    }
+    // create element
+    var tagTbody = document.createElement("tbody");
+    // type
+    for (var c = 0; c < filter.length; c++) {
+        // create element
+        var tagTr  = document.createElement("tr");
+        var tagTd1 = document.createElement("td");
+        var tagTd2 = document.createElement("td");
+        // occurrences
+        var occurrences = type.filter(function(count){
+            return count === filter[c];
+        }).length;
+        // inner html
+        tagTd1.innerHTML = filter[c];
+        tagTd2.innerHTML = occurrences;
+        // append child
+        tagTr.appendChild(tagTd1);
+        tagTr.appendChild(tagTd2);
+        tagTbody.appendChild(tagTr);
+    }
+    // append child
+    element.appendChild(tagTbody);
+    // inner html
+    document.getElementById("th_filter").innerHTML  = total;
+    document.getElementById("td_filter1").innerHTML = data[first][1];
+    document.getElementById("td_filter2").innerHTML = data[last][1];
+    document.getElementById("td_filter3").innerHTML = distance.toFixed(2);
+    document.getElementById("td_filter4").innerHTML = weight.toFixed(2);   
+}
+
+/* show filter ---------------------------------------------- */
+function showFilter(parameter) {
+    // get element
+    var element = document.getElementById(parameter.id).value;
+    var filter  = document.getElementById("div_filter")
+
+    if (element == 0) {
+        filter.style.display = "none";
+    } else {
+        filter.style.display = "block";
+    }
+}
+
+/* search file (jQuery) ------------------------------------- */
 $(document).ready(function(){
     $("#input_search").on("keyup", function() {
         var value = $(this).val().toLowerCase();

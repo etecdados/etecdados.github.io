@@ -146,6 +146,10 @@ button[data-target="#div_list"], #div_list {
     max-width: 180px;
 }
 
+#div_filter {
+    display: none;
+}
+
 /* summary -------------------------------------------------- */
 #div_summary table, #div_tableTechnical table {
     border-collapse: collapse;
