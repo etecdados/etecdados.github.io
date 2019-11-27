@@ -1501,16 +1501,12 @@ function googleMaps() {
 
 /* filter markers ------------------------------------------- */
 function filterMarkers(parameter) {
-    // get element
-    var element = document.getElementById("table_type");
-    // clear
-    element.innerHTML = "";
     // bounds
     var bounds = map.getBounds();
     // array
     var result = new Array();
     var type   = new Array();
-    // get position
+    // get markers
     for (var a = 0; a < parameter.length; a++) {
         // conditional
         if (bounds.contains(parameter[a].getPosition()) === true) {
@@ -1519,22 +1515,31 @@ function filterMarkers(parameter) {
             type.push(data[parameter[a].reference][2]);
         }
     }
+    // total
+    var total = result.length;
+    // inner html
+    document.getElementById("th_filter").innerHTML = total;
     // variables
-    var total    = result.length;
+    var cloneTr;
+    var cloneTd1;
+    var cloneTd2;
+    var distance = 0;
+    var filter   = Array.from(new Set(type));
     var first    = result[0] ? result[0] : 0;
     var last     = result[total - 1] ? result[total - 1] : 0;
-    var distance = 0;
+    var table    = '#table_filter > tbody';
     var weight   = 0;
-    var filter   = Array.from(new Set(type));
+    // clear body (jQuery)
+    $(table).html("");
     // conditional
     if (total == 0) {
         // hide (jQuery)
-        $('#table_filter > tbody').hide();
+        $(table).hide();
     } else {
         // show (jQuery)
-        $('#table_filter > tbody').show();
+        $(table).show();
     }
-    // sum
+    // weight and distance
     for (var b = 0; b < total; b++) {
         weight = weight + parseFloat(data[first + b][5]);
         // conditional
@@ -1542,34 +1547,45 @@ function filterMarkers(parameter) {
             distance = distance + parseFloat(data[first + b][4]);
         }
     }
-    // create element
-    var tagTbody = document.createElement("tbody");
+    // create element 
+    var tagTr = document.createElement("tr");
+    var tagTd = document.createElement("td");
+    // values
+    var values = [data[first][1], data[last][1], distance.toFixed(2), weight.toFixed(2)];
+    // data
+    for (var c = 0; c < values.length; c++) {
+        // clone
+        cloneTr  = tagTr.cloneNode(true);
+        cloneTd1 = tagTd.cloneNode(true);
+        cloneTd2 = tagTd.cloneNode(true);
+        // inner html
+        cloneTd1.innerHTML = text[67 + c][language].toUpperCase();
+        cloneTd2.innerHTML = values[c];
+        // append child
+        cloneTr.appendChild(cloneTd1);
+        cloneTr.appendChild(cloneTd2);
+        // jQuery
+        $(table).append(cloneTr);
+    }
     // type
-    for (var c = 0; c < filter.length; c++) {
-        // create element
-        var tagTr  = document.createElement("tr");
-        var tagTd1 = document.createElement("td");
-        var tagTd2 = document.createElement("td");
+    for (var d = 0; d < filter.length; d++) {
+        // clone
+        cloneTr  = tagTr.cloneNode(true);
+        cloneTd1 = tagTd.cloneNode(true);
+        cloneTd2 = tagTd.cloneNode(true);
         // occurrences
-        var occurrences = type.filter(function(count){
-            return count === filter[c];
+        var occurrences = type.filter(function(count) {
+            return count === filter[d];
         }).length;
         // inner html
-        tagTd1.innerHTML = filter[c];
-        tagTd2.innerHTML = occurrences;
+        cloneTd1.innerHTML = filter[d];
+        cloneTd2.innerHTML = occurrences;
         // append child
-        tagTr.appendChild(tagTd1);
-        tagTr.appendChild(tagTd2);
-        tagTbody.appendChild(tagTr);
+        cloneTr.appendChild(cloneTd1);
+        cloneTr.appendChild(cloneTd2);
+        // jQuery
+        $(table).append(cloneTr);
     }
-    // append child
-    element.appendChild(tagTbody);
-    // inner html
-    document.getElementById("th_filter").innerHTML  = total;
-    document.getElementById("td_filter1").innerHTML = data[first][1];
-    document.getElementById("td_filter2").innerHTML = data[last][1];
-    document.getElementById("td_filter3").innerHTML = distance.toFixed(2);
-    document.getElementById("td_filter4").innerHTML = weight.toFixed(2);   
 }
 
 /* show filter ---------------------------------------------- */
