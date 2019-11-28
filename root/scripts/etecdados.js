@@ -727,15 +727,19 @@ function legend(parameter1, parameter2) {
         var tagSpan     = document.createElement("span");
         var tagICicrcle = document.createElement("i");
         var tagIMinus   = document.createElement("i");
+        var clone       = tagSpan.cloneNode(true);
         // set attribute
         tagICicrcle.setAttribute("class", "mr-2 fas fa-circle");
         tagICicrcle.setAttribute("style", "color:" + colors[c] + "; opacity: 0.8");
         tagIMinus.setAttribute("class", "mr-2 mb-1 fas fa-minus");
         tagIMinus.setAttribute("style", "color:" + colors[c]);
+        tagSpan.setAttribute("id", "span_legend" + c);
+        clone.setAttribute("class", "badge badge-pill badge-danger float-right ml-2 filter_legend");
+        clone.setAttribute("id", "span_filter" + c);
         // conditional
         if (parameter1 == 0) {
             // inner html
-            tagSpan.innerHTML = filter[c];    
+            tagSpan.innerHTML = filter[c];
         } else {
             // description
             var description = activity[c + auxiliary][1];
@@ -758,6 +762,7 @@ function legend(parameter1, parameter2) {
             tagLi.appendChild(tagIMinus);
         }
         tagLi.appendChild(tagSpan);
+        tagLi.appendChild(clone);
     }
 }
 
@@ -1070,7 +1075,7 @@ function addMarkers(parameter) {
                         status = activity[auxiliary][1];
 						// conditional
 						if (status == "") {
-                            position = 8;
+                            position      = 8;
                             displayMarker = "d-none";
 							break;
 					    } else if (status == data[a][colActivity + parseInt(element)]) {
@@ -1079,7 +1084,9 @@ function addMarkers(parameter) {
 						    break;
 					    } else {
                             // no break
-                            position = 8;
+                            position      = 8;
+                            displayMarker = "d-none";
+                            status        = "";
                         }
 				    }
 				    break;
@@ -1495,24 +1502,66 @@ function googleMaps() {
     mapType("hybrid");
     // filter markers
     google.maps.event.addListener(map, 'idle', function() {
-        filterMarkers(towerMarkers);
+        filterLegend();
+        filterTowers();
     });
 }
+/* filter legend -------------------------------------------- */
+function filterLegend() {
+    // bounds
+    var bounds = map.getBounds();
+    // array
+    var result = new Array();
+    // get markers
+    for (var a = 0; a < iconMarkers.length; a++) {
+        // conditional
+        if (bounds.contains(iconMarkers[a].getPosition()) === true) {
+            // push
+            result.push(iconMarkers[a].reference);
+        }
+    }
+    // filter
+    var filter = Array.from(new Set(result));
+    // total
+    var total = document.getElementById("div_list").getElementsByTagName("LI").length;
+    // set values
+    for (var b = 0; b < total; b++) {
+        // get element
+        var spanLegend = document.getElementById("span_legend" + b).innerHTML;
+        var spanFilter = document.getElementById("span_filter" + b);
+        // filter
+        for (var c = 0; c < filter.length; c++) {
+            // occurrences
+            var occurrences = result.filter(function(count) {
+                return count === filter[c];
+            }).length;
+            // conditional
+            if (spanLegend == "") {
+                break;
+            } else if (spanLegend == filter[c]) {
+                spanFilter.innerHTML = occurrences;
+                break;
+            } else {
+                spanFilter.innerHTML = "";
+            }
+        }
+    }
+}
 
-/* filter markers ------------------------------------------- */
-function filterMarkers(parameter) {
+/* filter towers -------------------------------------------- */
+function filterTowers() {
     // bounds
     var bounds = map.getBounds();
     // array
     var result = new Array();
     var type   = new Array();
     // get markers
-    for (var a = 0; a < parameter.length; a++) {
+    for (var a = 0; a < towerMarkers.length; a++) {
         // conditional
-        if (bounds.contains(parameter[a].getPosition()) === true) {
+        if (bounds.contains(towerMarkers[a].getPosition()) === true) {
             // push
-            result.push(parameter[a].reference);
-            type.push(data[parameter[a].reference][2]);
+            result.push(towerMarkers[a].reference);
+            type.push(data[towerMarkers[a].reference][2]);
         }
     }
     // total
@@ -1592,8 +1641,8 @@ function filterMarkers(parameter) {
 function showFilter(parameter) {
     // get element
     var element = document.getElementById(parameter.id).value;
-    var filter  = document.getElementById("div_filter")
-
+    var filter  = document.getElementById("div_filter");
+    // conditional
     if (element == 0) {
         filter.style.display = "none";
     } else {
