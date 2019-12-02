@@ -20,6 +20,7 @@ function loadPolicy (parameter) {
 }
 
 /* google set ----------------------------------------------- */
+var accessKey     = "1dZe1ctuPzVp887vb7ttc8zbAdDQew_w761hqemr7O04";
 var apiKeySheets  = "AIzaSyCUHNFWOyP2Y25UKw1swqVQCS2MTaFIpok";
 var apiKeyMaps    = "AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ";
 var apiKeyDrive   = "AIzaSyDCkCbZhcCrB6hMeg6gIKYz_CAEQmd0--c";
@@ -69,7 +70,7 @@ var includeLink = [
 /* get access ----------------------------------------------- */
 function getAccess() {
     gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: "1dZe1ctuPzVp887vb7ttc8zbAdDQew_w761hqemr7O04",
+        spreadsheetId: accessKey,
         range: "access!A2:B2",
     }).then(function(response) {
         // result
@@ -85,25 +86,28 @@ function getAccess() {
 
 /* get values ----------------------------------------------- */
 function getValues(parameter1, parameter2, parameter3, parameter4) {
-    // link
-    var idSheet = parameter1;
-    // remove link
-    for (var a = 0; a < removeLink.length; a++) {
-        idSheet = idSheet.replace(removeLink[a], "");
+    // element
+    var element = parameter1;
+    // conditional
+    if (element != null) {
+        // remove link
+        for (var a = 0; a < removeLink.length; a++) {
+            element = element.replace(removeLink[a], "");
+        }
+        // values
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: element,
+            range: parameter2,
+        }).then(function(response) {
+            // result
+            var ranges = response.result;
+            // keys
+            var keys = Object.keys(ranges.values).length;
+            // set item
+            sessionStorage.setItem(parameter3, keys);
+            sessionStorage.setItem(parameter4, ranges.values);
+        });
     }
-    // values
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: idSheet,
-        range: parameter2,
-    }).then(function(response) {
-        // result
-        var ranges = response.result;
-        // keys
-        var keys = Object.keys(ranges.values).length;
-        // set item
-        sessionStorage.setItem(parameter3, keys);
-        sessionStorage.setItem(parameter4, ranges.values);
-    });
 }
 
 /* get database --------------------------------------------- */
@@ -734,7 +738,7 @@ function legend(parameter1, parameter2) {
         tagIMinus.setAttribute("class", "mr-2 mb-1 fas fa-minus");
         tagIMinus.setAttribute("style", "color:" + colors[c]);
         tagSpan.setAttribute("id", "span_legend" + c);
-        clone.setAttribute("class", "badge badge-pill badge-danger float-right ml-2 filter_legend");
+        clone.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
         clone.setAttribute("id", "span_filter" + c);
         // conditional
         if (parameter1 == 0) {
@@ -871,6 +875,7 @@ var colLink        = 2 + colDescription;
 // sheet activity
 var activityColor = 7;
 var activityRows  = 8;
+
 /* polyline ------------------------------------------------- */
 var polylines = new Array();
 // add polyline
@@ -1020,10 +1025,10 @@ function addMarkers(parameter) {
     // set map
     for (var a = 0;  a < data.length; a++) {
         // variables
-        var circle = 'opacity="0.8" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z"';
         var color;
         var displayGallery;
         var displayMarker;
+        var ellipse = 'opacity="0.8" d="M0.0,6.5 a17.0,6.5 0 1,0 34.0,0.0 a17.0,6.5 0 1,0 -34.0,0.0 M6.0,6.5 a8.0,3.5 0 0,1 22.0,0.0 a8.0,3.5 0 0,1 -22.0,0.0 Z"';
         var hidden;
         var opacity = 0.8;
         var position;
@@ -1185,7 +1190,7 @@ function addMarkers(parameter) {
                 anchor: new google.maps.Point(17, 6.5),
                 url: 'data:image/svg+xml;utf-8,' +
                         '<svg width="34" height="17" viewBox="0 0 34 17" xmlns="http://www.w3.org/2000/svg">' +
-                            '<path fill="' + rgb + '" ' + circle + '/>' +
+                            '<path fill="' + rgb + '" ' + ellipse + '/>' +
                         '</svg>'
             },
             map: map,
@@ -1215,19 +1220,19 @@ function addMarkers(parameter) {
                                 '<td>' + data[a][colType] + '</td>' +
                             '</tr>' +
                             '<tr>' +
-                                '<td>' + text[42][language]   + '</td>' +
-                                '<td>' + data[a][colHeight] + '</td>' +
+                                '<td>' + text[42][language] + '</td>' +
+                                '<td>' + data[a][colHeight] + ' m</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[43][language] + '</td>' +
-                                '<td>' + data[a][colSpan] + '</td>' +
+                                '<td>' + data[a][colSpan] + ' m</td>' +
                             '</tr>' +
                             '<tr>' +
                                 '<td>' + text[61][language] + '</td>' +
-                                '<td>' + data[a][colWeight] + '</td>' +
+                                '<td>' + data[a][colWeight] + ' kg</td>' +
                             '</tr>' +
                             '<tr>' +
-                                '<td>' + text[23][language]    + '</td>' +
+                                '<td>' + text[23][language] + '</td>' +
                                 '<td>' + data[a][colSection] + '</td>' +
                             '</tr>' +
                             '<tr>' +
@@ -1269,7 +1274,7 @@ function addMarkers(parameter) {
                 '<div ' + hidden + '>' +
                     '<div class="collapsed badge badge-pill badge-dark w-100">' +
                     '<svg width="34" height="17" viewBox="0 0 34 17" xmlns="http://www.w3.org/2000/svg" id="alert">' +
-                        '<path fill="' + rgb + '"' + circle + '/>' +
+                        '<path fill="' + rgb + '"' + ellipse + '/>' +
                     '</svg>' +
                         '<span class="ml-1 mr-1">' + data[a][colDescription] + '</span>' +
                     '</div>' +
@@ -1529,20 +1534,28 @@ function filterLegend() {
         // get element
         var spanLegend = document.getElementById("span_legend" + b).innerHTML;
         var spanFilter = document.getElementById("span_filter" + b);
-        // filter
-        for (var c = 0; c < filter.length; c++) {
-            // occurrences
-            var occurrences = result.filter(function(count) {
-                return count === filter[c];
-            }).length;
-            // conditional
-            if (spanLegend == "") {
-                break;
-            } else if (spanLegend == filter[c]) {
-                spanFilter.innerHTML = occurrences;
-                break;
-            } else {
-                spanFilter.innerHTML = "";
+        // conditional
+        if (result.length == 0) {
+            // hide
+            spanFilter.style.display = "none";
+        } else {
+            // show
+            spanFilter.style.display = "block";
+            // filter
+            for (var c = 0; c < filter.length; c++) {
+                // occurrences
+                var occurrences = result.filter(function(count) {
+                    return count === filter[c];
+                }).length;
+                // conditional
+                if (spanLegend == "") {
+                    break;
+                } else if (spanLegend == filter[c]) {
+                    spanFilter.innerHTML = occurrences;
+                    break;
+                } else {
+                    spanFilter.innerHTML = "";
+                }
             }
         }
     }
@@ -1587,53 +1600,54 @@ function filterTowers() {
     } else {
         // show (jQuery)
         $(table).show();
-    }
-    // weight and distance
-    for (var b = 0; b < total; b++) {
-        weight = weight + parseFloat(data[first + b][5]);
-        // conditional
-        if (b < total - 1) {
-            distance = distance + parseFloat(data[first + b][4]);
+        // weight and distance
+        for (var b = 0; b < total; b++) {
+            weight = weight + parseFloat(data[first + b][5]);
+            // conditional
+            if (b < total - 1) {
+                distance = distance + parseFloat(data[first + b][4]);
+            }
         }
-    }
-    // create element 
-    var tagTr = document.createElement("tr");
-    var tagTd = document.createElement("td");
-    // values
-    var values = [data[first][1], data[last][1], distance.toFixed(2), weight.toFixed(2)];
-    // data
-    for (var c = 0; c < values.length; c++) {
-        // clone
-        cloneTr  = tagTr.cloneNode(true);
-        cloneTd1 = tagTd.cloneNode(true);
-        cloneTd2 = tagTd.cloneNode(true);
-        // inner html
-        cloneTd1.innerHTML = text[67 + c][language].toUpperCase();
-        cloneTd2.innerHTML = values[c];
-        // append child
-        cloneTr.appendChild(cloneTd1);
-        cloneTr.appendChild(cloneTd2);
-        // jQuery
-        $(table).append(cloneTr);
-    }
-    // type
-    for (var d = 0; d < filter.length; d++) {
-        // clone
-        cloneTr  = tagTr.cloneNode(true);
-        cloneTd1 = tagTd.cloneNode(true);
-        cloneTd2 = tagTd.cloneNode(true);
-        // occurrences
-        var occurrences = type.filter(function(count) {
-            return count === filter[d];
-        }).length;
-        // inner html
-        cloneTd1.innerHTML = filter[d];
-        cloneTd2.innerHTML = occurrences;
-        // append child
-        cloneTr.appendChild(cloneTd1);
-        cloneTr.appendChild(cloneTd2);
-        // jQuery
-        $(table).append(cloneTr);
+        // create element 
+        var tagTr = document.createElement("tr");
+        var tagTd = document.createElement("td");
+        // values
+        var values = [data[first][1], data[last][1], (distance / 1000).toFixed(2) + " km", (weight / 1000).toFixed(2) + " ton"];
+        // data
+        for (var c = 0; c < values.length; c++) {
+            // clone
+            cloneTr  = tagTr.cloneNode(true);
+            cloneTd1 = tagTd.cloneNode(true);
+            cloneTd2 = tagTd.cloneNode(true);
+            cloneTd2.className = "font-weight-bold";
+            // inner html
+            cloneTd1.innerHTML = text[67 + c][language].toUpperCase();
+            cloneTd2.innerHTML = values[c];
+            // append child
+            cloneTr.appendChild(cloneTd1);
+            cloneTr.appendChild(cloneTd2);
+            // jQuery
+            $(table).append(cloneTr);
+        }
+        // type
+        for (var d = 0; d < filter.length; d++) {
+            // clone
+            cloneTr  = tagTr.cloneNode(true);
+            cloneTd1 = tagTd.cloneNode(true);
+            cloneTd2 = tagTd.cloneNode(true);
+            // occurrences
+            var occurrences = type.filter(function(count) {
+                return count === filter[d];
+            }).length;
+            // inner html
+            cloneTd1.innerHTML = filter[d];
+            cloneTd2.innerHTML = occurrences;
+            // append child
+            cloneTr.appendChild(cloneTd1);
+            cloneTr.appendChild(cloneTd2);
+            // jQuery
+            $(table).append(cloneTr);
+        }
     }
 }
 
@@ -1642,9 +1656,11 @@ function showFilter(parameter) {
     // get element
     var element = document.getElementById(parameter.id).value;
     var filter  = document.getElementById("div_filter");
+    var radio   = document.getElementById("input_disabled");
     // conditional
     if (element == 0) {
         filter.style.display = "none";
+        radio.checked        = true;
     } else {
         filter.style.display = "block";
     }

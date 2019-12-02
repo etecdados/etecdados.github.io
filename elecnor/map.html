@@ -113,6 +113,25 @@
                     <br>
                     <i class="fas fa-list-ul"></i>
                     <script>document.write(text[19][language])</script>
+                    <!-- filter -->
+                    <div class="border-top border-secondary mt-3">
+                        <i class="far fa-dot-circle"></i>
+                        <script>document.write(text[62][language])</script>
+                        <ul class="ul_sidebar">
+                            <li>
+                                <label class="mb-0">
+                                    <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="0" id="input_disabled" checked>
+                                    <script>document.write(text[63][language])</script>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="mb-0">
+                                    <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="1" id="input_enabled">
+                                    <script>document.write(text[64][language])</script>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
                     <!-- activity -->
                     <div class="border-top border-secondary mt-3">
                         <span id="span_activity"></span>
@@ -219,25 +238,6 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- filter -->
-                    <div class="border-top border-secondary mt-3">
-                        <i class="far fa-dot-circle"></i>
-                        <script>document.write(text[62][language])</script>
-                        <ul class="ul_sidebar">
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="0" id="input_disabled" checked>
-                                    <script>document.write(text[63][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="1" id="input_enabled">
-                                    <script>document.write(text[64][language])</script>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
                      <!-- tables -->
                      <div class="border-top border-secondary mt-3 mb-5">
                          <ul class="ul_sidebar">
@@ -295,6 +295,7 @@
                             <span>
                                 <script>document.write(text[62][language].toUpperCase())</script>
                             </span>
+                            <button type="button" class="badge badge-pill badge-dark border-0 ml-1" onclick="showFilter(this)" value="0" id="button_filter">X</button>
                         </div>
                         <!-- table filter -->
                         <table class="table table-sm m-0" id="table_filter">
