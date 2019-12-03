@@ -679,7 +679,7 @@ function legend(parameter1, parameter2) {
     tagP.setAttribute("class", "text-center text-primary pt-1 m-0");
     tagUl.setAttribute("class", "ul_legend p-1 mb-0");
     // switch
-    switch(parseInt(parameter1)) {
+    switch (parseInt(parameter1)) {
         case 1:
             title = text[26][language];
             break;
@@ -738,7 +738,6 @@ function legend(parameter1, parameter2) {
         tagIMinus.setAttribute("class", "mr-2 mb-1 fas fa-minus");
         tagIMinus.setAttribute("style", "color:" + colors[c]);
         tagSpan.setAttribute("id", "span_legend" + c);
-        clone.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
         clone.setAttribute("id", "span_filter" + c);
         // conditional
         if (parameter1 == 0) {
@@ -1387,7 +1386,7 @@ function googleMaps() {
     var properties = {
         center: new google.maps.LatLng(data[central][colLatitude], data[central][colLongitude]),
         fullscreenControl: true,
-        fullscreenControlOptions: {position: google.maps.ControlPosition.LEFT_CENTER},
+        fullscreenControlOptions: {position: google.maps.ControlPosition.LEFT_CENTER},        
         mapTypeControl: false,
         mapTypeControlOptions: {mapTypeIds: ['roadmap', 'hybrid', 'terrain', 'dark']},
         streetViewControl: false,
@@ -1534,28 +1533,22 @@ function filterLegend() {
         // get element
         var spanLegend = document.getElementById("span_legend" + b).innerHTML;
         var spanFilter = document.getElementById("span_filter" + b);
-        // conditional
-        if (result.length == 0) {
-            // hide
-            spanFilter.style.display = "none";
-        } else {
-            // show
-            spanFilter.style.display = "block";
-            // filter
-            for (var c = 0; c < filter.length; c++) {
-                // occurrences
-                var occurrences = result.filter(function(count) {
-                    return count === filter[c];
-                }).length;
-                // conditional
-                if (spanLegend == "") {
-                    break;
-                } else if (spanLegend == filter[c]) {
-                    spanFilter.innerHTML = occurrences;
-                    break;
-                } else {
-                    spanFilter.innerHTML = "";
-                }
+        // hide
+        spanFilter.style.display = "none";
+        //
+        for (var c = 0; c < filter.length; c++) {
+            // occurrences
+            var occurrences = result.filter(function(count) {
+                return count === filter[c];
+            }).length;
+            // conditional
+            if (spanLegend == "") {
+                break;
+            } else if (spanLegend == filter[c]) {
+                spanFilter.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
+                spanFilter.style.display = "block";
+                spanFilter.innerHTML = occurrences;
+                break;
             }
         }
     }
@@ -1619,6 +1612,7 @@ function filterTowers() {
             cloneTr  = tagTr.cloneNode(true);
             cloneTd1 = tagTd.cloneNode(true);
             cloneTd2 = tagTd.cloneNode(true);
+            // bold
             cloneTd2.className = "font-weight-bold";
             // inner html
             cloneTd1.innerHTML = text[67 + c][language].toUpperCase();
@@ -1635,6 +1629,8 @@ function filterTowers() {
             cloneTr  = tagTr.cloneNode(true);
             cloneTd1 = tagTd.cloneNode(true);
             cloneTd2 = tagTd.cloneNode(true);
+            // bold
+            cloneTd2.className = "font-weight-bold";
             // occurrences
             var occurrences = type.filter(function(count) {
                 return count === filter[d];
