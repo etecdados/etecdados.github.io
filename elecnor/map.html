@@ -290,12 +290,14 @@
                     <!-- list -->
                     <div id="div_list"   class="bg-white text-left collapse.show"></div>
                     <div id="div_cables" class="bg-white text-left"></div>
-                    <div id="div_filter" class="bg-white text-left">
-                        <div class="bg-danger text-white text-center p-1 mt-1">
+                    <div id="div_filter" class="bg-white text-left float-right mt-1">
+                        <div class="bg-danger text-white text-center p-1">
                             <span>
                                 <script>document.write(text[62][language].toUpperCase())</script>
                             </span>
-                            <button type="button" class="badge badge-pill badge-dark border-0 ml-1 pl-2 pr-2" onclick="showFilter(this)" value="0" id="button_filter">X</button>
+                            <button type="button" class="bg-transparent text-white float-right border-0 p-0 ml-2 mr-1" onclick="showFilter(this)" value="0" id="button_filter">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
                         <!-- table filter -->
                         <table class="table table-sm m-0" id="table_filter">
