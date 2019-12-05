@@ -727,18 +727,18 @@ function legend(parameter1, parameter2) {
     // list
     for (var c = 0; c < filter.length; c++) {
         // create element
-        var tagLi       = document.createElement("li");
-        var tagSpan     = document.createElement("span");
-        var tagICicrcle = document.createElement("i");
-        var tagIMinus   = document.createElement("i");
-        var clone       = tagSpan.cloneNode(true);
+        var tagLi      = document.createElement("li");
+        var tagSpan    = document.createElement("span");
+        var tagICircle = document.createElement("i");
+        var tagIMinus  = document.createElement("i");
+        var clone      = tagSpan.cloneNode(true);
         // set attribute
-        tagICicrcle.setAttribute("class", "mr-2 fas fa-circle");
-        tagICicrcle.setAttribute("style", "color:" + colors[c] + "; opacity: 0.8");
+        tagICircle.setAttribute("class", "mr-2 fas fa-circle");
+        tagICircle.setAttribute("style", "color:" + colors[c] + "; opacity: 0.8");
         tagIMinus.setAttribute("class", "mr-2 mb-1 fas fa-minus");
         tagIMinus.setAttribute("style", "color:" + colors[c]);
-        tagSpan.setAttribute("id", "span_legend" + c);
-        clone.setAttribute("id", "span_filter" + c);
+        //tagSpan.setAttribute("id", "span_legend" + c);
+        //clone.setAttribute("id", "span_filter" + c);
         // conditional
         if (parameter1 == 0) {
             // inner html
@@ -749,7 +749,7 @@ function legend(parameter1, parameter2) {
             // conditional
             if (description == "") {
                 // set attribute
-                tagICicrcle.setAttribute("class", "d-none");
+                tagICircle.setAttribute("class", "d-none");
                 tagIMinus.setAttribute("class", "d-none");
             } else {
                 // inner html
@@ -760,10 +760,19 @@ function legend(parameter1, parameter2) {
         tagUl.appendChild(tagLi);
         // conditional
         if (parameter2 == true) {
-            tagLi.appendChild(tagICicrcle);
+            // set attribute
+            tagSpan.setAttribute("id", "span_circle" + c);
+            clone.setAttribute("id", "span_circle" + c + ".1");
+            // append child
+            tagLi.appendChild(tagICircle);
         } else {
+            // set attribute
+            tagSpan.setAttribute("id", "span_minus" + c);
+            clone.setAttribute("id", "span_minus" + c + ".1");
+            // append child
             tagLi.appendChild(tagIMinus);
         }
+        // append child
         tagLi.appendChild(tagSpan);
         tagLi.appendChild(clone);
     }
@@ -876,7 +885,8 @@ var activityColor = 7;
 var activityRows  = 8;
 
 /* polyline ------------------------------------------------- */
-var polylines = new Array();
+var polylines       = new Array();
+var polylineMarkers = new Array();
 // add polyline
 function addPolyline(parameter) {
     // span cables
@@ -900,10 +910,12 @@ function addPolyline(parameter) {
 		// conditional
 		if (a == 0) {
 			for (var b = 0; b < polylines.length; b++) {
-				polylines[b].setMap(null);
+                polylines[b].setMap(null);
+                polylineMarkers[b].setMap(null);
 			}
 			// clear
-			polylines = [];
+            polylines       = [];
+            polylineMarkers = [];
 		}
 		// coordinates
 		var coordinates = new Array();
@@ -911,6 +923,9 @@ function addPolyline(parameter) {
 		if (a + 1 >= data.length) {
 			break;
 		} else {
+            // variables
+            var status;
+            var span;
             // get coordinates
 			coordinates = [
 				{lat: parseFloat(data[a + 0][colLatitude]), lng: parseFloat(data[a + 0][colLongitude])},
@@ -931,9 +946,13 @@ function addPolyline(parameter) {
                             var auxiliary = b + c + 1;
                             // conditional
                             if (activity[auxiliary][1] == "") {
+                                status   = 0;
+                                span     = 0;
                                 position = 8;
                                 break;
                             } else if (activity[auxiliary][1] == data[a][colActivity + parseInt(element)]) {
+                                status   = activity[auxiliary][1];
+                                span     = parseFloat(data[a][colSpan]);
                                 position = parseInt(activity[auxiliary][activityColor]);
                                 break;
                             }
@@ -983,6 +1002,21 @@ function addPolyline(parameter) {
             });
             // push
             polylines.push(polyline);
+            // create new marker
+            var marker = new google.maps.Marker({
+                clickable: false,
+                icon: {
+                    path: "M0.00,0.00 L0.00,0.00 Z",
+                    scale: 1.0,
+                    strokeOpacity: 0
+                },
+                map: map,
+                position: new google.maps.LatLng(data[a][colLatitude], data[a][colLongitude]),
+                reference: status,
+                distance: span
+            });
+            // set markers
+            polylineMarkers.push(marker);
 		}
 	}
 }
@@ -1506,12 +1540,14 @@ function googleMaps() {
     mapType("hybrid");
     // filter markers
     google.maps.event.addListener(map, 'idle', function() {
-        filterLegend();
+        filterMarkers();
+        filterCables();
         filterTowers();
     });
 }
-/* filter legend -------------------------------------------- */
-function filterLegend() {
+
+/* filter markers ------------------------------------------- */
+function filterMarkers() {
     // bounds
     var bounds = map.getBounds();
     // array
@@ -1531,8 +1567,8 @@ function filterLegend() {
     // set values
     for (var b = 0; b < total; b++) {
         // get element
-        var spanLegend = document.getElementById("span_legend" + b).innerHTML;
-        var spanFilter = document.getElementById("span_filter" + b);
+        var spanLegend = document.getElementById("span_circle" + b).innerHTML;
+        var spanFilter = document.getElementById("span_circle" + b + ".1");
         // hide
         spanFilter.style.display = "none";
         //
@@ -1548,6 +1584,61 @@ function filterLegend() {
                 spanFilter.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
                 spanFilter.style.display = "block";
                 spanFilter.innerHTML = occurrences;
+                break;
+            }
+        }
+    }
+}
+
+/* filter cables -------------------------------------------- */
+function filterCables() {
+    // bounds
+    var bounds = map.getBounds();
+    // array
+    var result      = new Array();
+    var span        = new Array();
+    var occurrences = new Array();
+    // get markers
+    for (var a = 0; a < polylineMarkers.length; a++) {
+        // conditional
+        if (bounds.contains(polylineMarkers[a].getPosition()) === true) {
+            // push
+            result.push(polylineMarkers[a].reference);
+            span.push(polylineMarkers[a].distance);
+        }
+    }
+    // filter
+    var filter = Array.from(new Set(result));
+    // total
+    var total = document.getElementById("div_cables").getElementsByTagName("LI").length;
+    // occurrences
+    for (var b = 0; b < filter.length; b++) {
+        // count
+        var count = 0;
+        for (var c = 0; c < result.length; c++) {
+            // conditional
+            if (filter[b] == result[c]) {
+                count += span[c];
+            }
+            // data
+            occurrences[b] = (count / 1000).toFixed(2);
+        }
+    }
+    // set values
+    for (var d = 0; d < total; d++) {
+        // get element
+        var spanLegend = document.getElementById("span_minus" + d).innerHTML;
+        var spanFilter = document.getElementById("span_minus" + d + ".1");
+        // hide
+        spanFilter.style.display = "none";
+        for (var e = 0; e < filter.length; e++) {
+            // conditional
+            if (spanLegend == "") {
+                break;
+            } else if (spanLegend == filter[e]) {
+                spanFilter.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
+                spanFilter.style.display = "block";
+                spanFilter.innerHTML = occurrences[e];
                 break;
             }
         }
