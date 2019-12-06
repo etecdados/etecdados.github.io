@@ -1579,7 +1579,7 @@ function filterTowers() {
         var tagTr = document.createElement("tr");
         var tagTd = document.createElement("td");
         // values
-        var values = [data[first][1], data[last][1], (distance / 1000).toFixed(2) + " km", (weight / 1000).toFixed(2) + " ton"];
+        var values = [data[first][1], data[last][1], (distance / 1000).toFixed(2) + " KM", (weight / 1000).toFixed(2) + " TON"];
         // data
         for (var c = 0; c < values.length; c++) {
             // clone
@@ -1591,6 +1591,12 @@ function filterTowers() {
             // inner html
             cloneTd1.innerHTML = text[67 + c][language].toUpperCase();
             cloneTd2.innerHTML = values[c];
+            /* !important
+             * text[67][language]
+             * text[68][language]
+             * text[69][language]
+             * text[70][language]
+             */
             // append child
             cloneTr.appendChild(cloneTd1);
             cloneTr.appendChild(cloneTd2);
@@ -1800,7 +1806,7 @@ function listFiles() {
     var tbody = document.getElementById("tbody_search");
     var input = document.getElementById("input_search");
     // input text
-    input.setAttribute("placeholder", text[67][language]);
+    input.setAttribute("placeholder", text[71][language]);
     // list
     for (var a = 0; a < filesText.length; a++) {
         // check empty
