@@ -277,7 +277,7 @@ var activity = new Array();
 var activityTotal = sessionStorage.getItem("activityLength");
 var activityValue = sessionStorage.getItem("activityValues");
 // total columns
-var activityColumns = 9;
+var activityColumns = 8;
 // push into array
 pushArray(activityTotal, activity, activityColumns, activityValue);
 
@@ -880,8 +880,7 @@ var colLongitude   = 1 + colLatitude;
 var colActivity    = 0 + colLongitude;
 var colDescription = 9 + colActivity;
 var colLink        = 2 + colDescription;
-// sheet activity
-var activityColor = 7;
+// activity rows
 var activityRows  = 8;
 
 /* polyline ----------------------------------------------------------------------------------- */
@@ -946,12 +945,12 @@ function addPolyline(parameter) {
                             var auxiliary = b + c + 1;
                             // conditional
                             if (activity[auxiliary][1] == "") {
-                                position = 8;
+                                position = colors.length;
                                 span     = 0;
                                 status   = 0;
                                 break;
                             } else if (activity[auxiliary][1] == data[a][colActivity + parseInt(element)]) {
-                                position = parseInt(activity[auxiliary][activityColor]);
+                                position = c;
                                 span     = parseFloat(data[a][colSpan]);
                                 status   = activity[auxiliary][1];
                                 break;
@@ -1115,16 +1114,16 @@ function addMarkers(parameter) {
                         status = activity[auxiliary][1];
 						// conditional
 						if (status == "") {
-                            position      = 8;
+                            position      = colors.length;
                             displayMarker = "d-none";
 							break;
 					    } else if (status == data[a][colActivity + parseInt(element)]) {
-                            position = parseInt(activity[auxiliary][activityColor]);
+                            position      = f;
                             displayMarker = "";
 						    break;
 					    } else {
                             // no break
-                            position      = 8;
+                            position      = colors.length;
                             displayMarker = "d-none";
                             status        = "";
                         }
