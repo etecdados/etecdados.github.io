@@ -7,8 +7,8 @@
  * last update on 2019/09/26
  */
 
- /* policy --------------------------------------------------- */
-function loadPolicy (parameter) {
+/* policy ------------------------------------------------------------------------------------- */
+function loadPolicy(parameter) {
     // get element
     var element = document.getElementById(parameter.id);
     // title
@@ -19,7 +19,7 @@ function loadPolicy (parameter) {
     $("#div_content").load(html + ".html");
 }
 
-/* google set ----------------------------------------------- */
+/* google set --------------------------------------------------------------------------------- */
 var accessKey     = "1dZe1ctuPzVp887vb7ttc8zbAdDQew_w761hqemr7O04";
 var apiKeySheets  = "AIzaSyCUHNFWOyP2Y25UKw1swqVQCS2MTaFIpok";
 var apiKeyMaps    = "AIzaSyAIFODSjhKFZBXo_bh_LjYGGANHmsGu0UQ";
@@ -29,13 +29,13 @@ var databaseKey   = "1ZcP8Rax-xRtegYTHQ_1BJjtOQmnQT8kMQb7Bi9Guls4";
 var discoveryDocs = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 var scopeReadonly = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
-/* cookies -------------------------------------------------- */
+/* cookies ------------------------------------------------------------------------------------ */
 var language = getCookie("language") ? getCookie("language") : 1;
 var link     = getCookie("link")     ? getCookie("link")     : null;
 var position = getCookie("position") ? getCookie("position") : null;
 var username = getCookie("username") ? getCookie("username") : null;
 
-/* get cookie ----------------------------------------------- */
+/* get cookie --------------------------------------------------------------------------------- */
 function getCookie(parameter) {
     // names
     var names = "; " + document.cookie;
@@ -47,7 +47,7 @@ function getCookie(parameter) {
     };
 }
 
-/* remove link ---------------------------------------------- */
+/* remove link -------------------------------------------------------------------------------- */
 var removeLink = [
     'id:',
     'https://drive.google.com/drive/folders/',
@@ -60,14 +60,14 @@ var removeLink = [
     '/view'
 ];
 
-/* include link --------------------------------------------- */
+/* include link ------------------------------------------------------------------------------- */
 var includeLink = [
     'https://drive.google.com/uc?export=view&id=',
     'https://drive.google.com/file/d/',
     '/preview'
 ];
 
-/* get access ----------------------------------------------- */
+/* get access --------------------------------------------------------------------------------- */
 function getAccess() {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: accessKey,
@@ -84,7 +84,7 @@ function getAccess() {
     });
 }
 
-/* get values ----------------------------------------------- */
+/* get values --------------------------------------------------------------------------------- */
 function getValues(parameter1, parameter2, parameter3, parameter4) {
     // element
     var element = parameter1;
@@ -110,7 +110,7 @@ function getValues(parameter1, parameter2, parameter3, parameter4) {
     }
 }
 
-/* get database --------------------------------------------- */
+/* get database ------------------------------------------------------------------------------- */
 function getDatabase() {
     // sheets
     var sheets = [
@@ -135,7 +135,7 @@ function getDatabase() {
     }
 }
 
-/* get project ---------------------------------------------- */
+/* get project -------------------------------------------------------------------------------- */
 function getProject() {
     // sheets
     var sheets = [
@@ -152,7 +152,7 @@ function getProject() {
     }
 }
 
-/* initial setup -------------------------------------------- */
+/* initial setup ------------------------------------------------------------------------------ */
 function initialSetup() {
     gapi.load("client:auth2", function() {
         gapi.client.init({
@@ -168,7 +168,7 @@ function initialSetup() {
     });
 }
 
-/* access setup --------------------------------------------- */
+/* access setup ------------------------------------------------------------------------------- */
 function accessSetup() {
     gapi.load("client:auth2", function() {
         gapi.client.init({
@@ -191,7 +191,7 @@ function accessSetup() {
     }
 }
 
-/* set language --------------------------------------------- */
+/* set language ------------------------------------------------------------------------------- */
 function setLanguage(parameter) {
     // get element
     var element = document.getElementById(parameter.id).value;
@@ -218,7 +218,7 @@ function setLanguage(parameter) {
     }
 }
 
-/* push array ----------------------------------------------- */
+/* push array --------------------------------------------------------------------------------- */
 function pushArray(parameter1, parameter2, parameter3, parameter4) {
     // get item
     var total = parameter1;
@@ -241,7 +241,7 @@ function pushArray(parameter1, parameter2, parameter3, parameter4) {
     }
 }
 
-/* text ----------------------------------------------------- */
+/* text --------------------------------------------------------------------------------------- */
 var text = new Array();
 // get item
 var textTotal = sessionStorage.getItem("languageLength");
@@ -251,7 +251,7 @@ var textColumns = 4;
 // push into array
 pushArray(textTotal, text, textColumns, textValue);
 
-/* projects ------------------------------------------------- */
+/* projects ----------------------------------------------------------------------------------- */
 var projects = new Array();
 // get item
 var projectsTotal = sessionStorage.getItem("projectsLength");
@@ -261,7 +261,7 @@ var projectsColumns = 4;
 // push into array
 pushArray(projectsTotal, projects, projectsColumns, projectsValue);
 
-/* data ----------------------------------------------------- */
+/* data --------------------------------------------------------------------------------------- */
 var data = new Array();
 // get item
 var dataTotal = sessionStorage.getItem("dataLength");
@@ -271,7 +271,7 @@ var dataColumns = 21;
 // push into array
 pushArray(dataTotal, data, dataColumns, dataValue);
 
-/* activity ------------------------------------------------- */
+/* activity ----------------------------------------------------------------------------------- */
 var activity = new Array();
 // get item
 var activityTotal = sessionStorage.getItem("activityLength");
@@ -281,7 +281,7 @@ var activityColumns = 9;
 // push into array
 pushArray(activityTotal, activity, activityColumns, activityValue);
 
-/* site ----------------------------------------------------- */
+/* site --------------------------------------------------------------------------------------- */
 var site = new Array();
 // get item
 var siteTotal = sessionStorage.getItem("siteLength");
@@ -291,7 +291,7 @@ var siteColumns = 6;
 // push into array
 pushArray(siteTotal, site, siteColumns, siteValue);
 
-/* alert ---------------------------------------------------- */
+/* alert -------------------------------------------------------------------------------------- */
 var alertText = new Array();
 // get item
 var alertTextTotal = sessionStorage.getItem("alertLength");
@@ -301,7 +301,7 @@ var alertTextColumns = 3;
 // push into array
 pushArray(alertTextTotal, alertText, alertTextColumns, alertTextValue);
 
-/* files ---------------------------------------------------- */
+/* files -------------------------------------------------------------------------------------- */
 var filesText = new Array();
 // get item
 var filesTextTotal = sessionStorage.getItem("filesLength");
@@ -311,7 +311,7 @@ var filesTextColumns = 6;
 // push into array
 pushArray(filesTextTotal, filesText, filesTextColumns, filesTextValue);
 
-/* technical ------------------------------------------------ */
+/* technical ---------------------------------------------------------------------------------- */
 var technical = new Array();
 // get item
 var technicalTotal = sessionStorage.getItem("technicalLength");
@@ -321,7 +321,7 @@ var technicalColumns = 3;
 // push into array
 pushArray(technicalTotal, technical, technicalColumns, technicalValue);
 
-/* check text ----------------------------------------------- */
+/* check text --------------------------------------------------------------------------------- */
 function checkText() {
     if (text[0] == null) {
         document.getElementById("div_login").className = "d-none";
@@ -332,7 +332,7 @@ function checkText() {
     }
 }
 
-/* reload --------------------------------------------------- */
+/* reload ------------------------------------------------------------------------------------- */
 function reloadPage() {
     if (getCookie("reload") == 0) {
         setTimeout(function(){
@@ -341,7 +341,7 @@ function reloadPage() {
     }
 }
 
-/* login ---------------------------------------------------- */
+/* login -------------------------------------------------------------------------------------- */
 function login() {
     // array
     var login = new Array();
@@ -389,7 +389,7 @@ function login() {
     }
 }
 
-/* trigger login  ------------------------------------------- */
+/* trigger login  ----------------------------------------------------------------------------- */
 function triggerLogin(e) {
     // conditional
     if (e.keyCode == 13) {
@@ -397,7 +397,7 @@ function triggerLogin(e) {
     }
 }
 
-/* logout --------------------------------------------------- */
+/* logout ------------------------------------------------------------------------------------- */
 function logout() {
     // split
     var cookies = document.cookie.split(";");
@@ -413,7 +413,7 @@ function logout() {
     location.href = "../login";
 }
 
-/* load projects -------------------------------------------- */
+/* load projects ------------------------------------------------------------------------------ */
 function loadProjects() {
     // get element
     var element = document.getElementById("div_logo");
@@ -443,7 +443,7 @@ function loadProjects() {
     }
 }
 
-/* set map -------------------------------------------------- */
+/* set map ------------------------------------------------------------------------------------ */
 function setMap(parameter) {
     // get element
     var element = parameter.id;
@@ -454,7 +454,7 @@ function setMap(parameter) {
     document.cookie = "link=" + projects[index][3] + "; path=/";
 }
 
-/* validation ----------------------------------------------- */
+/* validation --------------------------------------------------------------------------------- */
 function validation(parameter) {
     // get element
     var element = document.getElementById(parameter.id);
@@ -522,19 +522,19 @@ function validation(parameter) {
     }
 }
 
-/* open sidebar --------------------------------------------- */
+/* open sidebar ------------------------------------------------------------------------------- */
 function openSidebar() {
     document.getElementById("div_sidebar").style.width = "233px";
     // collapse navbar (jQuery)
     $(".collapse").collapse("hide");
 }
   
-/* close sidebar -------------------------------------------- */
+/* close sidebar ------------------------------------------------------------------------------ */
 function closeSidebar() {
     document.getElementById("div_sidebar").style.width = "0";
 }
 
-/* check data ----------------------------------------------- */
+/* check data --------------------------------------------------------------------------------- */
 function checkData() {
     // create element
     var tagScript = document.createElement("script");
@@ -624,7 +624,7 @@ function checkData() {
     }
 }
 
-/* colors --------------------------------------------------- */
+/* colors ------------------------------------------------------------------------------------- */
 var colors = [
     /*0*/ "#DC143C", // crimson
     /*1*/ "#4169E1", // royal blue
@@ -637,7 +637,7 @@ var colors = [
     /*8*/ "#808080", // gray  
 ];
 
-/* legend --------------------------------------------------- */
+/* legend ------------------------------------------------------------------------------------- */
 function legend(parameter1, parameter2) {
     // variable
     var auxiliary;
@@ -778,7 +778,7 @@ function legend(parameter1, parameter2) {
     }
 }
 
-/* gallery -------------------------------------------------- */
+/* gallery ------------------------------------------------------------------------------------ */
 function gallery(parameter1, parameter2) {
     // get element
     var element = parameter1.id;
@@ -866,7 +866,7 @@ function gallery(parameter1, parameter2) {
     }
 }
 
-/* map ------------------------------------------------------ */
+/* map ---------------------------------------------------------------------------------------- */
 var map;
 // sheet columns
 var colTower       = 1;
@@ -884,7 +884,7 @@ var colLink        = 2 + colDescription;
 var activityColor = 7;
 var activityRows  = 8;
 
-/* polyline ------------------------------------------------- */
+/* polyline ----------------------------------------------------------------------------------- */
 var polylines       = new Array();
 var polylineMarkers = new Array();
 // add polyline
@@ -904,7 +904,9 @@ function addPolyline(parameter) {
 	// set map
 	for (var a = 0; a < data.length; a++) {
         // variables
-		var position;
+        var position;
+        var span;
+        var status;
 		var stroke;
 		var weight = 5.0;
 		// conditional
@@ -921,11 +923,9 @@ function addPolyline(parameter) {
 		var coordinates = new Array();
 		// conditional
 		if (a + 1 >= data.length) {
-			break;
+            span   = 0;
+            status = 0;
 		} else {
-            // variables
-            var status;
-            var span;
             // get coordinates
 			coordinates = [
 				{lat: parseFloat(data[a + 0][colLatitude]), lng: parseFloat(data[a + 0][colLongitude])},
@@ -946,14 +946,14 @@ function addPolyline(parameter) {
                             var auxiliary = b + c + 1;
                             // conditional
                             if (activity[auxiliary][1] == "") {
-                                status   = 0;
-                                span     = 0;
                                 position = 8;
+                                span     = 0;
+                                status   = 0;
                                 break;
                             } else if (activity[auxiliary][1] == data[a][colActivity + parseInt(element)]) {
-                                status   = activity[auxiliary][1];
-                                span     = parseFloat(data[a][colSpan]);
                                 position = parseInt(activity[auxiliary][activityColor]);
+                                span     = parseFloat(data[a][colSpan]);
+                                status   = activity[auxiliary][1];
                                 break;
                             }
                         }
@@ -1002,26 +1002,28 @@ function addPolyline(parameter) {
             });
             // push
             polylines.push(polyline);
-            // create new marker
-            var marker = new google.maps.Marker({
-                clickable: false,
-                icon: {
-                    path: "M0.00,0.00 L0.00,0.00 Z",
-                    scale: 1.0,
-                    strokeOpacity: 0
-                },
-                map: map,
-                position: new google.maps.LatLng(data[a][colLatitude], data[a][colLongitude]),
-                reference: status,
-                distance: span
-            });
-            // set markers
-            polylineMarkers.push(marker);
-		}
-	}
+        }
+        // create new marker
+        var marker = new google.maps.Marker({
+            clickable: false,
+            icon: {
+                path: "M0.00,0.00 L0.00,0.00 Z",
+                scale: 1.0,
+                strokeOpacity: 0
+            },            
+            map: map,
+            position: new google.maps.LatLng(data[a][colLatitude], data[a][colLongitude]),
+            // legend
+            coordinates: data[a][colLatitude] + "," + data[a][colLongitude],
+            distance: span,
+            reference: status,
+        });
+        // set markers
+        polylineMarkers.push(marker);
+    }
 }
 
-/* markers -------------------------------------------------- */
+/* markers ------------------------------------------------------------------------------------ */
 var iconMarkers  = new Array();
 var alertMarkers = new Array();
 // add markers
@@ -1175,6 +1177,7 @@ function addMarkers(parameter) {
             },
             map: map,
             position: coordinates,
+            // legend
             reference: status
         });
         // push
@@ -1344,7 +1347,7 @@ function addMarkers(parameter) {
     }
 }
 
-/* map type ------------------------------------------------- */
+/* map type ----------------------------------------------------------------------------------- */
 var towerMarkers = new Array();
 // map type
 function mapType(parameter) {
@@ -1405,6 +1408,7 @@ function mapType(parameter) {
             },
             map: map,
             position: coordinates,
+            // legend
             reference: a
         });
         // set markers
@@ -1412,7 +1416,212 @@ function mapType(parameter) {
     }
 }
 
-/* google maps ---------------------------------------------- */
+/* filter markers ----------------------------------------------------------------------------- */
+function filterMarkers() {
+    // bounds
+    var bounds = map.getBounds();
+    // array
+    var result = new Array();
+    // get markers
+    for (var a = 0; a < iconMarkers.length; a++) {
+        // conditional
+        if (bounds.contains(iconMarkers[a].getPosition()) === true) {
+            // push
+            result.push(iconMarkers[a].reference);
+        }
+    }
+    // filter
+    var filter = Array.from(new Set(result));
+    // total
+    var total = document.getElementById("div_list").getElementsByTagName("LI").length;
+    // set values
+    for (var b = 0; b < total; b++) {
+        // get element
+        var spanLegend = document.getElementById("span_circle" + b).innerHTML;
+        var spanFilter = document.getElementById("span_circle" + b + ".1");
+        // hide
+        spanFilter.style.display = "none";
+        //
+        for (var c = 0; c < filter.length; c++) {
+            // occurrences
+            var occurrences = result.filter(function(count) {
+                return count === filter[c];
+            }).length;
+            // conditional
+            if (spanLegend == "") {
+                break;
+            } else if (spanLegend == filter[c]) {
+                spanFilter.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
+                spanFilter.style.display = "block";
+                spanFilter.innerHTML = occurrences;
+                break;
+            }
+        }
+    }
+}
+
+/* filter cables ------------------------------------------------------------------------------ */
+function filterCables() {
+    // bounds
+    var bounds = map.getBounds();
+    // array
+    var result      = new Array();
+    var span        = new Array();
+    var occurrences = new Array();
+    var position    = new Array();
+    // get markers
+    for (var a = 0; a < polylineMarkers.length; a++) {
+        // conditional
+        if (bounds.contains(polylineMarkers[a].getPosition()) === true) {
+            // push
+            result.push(polylineMarkers[a].reference);
+            span.push(polylineMarkers[a].distance);
+            position.push(polylineMarkers[a].coordinates);
+        }
+    }
+    // keys
+    var key1 = polylineMarkers.length - 1;
+    var key2 = position.length - 1;
+    var key3 = result.length;
+    // conditional
+    if (polylineMarkers[key1].coordinates != position[key2]) {
+        key3 = result.length - 1;
+    }
+    // filter
+    var filter = Array.from(new Set(result));
+    // total
+    var total = document.getElementById("div_cables").getElementsByTagName("LI").length;
+    // occurrences
+    for (var b = 0; b < filter.length; b++) {
+        // count
+        var count = 0;
+        for (var c = 0; c < key3; c++) {
+            // conditional
+            if (filter[b] == result[c]) {
+                count += span[c];
+            }
+            // data
+            occurrences[b] = (count / 1000).toFixed(2);
+        }
+    }
+    // set values
+    for (var d = 0; d < total; d++) {
+        // get element
+        var spanLegend = document.getElementById("span_minus" + d).innerHTML;
+        var spanFilter = document.getElementById("span_minus" + d + ".1");
+        // display
+        spanFilter.style.display = "none";
+        for (var e = 0; e < filter.length; e++) {
+            // conditional
+            if (spanLegend == "") {
+                break;
+            } else if (spanLegend == filter[e]) {
+                // conditional
+                if (key3 > 0) {
+                    spanFilter.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
+                    spanFilter.style.display = "block";
+                    spanFilter.innerHTML = occurrences[e];
+                }
+                break;
+            }
+        }
+    }
+}
+
+/* filter towers ------------------------------------------------------------------------------ */
+function filterTowers() {
+    // bounds
+    var bounds = map.getBounds();
+    // array
+    var result = new Array();
+    var type   = new Array();
+    // get markers
+    for (var a = 0; a < towerMarkers.length; a++) {
+        // conditional
+        if (bounds.contains(towerMarkers[a].getPosition()) === true) {
+            // push
+            result.push(towerMarkers[a].reference);
+            type.push(data[towerMarkers[a].reference][2]);
+        }
+    }
+    // total
+    var total = result.length;
+    // inner html
+    document.getElementById("th_filter").innerHTML = total;
+    // variables
+    var cloneTr;
+    var cloneTd1;
+    var cloneTd2;
+    var distance = 0;
+    var filter   = Array.from(new Set(type));
+    var first    = result[0] ? result[0] : 0;
+    var last     = result[total - 1] ? result[total - 1] : 0;
+    var table    = '#table_filter > tbody';
+    var weight   = 0;
+    // clear body (jQuery)
+    $(table).html("");
+    // conditional
+    if (total == 0) {
+        // hide (jQuery)
+        $(table).hide();
+    } else {
+        // show (jQuery)
+        $(table).show();
+        // weight and distance
+        for (var b = 0; b < total; b++) {
+            weight = weight + parseFloat(data[first + b][5]);
+            // conditional
+            if (b < total - 1) {
+                distance = distance + parseFloat(data[first + b][4]);
+            }
+        }
+        // create element 
+        var tagTr = document.createElement("tr");
+        var tagTd = document.createElement("td");
+        // values
+        var values = [data[first][1], data[last][1], (distance / 1000).toFixed(2) + " km", (weight / 1000).toFixed(2) + " ton"];
+        // data
+        for (var c = 0; c < values.length; c++) {
+            // clone
+            cloneTr  = tagTr.cloneNode(true);
+            cloneTd1 = tagTd.cloneNode(true);
+            cloneTd2 = tagTd.cloneNode(true);
+            // bold
+            cloneTd2.className = "font-weight-bold";
+            // inner html
+            cloneTd1.innerHTML = text[67 + c][language].toUpperCase();
+            cloneTd2.innerHTML = values[c];
+            // append child
+            cloneTr.appendChild(cloneTd1);
+            cloneTr.appendChild(cloneTd2);
+            // jQuery
+            $(table).append(cloneTr);
+        }
+        // type
+        for (var d = 0; d < filter.length; d++) {
+            // clone
+            cloneTr  = tagTr.cloneNode(true);
+            cloneTd1 = tagTd.cloneNode(true);
+            cloneTd2 = tagTd.cloneNode(true);
+            // bold
+            cloneTd2.className = "font-weight-bold";
+            // occurrences
+            var occurrences = type.filter(function(count) {
+                return count === filter[d];
+            }).length;
+            // inner html
+            cloneTd1.innerHTML = filter[d];
+            cloneTd2.innerHTML = occurrences;
+            // append child
+            cloneTr.appendChild(cloneTd1);
+            cloneTr.appendChild(cloneTd2);
+            // jQuery
+            $(table).append(cloneTr);
+        }
+    }
+}
+
+/* google maps -------------------------------------------------------------------------------- */
 function googleMaps() {
     // central map
     var central = Math.round(data.length / 2);
@@ -1546,199 +1755,7 @@ function googleMaps() {
     });
 }
 
-/* filter markers ------------------------------------------- */
-function filterMarkers() {
-    // bounds
-    var bounds = map.getBounds();
-    // array
-    var result = new Array();
-    // get markers
-    for (var a = 0; a < iconMarkers.length; a++) {
-        // conditional
-        if (bounds.contains(iconMarkers[a].getPosition()) === true) {
-            // push
-            result.push(iconMarkers[a].reference);
-        }
-    }
-    // filter
-    var filter = Array.from(new Set(result));
-    // total
-    var total = document.getElementById("div_list").getElementsByTagName("LI").length;
-    // set values
-    for (var b = 0; b < total; b++) {
-        // get element
-        var spanLegend = document.getElementById("span_circle" + b).innerHTML;
-        var spanFilter = document.getElementById("span_circle" + b + ".1");
-        // hide
-        spanFilter.style.display = "none";
-        //
-        for (var c = 0; c < filter.length; c++) {
-            // occurrences
-            var occurrences = result.filter(function(count) {
-                return count === filter[c];
-            }).length;
-            // conditional
-            if (spanLegend == "") {
-                break;
-            } else if (spanLegend == filter[c]) {
-                spanFilter.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
-                spanFilter.style.display = "block";
-                spanFilter.innerHTML = occurrences;
-                break;
-            }
-        }
-    }
-}
-
-/* filter cables -------------------------------------------- */
-function filterCables() {
-    // bounds
-    var bounds = map.getBounds();
-    // array
-    var result      = new Array();
-    var span        = new Array();
-    var occurrences = new Array();
-    // get markers
-    for (var a = 0; a < polylineMarkers.length; a++) {
-        // conditional
-        if (bounds.contains(polylineMarkers[a].getPosition()) === true) {
-            // push
-            result.push(polylineMarkers[a].reference);
-            span.push(polylineMarkers[a].distance);
-        }
-    }
-    // filter
-    var filter = Array.from(new Set(result));
-    // total
-    var total = document.getElementById("div_cables").getElementsByTagName("LI").length;
-    // occurrences
-    for (var b = 0; b < filter.length; b++) {
-        // count
-        var count = 0;
-        for (var c = 0; c < result.length; c++) {
-            // conditional
-            if (filter[b] == result[c]) {
-                count += span[c];
-            }
-            // data
-            occurrences[b] = (count / 1000).toFixed(2);
-        }
-    }
-    // set values
-    for (var d = 0; d < total; d++) {
-        // get element
-        var spanLegend = document.getElementById("span_minus" + d).innerHTML;
-        var spanFilter = document.getElementById("span_minus" + d + ".1");
-        // hide
-        spanFilter.style.display = "none";
-        for (var e = 0; e < filter.length; e++) {
-            // conditional
-            if (spanLegend == "") {
-                break;
-            } else if (spanLegend == filter[e]) {
-                spanFilter.setAttribute("class", "badge badge-pill badge-dark float-right ml-2");
-                spanFilter.style.display = "block";
-                spanFilter.innerHTML = occurrences[e];
-                break;
-            }
-        }
-    }
-}
-
-/* filter towers -------------------------------------------- */
-function filterTowers() {
-    // bounds
-    var bounds = map.getBounds();
-    // array
-    var result = new Array();
-    var type   = new Array();
-    // get markers
-    for (var a = 0; a < towerMarkers.length; a++) {
-        // conditional
-        if (bounds.contains(towerMarkers[a].getPosition()) === true) {
-            // push
-            result.push(towerMarkers[a].reference);
-            type.push(data[towerMarkers[a].reference][2]);
-        }
-    }
-    // total
-    var total = result.length;
-    // inner html
-    document.getElementById("th_filter").innerHTML = total;
-    // variables
-    var cloneTr;
-    var cloneTd1;
-    var cloneTd2;
-    var distance = 0;
-    var filter   = Array.from(new Set(type));
-    var first    = result[0] ? result[0] : 0;
-    var last     = result[total - 1] ? result[total - 1] : 0;
-    var table    = '#table_filter > tbody';
-    var weight   = 0;
-    // clear body (jQuery)
-    $(table).html("");
-    // conditional
-    if (total == 0) {
-        // hide (jQuery)
-        $(table).hide();
-    } else {
-        // show (jQuery)
-        $(table).show();
-        // weight and distance
-        for (var b = 0; b < total; b++) {
-            weight = weight + parseFloat(data[first + b][5]);
-            // conditional
-            if (b < total - 1) {
-                distance = distance + parseFloat(data[first + b][4]);
-            }
-        }
-        // create element 
-        var tagTr = document.createElement("tr");
-        var tagTd = document.createElement("td");
-        // values
-        var values = [data[first][1], data[last][1], (distance / 1000).toFixed(2) + " km", (weight / 1000).toFixed(2) + " ton"];
-        // data
-        for (var c = 0; c < values.length; c++) {
-            // clone
-            cloneTr  = tagTr.cloneNode(true);
-            cloneTd1 = tagTd.cloneNode(true);
-            cloneTd2 = tagTd.cloneNode(true);
-            // bold
-            cloneTd2.className = "font-weight-bold";
-            // inner html
-            cloneTd1.innerHTML = text[67 + c][language].toUpperCase();
-            cloneTd2.innerHTML = values[c];
-            // append child
-            cloneTr.appendChild(cloneTd1);
-            cloneTr.appendChild(cloneTd2);
-            // jQuery
-            $(table).append(cloneTr);
-        }
-        // type
-        for (var d = 0; d < filter.length; d++) {
-            // clone
-            cloneTr  = tagTr.cloneNode(true);
-            cloneTd1 = tagTd.cloneNode(true);
-            cloneTd2 = tagTd.cloneNode(true);
-            // bold
-            cloneTd2.className = "font-weight-bold";
-            // occurrences
-            var occurrences = type.filter(function(count) {
-                return count === filter[d];
-            }).length;
-            // inner html
-            cloneTd1.innerHTML = filter[d];
-            cloneTd2.innerHTML = occurrences;
-            // append child
-            cloneTr.appendChild(cloneTd1);
-            cloneTr.appendChild(cloneTd2);
-            // jQuery
-            $(table).append(cloneTr);
-        }
-    }
-}
-
-/* show filter ---------------------------------------------- */
+/* show filter -------------------------------------------------------------------------------- */
 function showFilter(parameter) {
     // get element
     var element = document.getElementById(parameter.id).value;
@@ -1753,7 +1770,7 @@ function showFilter(parameter) {
     }
 }
 
-/* search file (jQuery) ------------------------------------- */
+/* search file (jQuery) ----------------------------------------------------------------------- */
 $(document).ready(function(){
     $("#input_search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
@@ -1763,7 +1780,7 @@ $(document).ready(function(){
     });
 });
 
-/* link file ------------------------------------------------ */
+/* link file ---------------------------------------------------------------------------------- */
 function linkFile(parameter) {
     // get element
     var element = document.getElementById("iframe_file");
@@ -1777,10 +1794,13 @@ function linkFile(parameter) {
     element.setAttribute("src", includeLink[1] + link + includeLink[2]);
 }
 
-/* list files ----------------------------------------------- */
+/* list files --------------------------------------------------------------------------------- */
 function listFiles() {
-    // get element
-    var element = document.getElementById("tbody_search");
+    // get elements
+    var tbody = document.getElementById("tbody_search");
+    var input = document.getElementById("input_search");
+    // input text
+    input.setAttribute("placeholder", text[67][language]);
     // list
     for (var a = 0; a < filesText.length; a++) {
         // check empty
@@ -1790,7 +1810,7 @@ function listFiles() {
             var tagTd     = document.createElement("td");
             var tagButton = document.createElement("button");
             // append child
-            element.appendChild(tagTr);
+            tbody.appendChild(tagTr);
             // td
             for (var b = 0; b < filesTextColumns - 1; b++) {
                 // clone
@@ -1828,7 +1848,7 @@ function listFiles() {
     }
 }
 
-/* clear iframe --------------------------------------------- */
+/* clear iframe ------------------------------------------------------------------------------- */
 function clearIframe() {
     // get element
     var element = document.getElementById("iframe_file");
