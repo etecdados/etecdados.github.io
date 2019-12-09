@@ -198,7 +198,7 @@ function setLanguage(parameter) {
     var input   = document.getElementById("input_general");
     // conditional
     if (input != null) {
-        // checked (sidebar)
+        // checked (menu)
         input.checked = true;
         document.getElementById("input_hybrid").checked  = true;
     }
@@ -522,16 +522,30 @@ function validation(parameter) {
     }
 }
 
-/* open sidebar ------------------------------------------------------------------------------- */
-function openSidebar() {
-    document.getElementById("div_sidebar").style.width = "233px";
+/* menu --------------------------------------------------------------------------------------- */
+function openMenu() {
     // collapse navbar (jQuery)
     $(".collapse").collapse("hide");
+    // get elements
+    var legend   = document.getElementById("div_legend");
+    var dropdown = document.getElementById("div_dropdown");
+    // conditional
+    if (screen.width < 600) {
+        legend.style.display = "none";
+    } else {
+        legend.style.display = "block";
+    }
+    // conditional
+    if (screen.height < 600) {
+        dropdown.style.maxHeight = "233px";
+    } else {
+        dropdown.style.maxHeight = "450px";
+    }
 }
-  
-/* close sidebar ------------------------------------------------------------------------------ */
-function closeSidebar() {
-    document.getElementById("div_sidebar").style.width = "0";
+
+/* show legend -------------------------------------------------------------------------------- */
+function showLegend() {
+    document.getElementById("div_legend").style.display = "block";
 }
 
 /* check data --------------------------------------------------------------------------------- */
@@ -737,8 +751,6 @@ function legend(parameter1, parameter2) {
         tagICircle.setAttribute("style", "color:" + colors[c] + "; opacity: 0.8");
         tagIMinus.setAttribute("class", "mr-2 mb-1 fas fa-minus");
         tagIMinus.setAttribute("style", "color:" + colors[c]);
-        //tagSpan.setAttribute("id", "span_legend" + c);
-        //clone.setAttribute("id", "span_filter" + c);
         // conditional
         if (parameter1 == 0) {
             // inner html
@@ -899,7 +911,8 @@ function addPolyline(parameter) {
         element = document.getElementById(parameter.id).value;
     }
     // legend
-	legend(element, false);
+    legend(element, false);
+    showLegend();
 	// set map
 	for (var a = 0; a < data.length; a++) {
         // variables
@@ -1043,6 +1056,7 @@ function addMarkers(parameter) {
     }
     // legend
     legend(element, true);
+    showLegend();
     // info window
     var info = new google.maps.InfoWindow();
     // icon activity and others
@@ -1364,6 +1378,8 @@ function mapType(parameter) {
     }
     // set map
     map.setMapTypeId(type);
+    // legend
+    showLegend();
     // conditional
     if (type == "hybrid" || type == "dark") {
         color = "#FFFFFF";
@@ -1773,6 +1789,8 @@ function showFilter(parameter) {
     } else {
         filter.style.display = "block";
     }
+    // legend
+    showLegend();
 }
 
 /* search file (jQuery) ----------------------------------------------------------------------- */

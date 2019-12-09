@@ -102,23 +102,18 @@ header img {
     max-width: 144px;
 }
 
-/* sidebar -------------------------------------------------- */
-#div_sidebar {
-    height: 84vh;
-    left: 0;
-    overflow-x: hidden;
+/* menu ----------------------------------------------------- */
+#div_dropdown {
+    max-height: 450px;
     overflow-y: auto;
-    position: absolute;
-    transition: 0.5s;
-    width: 0;
-    z-index: 1;
+    width: 233px;
 }
 
-#div_sidebar input, .ul_sidebar label {
+.ul_menu label {
     cursor: pointer;
 }
 
-.ul_sidebar {
+.ul_menu {
     list-style-type: none;
     padding: 0;
 }

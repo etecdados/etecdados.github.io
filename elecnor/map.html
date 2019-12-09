@@ -38,7 +38,7 @@
                 <script>document.write(username)</script>
             </div>
             <!-- button toggler -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar" onclick="closeSidebar()">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_navbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- navbar menu -->
@@ -103,168 +103,159 @@
                     <span class="sr-only"></span>
                 </div>        
             </div>
-            <!-- sidebar -->
-            <div class="bg-dark text-left text-white-50 text-nowrap" id="div_sidebar" >
-                <div class="ml-2">
-                    <!-- menu -->
-                    <button type="button" class="btn btn-dark text-white-50 float-right mr-2" onclick="closeSidebar()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    <br>
-                    <i class="fas fa-list-ul"></i>
-                    <script>document.write(text[19][language])</script>
-                    <!-- filter -->
-                    <div class="border-top border-secondary mt-3">
-                        <i class="far fa-dot-circle"></i>
-                        <script>document.write(text[62][language])</script>
-                        <ul class="ul_sidebar">
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="0" id="input_disabled" checked>
-                                    <script>document.write(text[63][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="1" id="input_enabled">
-                                    <script>document.write(text[64][language])</script>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- activity -->
-                    <div class="border-top border-secondary mt-3">
-                        <span id="span_activity"></span>
-                        <script>document.write(text[20][language])</script>
-                        <ul class="ul_sidebar">
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="0" id="input_general" checked>
-                                    <script>document.write(text[21][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="1" id="input_preliminary">
-                                    <script>document.write(text[26][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="2" id="input_civil">
-                                    <script>document.write(text[27][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="3" id="input_assembly">
-                                    <script>document.write(text[28][language])</script>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- cables -->
-                    <div class="border-top border-secondary mt-3">
-                        <span id="span_cables"></span>
-                        <script>document.write(text[29][language])</script>
-                        <ul class="ul_sidebar">
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="4" id="input_lightning">
-                                    <script>document.write(text[51][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="5" id="input_optical">
-                                    <script>document.write(text[52][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="6" id="input_conductor">
-                                    <script>document.write(text[53][language])</script>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- others -->
-                    <div class="border-top border-secondary mt-3">
-                        <span id="span_others"></span>
-                        <script>document.write(text[57][language])</script>
-                        <ul class="ul_sidebar">
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="7" id="input_environment">
-                                    <script>document.write(text[58][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="8" id="input_landowner">
-                                    <script>document.write(text[59][language])</script>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- map type -->
-                    <div class="border-top border-secondary mt-3">
-                        <i class="far fa-dot-circle"></i>
-                        <script>document.write(text[46][language])</script>
-                        <ul class="ul_sidebar">
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="hybrid" id="input_hybrid" checked>
-                                    <script>document.write(text[47][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="roadmap" id="input_roadmap">
-                                    <script>document.write(text[48][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="terrain" id="input_terrain">
-                                    <script>document.write(text[49][language])</script>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="mb-0">
-                                    <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="dark" id="input_dark">
-                                    <script>document.write(text[65][language])</script>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                     <!-- tables -->
-                     <div class="border-top border-secondary mt-3 mb-5">
-                         <ul class="ul_sidebar">
-                             <li class="mt-2">
-                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
-                                    <i class="fas fa-table"></i>
-                                    <script>document.write(text[30][language])</script>
-                                </a>
-                             </li>
-                             <li class="mt-2">
-                                <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_technical">
-                                    <i class="fas fa-table"></i>
-                                    <script>document.write(text[60][language])</script>
-                                </a>
-                             </li>
-                         </ul>  
-                    </div>
-                </div>
-            </div>
             <!-- controls -->
             <div id="div_controls" hidden>
                 <!-- menu -->
-                <div id="div_menu">
-                    <button type="button" class="btn btn-sm btn-primary m-2" onclick="openSidebar()">
+                <div class="dropdown" id="div_menu">
+                    <!-- button -->
+                    <button class="btn btn-sm btn-primary m-2 dropdown-toggle" type="button" data-toggle="dropdown" onclick="openMenu()" id="button_menu">
                         <i class="fas fa-list-ul"></i>
                         <script>document.write(text[19][language])</script>
                     </button>
+                    <div class="dropdown-menu ml-5 pl-1 text-muted bg-white text-nowrap" aria-labelledby="button_menu" id="div_dropdown">
+                        <!-- filter -->    
+                        <div class="border-bottom border-secondary m-1">
+                            <i class="far fa-dot-circle"></i>
+                            <script>document.write(text[62][language])</script>
+                            <ul class="ul_menu mb-1">
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="0" id="input_disabled" checked>
+                                        <script>document.write(text[63][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="filter" class="mr-1 align-middle" onclick="showFilter(this)" value="1" id="input_enabled">
+                                        <script>document.write(text[64][language])</script>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- activity -->
+                        <div class="border-bottom border-secondary m-1">
+                            <span id="span_activity"></span>
+                            <script>document.write(text[20][language])</script>
+                            <ul class="ul_menu mb-1">
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="0" id="input_general" checked>
+                                        <script>document.write(text[21][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="1" id="input_preliminary">
+                                        <script>document.write(text[26][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="2" id="input_civil">
+                                        <script>document.write(text[27][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="3" id="input_assembly">
+                                        <script>document.write(text[28][language])</script>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- cables -->
+                        <div class="border-bottom border-secondary m-1">
+                            <span id="span_cables"></span>
+                            <script>document.write(text[29][language])</script>
+                            <ul class="ul_menu mb-1">
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="4" id="input_lightning">
+                                        <script>document.write(text[51][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="5" id="input_optical">
+                                        <script>document.write(text[52][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="cables" class="mr-1 align-middle" onclick="addPolyline(this)" value="6" id="input_conductor">
+                                        <script>document.write(text[53][language])</script>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- others -->
+                        <div class="border-bottom border-secondary m-1">
+                            <span id="span_others"></span>
+                            <script>document.write(text[57][language])</script>
+                            <ul class="ul_menu mb-1">
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="7" id="input_environment">
+                                        <script>document.write(text[58][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="activity" class="mr-1 align-middle" onclick="addMarkers(this)" value="8" id="input_landowner">
+                                        <script>document.write(text[59][language])</script>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- map type -->
+                        <div class="m-1">
+                            <i class="far fa-dot-circle"></i>
+                            <script>document.write(text[46][language])</script>
+                            <ul class="ul_menu mb-1">
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="hybrid" id="input_hybrid" checked>
+                                        <script>document.write(text[47][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="roadmap" id="input_roadmap">
+                                        <script>document.write(text[48][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="terrain" id="input_terrain">
+                                        <script>document.write(text[49][language])</script>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="mb-0">
+                                        <input type="radio" name="maptype" class="mr-1 align-middle" onclick="mapType(this)" value="dark" id="input_dark">
+                                        <script>document.write(text[65][language])</script>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- tables -->
+                        <div class="border-top border-secondary mb-3">
+                            <ul class="ul_menu mb-2">
+                                <li class="mt-2">
+                                    <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_summary">
+                                        <i class="fas fa-table"></i>
+                                        <script>document.write(text[30][language])</script>
+                                    </a>
+                                </li>
+                                <li class="mt-2">
+                                    <a href="#" class="text-decoration-none" data-toggle="modal" data-target="#div_technical">
+                                        <i class="fas fa-table"></i>
+                                        <script>document.write(text[60][language])</script>
+                                    </a>
+                                </li>
+                            </ul>  
+                        </div>
+                    </div>
                 </div>
                 <!-- date -->
                 <div class="alert alert-light p-1 m-2" id="div_date">
@@ -278,16 +269,7 @@
                 </div>
                 <!-- legend -->
                 <div class="m-2" id="div_legend">
-                    <!-- button -->
-                    <button class="btn btn-sm btn btn-light text-secondary bg-white w-100" type="button" data-toggle="collapse" data-target="#div_list">
-                        <span class="mr-2">
-                            <script>document.write(text[32][language])</script>
-                        </span>
-                        <span class="float-right">
-                            <i class="fas fa-caret-down"></i>
-                        </span>
-                    </button>
-                    <!-- list -->
+                    <!-- legend -->
                     <div id="div_list"   class="bg-white text-left collapse.show"></div>
                     <div id="div_cables" class="bg-white text-left"></div>
                     <div id="div_filter" class="bg-white text-left float-right mt-1">
