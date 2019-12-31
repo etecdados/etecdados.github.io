@@ -1303,7 +1303,7 @@ function addMarkers(parameter) {
                             '<tr class="' + displayGallery + '">' +
                                 '<td>' + text[25][language] + '</td>' +
                                 '<td>' +
-                                    '<a href="#" data-toggle="modal" data-target="#div_gallery" id="' + data[a][colLink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][colTower] + '&apos;)">' +
+                                    '<a href="javascript:void(0);" data-toggle="modal" data-target="#div_gallery" id="' + data[a][colLink] + '" onclick="gallery(this, &apos;' + text[22][language] + ' ' + data[a][colTower] + '&apos;)">' +
                                     '<i class="far fa-images"></i> ' +
                                     '<span>' + text[24][language] + '</span>' +
                                     '</a>' +
@@ -1650,7 +1650,7 @@ function googleMaps() {
     var properties = {
         center: new google.maps.LatLng(data[central][colLatitude], data[central][colLongitude]),
         fullscreenControl: true,
-        fullscreenControlOptions: {position: google.maps.ControlPosition.LEFT_CENTER},        
+        fullscreenControlOptions: {position: google.maps.ControlPosition.LEFT_CENTER},
         mapTypeControl: false,
         mapTypeControlOptions: {mapTypeIds: ['roadmap', 'hybrid', 'terrain', 'dark']},
         streetViewControl: false,
