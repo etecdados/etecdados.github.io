@@ -536,10 +536,10 @@ function openMenu() {
         legend.style.display = "block";
     }
     // conditional
-    if (screen.height < 600) {
+    if (screen.height < 500) {
         dropdown.style.maxHeight = "233px";
     } else {
-        dropdown.style.maxHeight = "450px";
+        dropdown.style.maxHeight = "377px";
     }
 }
 
