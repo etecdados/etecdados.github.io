@@ -530,13 +530,13 @@ function openMenu() {
     var legend   = document.getElementById("div_legend");
     var dropdown = document.getElementById("div_dropdown");
     // conditional
-    if (screen.width < 600) {
+    if (screen.width < 700) {
         legend.style.display = "none";
     } else {
         legend.style.display = "block";
     }
     // conditional
-    if (screen.height < 500) {
+    if (screen.height < 700) {
         dropdown.style.maxHeight = "233px";
     } else {
         dropdown.style.maxHeight = "377px";
